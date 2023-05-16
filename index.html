@@ -2,15 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Real Time Locantion</title>
-    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API"></script>
+    <title>Google Maps API</title>
+    <style>
+        #map {
+            height: 400px;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=places"></script>
     <script>
+        // Variáveis globais
+        var map, marker, directionsService, directionsRenderer, startTime;
+        
         function initMap() {
-            // Crie um mapa
-            var map = new google.maps.Map(document.getElementById('map'), {
+            // Configurações iniciais do mapa
+            map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: -34.397, lng: 150.644},
                 zoom: 8
             });
+            
+            // Inicializa o serviço de direções
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
             
             // Obtenha a localização atual do usuário
             if (navigator.geolocation) {
@@ -18,35 +31,69 @@
                     var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     
                     // Coloque um marcador no mapa para a localização atual
-                    var marker = new google.maps.Marker({
+                    marker = new google.maps.Marker({
                         position: userLatLng,
                         map: map,
                         title: 'Minha Localização'
                     });
                     
-                    // Adicione um listener para o evento de clique no marcador
-                    marker.addListener('click', function() {
-                        var infoWindow = new google.maps.InfoWindow({
-                            content: 'Tempo gasto no local: X horas'
-                        });
-                        
-                        // Abra uma janela de informações com o tempo gasto no local
-                        infoWindow.open(map, marker);
-                        
-                        // Envie as informações para um aparelho externo
-                        // Faça aqui as ações necessárias para enviar as informações
-                    });
+                    // Inicia o tempo de chegada
+                    startTime = new Date();
                 });
             }
+        }
+        
+        function calculateAndDisplayRoute() {
+            // Configurações da rota
+            var destination = document.getElementById('destination').value;
+            
+            var request = {
+                origin: marker.getPosition(),
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            
+            // Solicitação da rota
+            directionsService.route(request, function(result, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
+                    
+                    // Calcula o tempo gasto na rota
+                    var endTime = new Date();
+                    var timeSpent = Math.round((endTime - startTime) / 1000); // Tempo em segundos
+                    var timeSpentFormatted = formatTime(timeSpent);
+                    
+                    // Exibe o tempo gasto na rota
+                    document.getElementById('timeSpent').textContent = 'Tempo gasto no percurso: ' + timeSpentFormatted;
+                    
+                    // Envia as informações para um aparelho externo
+                    // Implemente aqui a lógica para enviar as informações
+                }
+            });
+        }
+        
+        function formatTime(seconds) {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var seconds = seconds % 60;
+            
+            return hours + 'h ' + minutes + 'm ' + seconds + 's';
         }
     </script>
 </head>
 <body onload="initMap()">
-    <div id="map" style="height: 400px;"></div>
+    <div id="map"></div>
     
-    <footer>
-        <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
-    </footer>
-</body>
-</html>
+    <div>
+        <label for="destination">Destino:</label>
+        <input type="text" id="destination" placeholder="Insira o destino">
+        <button onclick="calculateAndDisplayRoute()">Calcular Rota</button>
+   </div>
+    
+<div id="timeSpent"></div>
 
+<footer>
+    <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
+</footer>
+    </body>
+</html>

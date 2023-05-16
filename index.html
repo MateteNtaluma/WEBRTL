@@ -1,11 +1,34 @@
 <html>
-  <head>
-  <title></title>
+<head>
+    <meta charset="UTF-8">
+    <title>GPS e Localização</title>
+    <script>
+        function enviarInformacoes() {
+            // Obtenha os dados de GPS e localização
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                
+                // Obtenha a hora atual
+                var dataAtual = new Date();
+                
+                // Faça algo com os dados (por exemplo, envie para um aparelho externo)
+                // Aqui, apenas mostraremos as informações em um alerta
+                alert("Informações de GPS e localização:\n\nLatitude: " + latitude +
+                      "\nLongitude: " + longitude +
+                      "\nHora atual: " + dataAtual);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>GPS e Localização</h1>
     
-  </head>
-    <body>
-      <h1>Teste</h1>
-      </body>
-      
-  </html>
-  
+    <button onclick="enviarInformacoes()">Enviar Informações</button>
+    
+    <footer>
+        <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
+

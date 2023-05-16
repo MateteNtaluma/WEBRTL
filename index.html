@@ -7,6 +7,18 @@
         #map {
             height: 400px;
         }
+        
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=places"></script>
     <script>
@@ -63,37 +75,53 @@
                     var timeSpent = Math.round((endTime - startTime) / 1000); // Tempo em segundos
                     var timeSpentFormatted = formatTime(timeSpent);
                     
-                    // Exibe o tempo gasto na rota
-                    document.getElementById('timeSpent').textContent = 'Tempo gasto no percurso: ' + timeSpentFormatted;
+                    // Exibe as informações em uma tabela
+                    var table = document.getElementById('infoTable');
                     
-                    // Envia as informações para um aparelho externo
-                    // Implemente aqui a lógica para enviar as informações
-                }
-            });
-        }
+                    var row1 = table.insertRow();
+                    var cell11 = row1.insertCell(0);
+                    var cell12 = row1.insertCell(1);
+                    cell11.innerHTML = 'GPS:';
+                    cell12.innerHTML = marker.getPosition().toString();
+                    
+                    var row2 = table.insertRow();
+                    var cell21 = row2.insertCell(0);
+                    var cell22 = row2.insertCell(1);
+                    cell21.innerHTML = 'Destino:';
+                    cell22.innerHTML = destination;
+                    
+                    var row3 = table.insertRow();
+                    var cell31 = row3.insertCell(0);
+                    var cell32 = row3.insertCell(1);
+                    cell31.innerHTML = 'Tempo gasto no percurso:';
+                    cell32.innerHTML = timeSpentFormatted: ;
+                // Envia as informações para um aparelho externo
+                // Implemente aqui a lógica para enviar as informações
+            }
+        });
+    }
+    
+    function formatTime(seconds) {
+        var hours = Math.floor(seconds / 3600);
+        var minutes = Math.floor((seconds % 3600) / 60);
+        var seconds = seconds % 60;
         
-        function formatTime(seconds) {
-            var hours = Math.floor(seconds / 3600);
-            var minutes = Math.floor((seconds % 3600) / 60);
-            var seconds = seconds % 60;
-            
-            return hours + 'h ' + minutes + 'm ' + seconds + 's';
-        }
-    </script>
+        return hours + 'h ' + minutes + 'm ' + seconds + 's';
+    }
+</script>
 </head>
 <body onload="initMap()">
     <div id="map"></div>
-    
     <div>
-        <label for="destination">Destino:</label>
-        <input type="text" id="destination" placeholder="Insira o destino">
-        <button onclick="calculateAndDisplayRoute()">Calcular Rota</button>
-   </div>
-    
-<div id="timeSpent"></div>
+    <label for="destination">Destino:</label>
+    <input type="text" id="destination" placeholder="Insira o destino">
+    <button onclick="calculateAndDisplayRoute()">Calcular Rota</button>
+</div>
+
+<table id="infoTable"></table>
 
 <footer>
     <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>
 </footer>
-    </body>
+</body>
 </html>

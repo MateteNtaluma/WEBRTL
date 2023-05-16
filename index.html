@@ -22,41 +22,34 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=places"></script>
     <script>
-        // Variáveis globais
         var map, marker, directionsService, directionsRenderer, startTime;
         
         function initMap() {
-            // Configurações iniciais do mapa
             map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: -34.397, lng: 150.644},
+                center: { lat: -34.397, lng: 150.644 },
                 zoom: 8
             });
             
-            // Inicializa o serviço de direções
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
             
-            // Obtenha a localização atual do usuário
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     
-                    // Coloque um marcador no mapa para a localização atual
                     marker = new google.maps.Marker({
                         position: userLatLng,
                         map: map,
                         title: 'Minha Localização'
                     });
                     
-                    // Inicia o tempo de chegada
                     startTime = new Date();
                 });
             }
         }
         
         function calculateAndDisplayRoute() {
-            // Configurações da rota
             var destination = document.getElementById('destination').value;
             
             var request = {
@@ -65,17 +58,14 @@
                 travelMode: google.maps.TravelMode.DRIVING
             };
             
-            // Solicitação da rota
             directionsService.route(request, function(result, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     directionsRenderer.setDirections(result);
                     
-                    // Calcula o tempo gasto na rota
                     var endTime = new Date();
                     var timeSpent = Math.round((endTime - startTime) / 1000); // Tempo em segundos
                     var timeSpentFormatted = formatTime(timeSpent);
                     
-                    // Exibe as informações em uma tabela
                     var table = document.getElementById('infoTable');
                     
                     var row1 = table.insertRow();
@@ -94,19 +84,36 @@
                     var cell31 = row3.insertCell(0);
                     var cell32 = row3.insertCell(1);
                     cell31.innerHTML = 'Tempo gasto no percurso:';
-                    cell32.innerHTML = timeSpentFormatted: ;
-                // Envia as informações para um aparelho externo
-                // Implemente aqui a lógica para enviar as informações
-            }
-        });
-    }
-    
-    function formatTime(seconds) {
-        var hours = Math.floor(seconds / 3600);
-        var minutes = Math.floor((seconds % 3600) / 60);
-        var seconds = seconds % 60;
+                    cell32.innerHTML = timeSpentFormatted;
+                    
+                    // Envia as informações para um aparelho externo
+                    sendToExternalDevice(marker.getPosition(), destination, timeSpentFormatted);
+                }
+            });
+        }
         
-        return hours + 'h ' + minutes + 'm ' + seconds + 's';
+        function formatTime(seconds) {
+            var hours = Math.floor(seconds / 3600);
+            var minutes = Math.floor((seconds % 3600) / 60);
+            var seconds = seconds % 60;
+            
+            return hours + 'h ' + minutes + 'm ' + seconds + 's';
+        }
+        
+        function send
+ToExternalDevice(position, destination, timeSpent) {
+// Implemente aqui a lógica para enviar as informações para o aparelho externo
+// Por exemplo, você pode usar uma requisição HTTP para enviar os dados para um servidor
+// Ou usar um protocolo de comunicação específico do dispositivo
+            // Exemplo:
+        var data = {
+            gps: position.toString(),
+            destination: destination,
+            timeSpent: timeSpent
+        };
+        
+        // Use o objeto 'data' para enviar as informações para o aparelho externo
+        console.log(data);
     }
 </script>
 </head>

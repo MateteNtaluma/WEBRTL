@@ -1,30 +1,48 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>GPS e Localização</title>
+    <title>Google Maps API</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API"></script>
     <script>
-        function enviarInformacoes() {
-            // Obtenha os dados de GPS e localização
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
-                
-                // Obtenha a hora atual
-                var dataAtual = new Date();
-                
-                // Faça algo com os dados (por exemplo, envie para um aparelho externo)
-                // Aqui, apenas mostraremos as informações em um alerta
-                alert("Informações de GPS e localização:\n\nLatitude: " + latitude +
-                      "\nLongitude: " + longitude +
-                      "\nHora atual: " + dataAtual);
+        function initMap() {
+            // Crie um mapa
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 8
             });
+            
+            // Obtenha a localização atual do usuário
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    
+                    // Coloque um marcador no mapa para a localização atual
+                    var marker = new google.maps.Marker({
+                        position: userLatLng,
+                        map: map,
+                        title: 'Minha Localização'
+                    });
+                    
+                    // Adicione um listener para o evento de clique no marcador
+                    marker.addListener('click', function() {
+                        var infoWindow = new google.maps.InfoWindow({
+                            content: 'Tempo gasto no local: X horas'
+                        });
+                        
+                        // Abra uma janela de informações com o tempo gasto no local
+                        infoWindow.open(map, marker);
+                        
+                        // Envie as informações para um aparelho externo
+                        // Faça aqui as ações necessárias para enviar as informações
+                    });
+                });
+            }
         }
     </script>
 </head>
-<body>
-    <h1>GPS e Localização</h1>
-    
-    <button onclick="enviarInformacoes()">Enviar Informações</button>
+<body onload="initMap()">
+    <div id="map" style="height: 400px;"></div>
     
     <footer>
         <p>&copy; 2023 Meu Site. Todos os direitos reservados.</p>

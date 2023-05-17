@@ -21,7 +21,7 @@
       map.addLayer(new OpenLayers.Layer.OSM());
 
       // Defina a exibição inicial do mapa
-      var lonLat = new OpenLayers.LonLat(36.633308, -9.550520).transform(
+      var lonLat = new OpenLayers.LonLat(-36.633308, -9.550520).transform(
         new OpenLayers.Projection("EPSG:4326"),
         map.getProjectionObject()
       );

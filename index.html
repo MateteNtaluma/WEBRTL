@@ -10,57 +10,70 @@
   </style>
 </head>
 <body>
+  <input type="text" id="search-input" placeholder="Digite um local">
   <div id="map"></div>
 
+  <script src="https://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
     function initMap() {
       // Inicialize o mapa
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -23.550520, lng: -46.633308},
-        zoom: 12
+      var map = new OpenLayers.Map("map");
+      map.addLayer(new OpenLayers.Layer.OSM());
+
+      // Defina a exibição inicial do mapa
+      var lonLat = new OpenLayers.LonLat(-46.633308, -23.550520).transform(
+        new OpenLayers.Projection("EPSG:4326"),
+        map.getProjectionObject()
+      );
+      map.setCenter(lonLat, 12);
+
+      // Adicione a funcionalidade de pesquisa de lugares
+      var searchInput = document.getElementById('search-input');
+      searchInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          searchPlace();
+        }
       });
 
-      // Adicione um marcador para um local específico
-      var marker = new google.maps.Marker({
-        position: {lat: -23.550520, lng: -46.633308},
-        map: map,
-        title: 'São Paulo'
-      });
-
-      // Função para calcular o tempo de permanência em um local
-      var startTime = new Date(); // Hora de chegada
-      var endTime = new Date(); // Hora de saída
-
-      function calcularTempoPermanencia() {
-        endTime = new Date();
-        var timeDiff = endTime - startTime; // Diferença em milissegundos
-        var seconds = Math.floor(timeDiff / 1000); // Diferença em segundos
-        var minutes = Math.floor(seconds / 60); // Diferença em minutos
-
-        console.log('Tempo de permanência: ' + minutes + ' minutos');
+      function searchPlace() {
+        var query = searchInput.value;
+        if (query.trim() !== '') {
+          var request = OpenLayers.Request.GET({
+            url: 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query),
+            callback: function (response) {
+              var data = JSON.parse(response.responseText);
+              if (data && data.length > 0) {
+                var result = data[0];
+                var lon = parseFloat(result.lon);
+                var lat = parseFloat(result.lat);
+                var point = new OpenLayers.LonLat(lon, lat).transform(
+                  new OpenLayers.Projection("EPSG:4326"),
+                  map.getProjectionObject()
+                );
+                map.setCenter(point, 15);
+                addMarker(lon, lat);
+              }
+            }
+          });
+        }
       }
 
-      // Exemplo de envio de dados a cada 1 hora
-      setInterval(function() {
-        // Lógica para enviar os dados a cada 1 hora
-        console.log('Dados enviados');
-      }, 3600000); // 1 hora = 3.600.000 milissegundos
-
-      // Exemplo de integração com dispositivo externo
-      function enviarParaDispositivoExterno(dados) {
-        // Lógica para enviar dados para o dispositivo externo
-        console.log('Dados enviados para dispositivo externo');
+      // Adicione a funcionalidade de marcação de pontos
+      function addMarker(lon, lat) {
+        var markers = new OpenLayers.Layer.Markers("Markers");
+        map.addLayer(markers);
+        var marker = new OpenLayers.Marker(
+          new OpenLayers.LonLat(lon, lat).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            map.getProjectionObject()
+          )
+        );
+        markers.addMarker(marker);
       }
-
-      var dados = {
-        local: 'São Paulo',
-        latitude: -23.550520,
-        longitude: -46.633308
-      };
-
-      enviarParaDispositivoExterno(dados);
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  <script>
+    initMap();
+  </script>
 </body>
 </html>

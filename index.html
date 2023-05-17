@@ -10,70 +10,89 @@
   </style>
 </head>
 <body>
-  <input type="text" id="search-input" placeholder="Digite um local">
   <div id="map"></div>
 
-  <script src="https://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
+    let map;
+    let directionsService;
+    let directionsRenderer;
+    let startTime;
+    let endTime;
+
     function initMap() {
       // Inicialize o mapa
-      var map = new OpenLayers.Map("map");
-      map.addLayer(new OpenLayers.Layer.OSM());
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: -23.550520, lng: -46.633308 },
+        zoom: 12
+      });
 
-      // Defina a exibição inicial do mapa
-      var lonLat = new OpenLayers.LonLat(-9.123,38.633308).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        map.getProjectionObject()
-      );
-      map.setCenter(lonLat, 12);
+      // Inicialize o serviço de direções
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true
+      });
 
-      // Adicione a funcionalidade de pesquisa de lugares
-      var searchInput = document.getElementById('search-input');
-      searchInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-          searchPlace();
+      // Registrar o tempo de permanência em um local
+      google.maps.event.addListener(map, 'click', function (event) {
+        if (startTime && !endTime) {
+          endTime = new Date();
+          const duration = (endTime - startTime) / 1000; // duração em segundos
+          console.log(`Tempo de permanência: ${duration} segundos`);
+          enviarDados(duration);
+        } else {
+          startTime = new Date();
+          endTime = null;
         }
       });
 
-      function searchPlace() {
-        var query = searchInput.value;
-        if (query.trim() !== '') {
-          var request = OpenLayers.Request.GET({
-            url: 'https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(query),
-            callback: function (response) {
-              var data = JSON.parse(response.responseText);
-              if (data && data.length > 0) {
-                var result = data[0];
-                var lon = parseFloat(result.lon);
-                var lat = parseFloat(result.lat);
-                var point = new OpenLayers.LonLat(lon, lat).transform(
-                  new OpenLayers.Projection("EPSG:4326"),
-                  map.getProjectionObject()
-                );
-                map.setCenter(point, 15);
-                addMarker(lon, lat);
-              }
-            }
-          });
-        }
-      }
+      // Atualizar o percurso em tempo real
+      setInterval(updateRoute, 5000); // atualizar a cada 5 segundos
+    }
 
-      // Adicione a funcionalidade de marcação de pontos
-      function addMarker(lon, lat) {
-        var markers = new OpenLayers.Layer.Markers("Markers");
-        map.addLayer(markers);
-        var marker = new OpenLayers.Marker(
-          new OpenLayers.LonLat(lon, lat).transform(
-            new OpenLayers.Projection("EPSG:4326"),
-            map.getProjectionObject()
-          )
-        );
-        markers.addMarker(marker);
-      }
+    function updateRoute() {
+      const origin = new google.maps.LatLng(-23.550520, -46.633308);
+      const destination = new google.maps.LatLng(-23.564960, -46.658170);
+
+      const request = {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+
+      directionsService.route(request, function (response, status) {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
+        }
+      });
+    }
+
+    function enviarDados(duration) {
+      const dados = {
+        tempoPermanencia: duration,
+        local: 'São Paulo',
+        latitude: -23.550520,
+        longitude: -46.633308
+      };
+
+      // Lógica para enviar dados para um aparelho externo
+      // Exemplo de chamada de API
+      fetch('https://api.example.com/senddata', {
+        method: 'POST',
+        body: JSON.stringify(dados),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Dados enviados com sucesso:', data);
+      })
+      .catch(error => {
+        console.error('Erro ao enviar dados:', error);
+      });
     }
   </script>
-  <script>
-    initMap();
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
 </html>

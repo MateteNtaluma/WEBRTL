@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Meu Mapa</title>
+  <title>Meu Mapa - Portugal</title>
   <style>
     #map {
       height: 400px;
@@ -12,41 +12,41 @@
 <body>
   <div id="map"></div>
 
-  <script src="https://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
     let map;
-    let startPoint;
-    let lastPoint;
+    let directionsService;
+    let directionsRenderer;
     let startTime;
     let endTime;
+    let history = [];
 
     function initMap() {
       // Inicialize o mapa
-      map = new OpenLayers.Map("map");
-      map.addLayer(new OpenLayers.Layer.OSM());
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 39.3999, lng: -8.2245 },
+        zoom: 8
+      });
 
-      // Defina a exibição inicial do mapa
-      var lonLat = new OpenLayers.LonLat(-46.633308, -23.550520).transform(
-        new OpenLayers.Projection("EPSG:4326"),
-        map.getProjectionObject()
-      );
-      map.setCenter(lonLat, 12);
+      // Inicialize o serviço de direções
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+        suppressMarkers: true
+      });
 
       // Registrar o tempo de permanência em um local
-      map.events.register("click", map, function (e) {
-        if (!startTime) {
-          startTime = new Date();
-          startPoint = map.getLonLatFromPixel(e.xy);
-        } else {
+      google.maps.event.addListener(map, 'click', function (event) {
+        if (startTime && !endTime) {
           endTime = new Date();
-          lastPoint = map.getLonLatFromPixel(e.xy);
-
           const duration = (endTime - startTime) / 1000; // duração em segundos
           console.log(`Tempo de permanência: ${duration} segundos`);
-
-          enviarDados(duration);
-          startTime = null;
-          startPoint = null;
+          history.push({
+            location: event.latLng,
+            duration: duration
+          });
+        } else {
+          startTime = new Date();
+          endTime = null;
         }
       });
 
@@ -55,64 +55,40 @@
     }
 
     function updateRoute() {
-      if (startPoint && lastPoint) {
-        var style = {
-          strokeColor: "#0000ff",
-          strokeOpacity: 0.7,
-          strokeWidth: 5
-        };
+      const waypoints = [
+        { location: new google.maps.LatLng(38.7223, -9.1393) },
+        { location: new google.maps.LatLng(41.1496, -8.6110) },
+        { location: new google.maps.LatLng(37.0167, -7.9333) }
+      ];
 
-        var vectorLayer = new OpenLayers.Layer.Vector("Route");
-        var features = [];
-
-        var startPointTransformed = startPoint.transform(
-          map.getProjectionObject(),
-          new OpenLayers.Projection("EPSG:4326")
-        );
-        var lastPointTransformed = lastPoint.transform(
-          map.getProjectionObject(),
-          new OpenLayers.Projection("EPSG:4326")
-        );
-
-        var lineString = new OpenLayers.Geometry.LineString([
-          startPointTransformed,
-          lastPointTransformed
-        ]);
-
-        var lineFeature = new OpenLayers.Feature.Vector(lineString, null, style);
-        vectorLayer.addFeatures([lineFeature]);
-        map.addLayer(vectorLayer);
-      }
-    }
-
-    function enviarDados(duration) {
-      const dados = {
-        tempoPermanencia: duration,
-        local: 'São Paulo',
-        latitude: startPoint.lat,
-        longitude: startPoint.lon
+      const request = {
+        origin: waypoints[0].location,
+        destination: waypoints[waypoints.length - 1].location,
+        waypoints: waypoints.slice(1, -1),
+        travelMode: google.maps.TravelMode.DRIVING
       };
 
-      // Lógica para enviar dados para um aparelho externo
-      // Exemplo de chamada de API
-      fetch('https://api.example.com/senddata', {
-        method: 'POST',
-        body: JSON.stringify(dados),
-        headers: {
-          'Content-Type': 'application/json'
+      directionsService.route(request, function (response, status) {
+        if (status === 'OK') {
+          directionsRenderer.setDirections(response);
         }
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Dados enviados com sucesso:', data);
-      })
-      .catch(error => {
-        console.error('Erro ao enviar dados:', error);
+      });
+    }
+
+    function enviarDados() {
+      // Enviar dados para um aparelho externo
+      // Lógica de envio para o dispositivo externo
+      // ...
+    }
+
+    function exibirHistorico() {
+      console.log('Histórico:');
+      history.forEach(item => {
+        console.log(`Local: ${item.location}`);
+        console.log(`Duração: ${item.duration} segundos`);
       });
     }
   </script>
-  <script>
-    initMap();
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places" async defer></script>
 </body>
 </html>

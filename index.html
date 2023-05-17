@@ -12,37 +12,41 @@
 <body>
   <div id="map"></div>
 
+  <script src="https://www.openlayers.org/api/OpenLayers.js"></script>
   <script>
     let map;
-    let directionsService;
-    let directionsRenderer;
+    let startPoint;
+    let lastPoint;
     let startTime;
     let endTime;
 
     function initMap() {
       // Inicialize o mapa
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -23.550520, lng: -46.633308 },
-        zoom: 12
-      });
+      map = new OpenLayers.Map("map");
+      map.addLayer(new OpenLayers.Layer.OSM());
 
-      // Inicialize o serviço de direções
-      directionsService = new google.maps.DirectionsService();
-      directionsRenderer = new google.maps.DirectionsRenderer({
-        map: map,
-        suppressMarkers: true
-      });
+      // Defina a exibição inicial do mapa
+      var lonLat = new OpenLayers.LonLat(-46.633308, -23.550520).transform(
+        new OpenLayers.Projection("EPSG:4326"),
+        map.getProjectionObject()
+      );
+      map.setCenter(lonLat, 12);
 
       // Registrar o tempo de permanência em um local
-      google.maps.event.addListener(map, 'click', function (event) {
-        if (startTime && !endTime) {
+      map.events.register("click", map, function (e) {
+        if (!startTime) {
+          startTime = new Date();
+          startPoint = map.getLonLatFromPixel(e.xy);
+        } else {
           endTime = new Date();
+          lastPoint = map.getLonLatFromPixel(e.xy);
+
           const duration = (endTime - startTime) / 1000; // duração em segundos
           console.log(`Tempo de permanência: ${duration} segundos`);
+
           enviarDados(duration);
-        } else {
-          startTime = new Date();
-          endTime = null;
+          startTime = null;
+          startPoint = null;
         }
       });
 
@@ -51,28 +55,42 @@
     }
 
     function updateRoute() {
-      const origin = new google.maps.LatLng(-23.550520, -46.633308);
-      const destination = new google.maps.LatLng(-23.564960, -46.658170);
+      if (startPoint && lastPoint) {
+        var style = {
+          strokeColor: "#0000ff",
+          strokeOpacity: 0.7,
+          strokeWidth: 5
+        };
 
-      const request = {
-        origin: origin,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING
-      };
+        var vectorLayer = new OpenLayers.Layer.Vector("Route");
+        var features = [];
 
-      directionsService.route(request, function (response, status) {
-        if (status === 'OK') {
-          directionsRenderer.setDirections(response);
-        }
-      });
+        var startPointTransformed = startPoint.transform(
+          map.getProjectionObject(),
+          new OpenLayers.Projection("EPSG:4326")
+        );
+        var lastPointTransformed = lastPoint.transform(
+          map.getProjectionObject(),
+          new OpenLayers.Projection("EPSG:4326")
+        );
+
+        var lineString = new OpenLayers.Geometry.LineString([
+          startPointTransformed,
+          lastPointTransformed
+        ]);
+
+        var lineFeature = new OpenLayers.Feature.Vector(lineString, null, style);
+        vectorLayer.addFeatures([lineFeature]);
+        map.addLayer(vectorLayer);
+      }
     }
 
     function enviarDados(duration) {
       const dados = {
         tempoPermanencia: duration,
         local: 'São Paulo',
-        latitude: -23.550520,
-        longitude: -46.633308
+        latitude: startPoint.lat,
+        longitude: startPoint.lon
       };
 
       // Lógica para enviar dados para um aparelho externo
@@ -93,6 +111,8 @@
       });
     }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  <script>
+    initMap();
+  </script>
 </body>
 </html>

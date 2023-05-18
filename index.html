@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Meu Site de Localização</title>
-  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=places"></script>
+  <title>Meu Mapa</title>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
   <script>
     function initMap() {
       // Inicializar o mapa
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: {lat: -33.867, lng: 151.206}
+        center: {lat: -33.867, lng: 151.206},
+        zoom: 13
       });
 
       // Adicionar um marcador no mapa
@@ -22,35 +31,26 @@
       marker.addListener('click', function() {
         alert('Clicou no marcador!');
       });
+
+      // Adicionar uma barra de pesquisa
+      var searchInput = document.createElement('input');
+      searchInput.setAttribute('type', 'text');
+      searchInput.setAttribute('id', 'search-input');
+      searchInput.setAttribute('placeholder', 'Pesquisar destino');
+      document.body.appendChild(searchInput);
+
+      var searchButton = document.createElement('button');
+      searchButton.innerText = 'Pesquisar';
+      searchButton.addEventListener('click', function() {
+        var searchQuery = document.getElementById('search-input').value;
+
+        // Realizar uma pesquisa usando a API do Google Places
+        // e exibir os resultados no mapa
+        // ...
+      });
+      document.body.appendChild(searchButton);
     }
   </script>
-  <style>
-    #map {
-      height: 400px;
-      width: 100%;
-    }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-  <input type="text" id="search-input" placeholder="Pesquisar destino">
-  <button onclick="search()">Pesquisar</button>
-
-  <script>
-    function search() {
-      var searchInput = document.getElementById('search-input');
-      var searchQuery = searchInput.value;
-
-      // Realizar uma pesquisa usando a API do Google Places
-      // e exibir os resultados no mapa
-      // ...
-
-      // Salvar o destino pesquisado no banco de dados
-      // ...
-
-      // Enviar dados para um aparelho externo
-      // ...
-    }
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=initMap" async defer></script>
 </body>
 </html>

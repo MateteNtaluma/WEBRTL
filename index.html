@@ -1,89 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Google Maps Structure Example</title>
+  <title>Waze-like Website with Mapbox</title>
   <style>
     #map {
       height: 400px;
       width: 100%;
     }
-
-    #search-box {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 1;
-      background-color: #fff;
-      padding: 10px;
-    }
   </style>
 </head>
 <body>
-  <div id="search-box">
-    <input type="text" id="location-input" placeholder="Pesquisar um local">
-    <button onclick="searchLocation()">Pesquisar</button>
-  </div>
   <div id="map"></div>
 
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+
   <script>
-    // Inicializar o mapa
-    function initMap() {
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
-      });
+    mapboxgl.accessToken = 'YOUR_ACCESS_TOKEN';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-122.4194, 37.7749],
+      zoom: 13
+    });
 
-      // Adicionar barra de pesquisa
-      var input = document.getElementById('location-input');
-      var searchBox = new google.maps.places.SearchBox(input);
-      map.controls[google.maps.ControlPosition.TOP_LEFT].push(document.getElementById('search-box'));
+    var directions = new MapboxDirections({
+      accessToken: mapboxgl.accessToken,
+      unit: 'metric',
+      profile: 'mapbox/driving-traffic',
+      alternatives: true,
+      congestion: true,
+      controls: { instructions: false }
+    });
+    map.addControl(directions, 'top-left');
 
-      // Adicionar controle de zoom
-      var zoomControlDiv = document.createElement('div');
-      var zoomControl = new ZoomControl(zoomControlDiv, map);
-      map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
-    }
-
-    // Classe personalizada para controle de zoom
-    function ZoomControl(controlDiv, map) {
-      var controlUI = document.createElement('div');
-      controlUI.style.backgroundColor = '#fff';
-      controlUI.style.border = '1px solid #ccc';
-      controlUI.style.padding = '5px';
-      controlUI.style.textAlign = 'center';
-      controlUI.style.cursor = 'pointer';
-      controlUI.title = 'Clique para ampliar';
-      controlDiv.appendChild(controlUI);
-
-      var controlText = document.createElement('div');
-      controlText.style.fontFamily = 'Arial,sans-serif';
-      controlText.style.fontSize = '12px';
-      controlText.style.paddingLeft = '4px';
-      controlText.style.paddingRight = '4px';
-      controlText.innerHTML = 'Zoom';
-      controlUI.appendChild(controlText);
-
-      controlUI.addEventListener('click', function() {
-        map.setZoom(map.getZoom() + 1);
-      });
-    }
-
-    // Função para buscar a localização
-    function searchLocation() {
-      var input = document.getElementById('location-input');
-      var location = input.value;
-
-      // Fazer algo com a localização pesquisada, como geocodificação ou exibição de um marcador
-      // Exemplo:
-      // var geocoder = new google.maps.Geocoder();
-      // geocoder.geocode({ address: location }, function(results, status) {
-      //   if (status === google.maps.GeocoderStatus.OK) {
-      //     var position = results[0].geometry.location;
-      //     // Fazer algo com a posição encontrada, como exibir um marcador no mapa
-      //   }
-      // });
-    }
+    // Event listener para receber informações de rotas
+    directions.on('route', function(event) {
+      var route = event.route[0];
+      // Fazer algo com as informações da rota, como mostrar tempo estimado de chegada, distância, etc.
+    });
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_DE_API&libraries=places&callback=initMap" async defer></script>
 </body>
 </html>

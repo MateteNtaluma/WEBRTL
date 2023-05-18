@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>OpenStreetMaps Website</title>
+  <title>Waze-like Website</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
@@ -22,15 +22,8 @@
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
-    var results = L.layerGroup().addTo(map);
-
-    searchControl.on('results', function(data) {
-      results.clearLayers();
-      for (var i = data.results.length - 1; i >= 0; i--) {
-        results.addLayer(L.marker(data.results[i].latlng));
-      }
-    });
+    // Adicione aqui a aparência e funcionalidades semelhantes ao Waze
+    // Isso incluiria elementos visuais como botões, barras de pesquisa, painéis laterais, etc.
 
     // Enviar informações para dispositivo externo
     function enviarInformacoes(lat, lng) {

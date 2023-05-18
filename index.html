@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Meu Mapa - Portugal</title>
+  <title>Google Maps API</title>
   <style>
     #map {
       height: 400px;
@@ -10,85 +10,43 @@
   </style>
 </head>
 <body>
+  <h1>Google Maps Example</h1>
   <div id="map"></div>
 
   <script>
-    let map;
-    let directionsService;
-    let directionsRenderer;
-    let startTime;
-    let endTime;
-    let history = [];
-
+    // Função de callback para ser chamada quando o script do Google Maps estiver carregado
     function initMap() {
-      // Inicialize o mapa
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 39.3999, lng: -8.2245 },
-        zoom: 8
+      // Coordenadas do local de partida e destino
+      var origin = {lat: 37.7749, lng: -122.4194}; // San Francisco
+      var destination = {lat: 34.0522, lng: -118.2437}; // Los Angeles
+
+      // Criação do mapa
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: origin,
+        zoom: 7
       });
 
-      // Inicialize o serviço de direções
-      directionsService = new google.maps.DirectionsService();
-      directionsRenderer = new google.maps.DirectionsRenderer({
-        map: map,
-        suppressMarkers: true
-      });
+      // Criação do serviço de Directions
+      var directionsService = new google.maps.DirectionsService();
 
-      // Registrar o tempo de permanência em um local
-      google.maps.event.addListener(map, 'click', function (event) {
-        if (startTime && !endTime) {
-          endTime = new Date();
-          const duration = (endTime - startTime) / 1000; // duração em segundos
-          console.log(`Tempo de permanência: ${duration} segundos`);
-          history.push({
-            location: event.latLng,
-            duration: duration
-          });
-        } else {
-          startTime = new Date();
-          endTime = null;
-        }
-      });
-
-      // Atualizar o percurso em tempo real
-      setInterval(updateRoute, 5000); // atualizar a cada 5 segundos
-    }
-
-    function updateRoute() {
-      const waypoints = [
-        { location: new google.maps.LatLng(38.7223, -9.1393) },
-        { location: new google.maps.LatLng(41.1496, -8.6110) },
-        { location: new google.maps.LatLng(37.0167, -7.9333) }
-      ];
-
-      const request = {
-        origin: waypoints[0].location,
-        destination: waypoints[waypoints.length - 1].location,
-        waypoints: waypoints.slice(1, -1),
+      // Solicitação de rota
+      var request = {
+        origin: origin,
+        destination: destination,
         travelMode: google.maps.TravelMode.DRIVING
       };
 
-      directionsService.route(request, function (response, status) {
-        if (status === 'OK') {
-          directionsRenderer.setDirections(response);
+      // Cálculo do percurso
+      directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          // Exibir o percurso no mapa
+          var directionsDisplay = new google.maps.DirectionsRenderer();
+          directionsDisplay.setMap(map);
+          directionsDisplay.setDirections(result);
         }
       });
     }
-
-    function enviarDados() {
-      // Enviar dados para um aparelho externo
-      // Lógica de envio para o dispositivo externo
-      // ...
-    }
-
-    function exibirHistorico() {
-      console.log('Histórico:');
-      history.forEach(item => {
-        console.log(`Local: ${item.location}`);
-        console.log(`Duração: ${item.duration} segundos`);
-      });
-    }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap&libraries=places" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_DE_API&callback=initMap" async defer></script>
 </body>
 </html>

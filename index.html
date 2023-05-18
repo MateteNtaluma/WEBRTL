@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Waze-like Website with Mapbox</title>
+  <title>OpenStreetMaps Website</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <style>
     #map {
       height: 400px;
-      width: 100%;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
 
-  <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
-
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script>
-    mapboxgl.accessToken = 'YOUR_ACCESS_TOKEN';
-    var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [-122.4194, 37.7749],
-      zoom: 13
+    var map = L.map('map').setView([37.7749, -122.4194], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+    var results = L.layerGroup().addTo(map);
+
+    searchControl.on('results', function(data) {
+      results.clearLayers();
+      for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+      }
     });
 
-    var directions = new MapboxDirections({
-      accessToken: mapboxgl.accessToken,
-      unit: 'metric',
-      profile: 'mapbox/driving-traffic',
-      alternatives: true,
-      congestion: true,
-      controls: { instructions: false }
-    });
-    map.addControl(directions, 'top-left');
+    // Enviar informações para dispositivo externo
+    function enviarInformacoes(lat, lng) {
+      // Implemente o código para enviar informações para o dispositivo externo aqui
+    }
 
-    // Event listener para receber informações de rotas
-    directions.on('route', function(event) {
-      var route = event.route[0];
-      // Fazer algo com as informações da rota, como mostrar tempo estimado de chegada, distância, etc.
-    });
+    // Atualizar percurso em tempo real
+    function atualizarPercurso() {
+      // Implemente o código para atualizar o percurso em tempo real aqui
+    }
+
+    // Guardar os dados
+    function guardarDados() {
+      // Implemente o código para guardar os dados aqui
+    }
   </script>
 </body>
 </html>

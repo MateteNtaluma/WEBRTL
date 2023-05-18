@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Waze-like Website</title>
+  <title>REAl TIME LOCATION</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -13,86 +13,94 @@
 <body>
   <div id="map"></div>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+
   <script>
-    var map;
-    var directionsService;
-    var directionsRenderer;
+    var map = L.map('map').setView([0, 0], 13);
 
-    function initMap() {
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 39.3999, lng: -8.2245},
-        zoom: 8
-      });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
 
-      directionsService = new google.maps.DirectionsService();
-      directionsRenderer = new google.maps.DirectionsRenderer({
-        map: map
-      });
-
-      var input = document.getElementById('search-input');
-      var searchBox = new google.maps.places.SearchBox(input);
-
-      map.addListener('bounds_changed', function() {
-        searchBox.setBounds(map.getBounds());
-      });
-
-      searchBox.addListener('places_changed', function() {
-        var places = searchBox.getPlaces();
-
-        if (places.length === 0) {
-          return;
-        }
-
-        var bounds = new google.maps.LatLngBounds();
-        places.forEach(function(place) {
-          if (!place.geometry || !place.geometry.location) {
-            return;
-          }
-
-          if (place.geometry.viewport) {
-            bounds.union(place.geometry.viewport);
-          } else {
-            bounds.extend(place.geometry.location);
-          }
-        });
-
-        map.fitBounds(bounds);
-      });
+    // Obter localização do usuário
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
     }
 
-    function calculateRoute() {
-      var origin = document.getElementById('origin-input').value;
-      var destination = document.getElementById('destination-input').value;
+    function showPosition(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
 
-      var request = {
-        origin: origin,
-        destination: destination,
-        travelMode: google.maps.TravelMode.DRIVING
+      // Atualizar a posição do mapa para a localização do usuário
+      map.setView([lat, lng], 13);
+
+      // Adicione um marcador para a localização do usuário
+      L.marker([lat, lng]).addTo(map).bindPopup('You are here!');
+    }
+
+    // Traçar um percurso em tempo real
+    function traceRoute() {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(updatePosition);
+      } else {
+        console.log('Geolocation is not supported by this browser.');
+      }
+    }
+
+    function updatePosition(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+
+      // Atualizar a posição do mapa em tempo real
+      map.setView([lat, lng], 13);
+
+      // Atualizar ou adicionar marcador em tempo real
+      var marker = L.marker([lat, lng]).addTo(map);
+      marker.bindPopup('You are here!').openPopup();
+
+      // Implemente o código para enviar as informações de localização para um dispositivo externo aqui
+      enviarInformacoes(lat, lng);
+    }
+
+    // Barra de pesquisa
+    function search() {
+      var input = document.getElementById('search-input').value;
+
+      // Implemente o código para pesquisar o local desejado e exibir o resultado no mapa aqui
+      // Por exemplo, você pode usar uma API de geocodificação para converter o texto da pesquisa em coordenadas geográficas e exibir um marcador no mapa.
+    }
+
+    // Guardar dados localmente
+    function guardarDados() {
+      var data = {
+        location: map.getCenter(),
+        zoom: map.getZoom()
       };
 
-      directionsService.route(request, function(result, status) {
-        if (status === google.maps.DirectionsStatus.OK) {
-          directionsRenderer.setDirections(result);
-        }
-      });
+      // Implemente o código para guardar os dados localmente aqui
+      // Você pode usar o LocalStorage ou IndexedDB para armazenar os dados.
     }
 
     // Enviar informações para dispositivo externo
     function enviarInformacoes(lat, lng) {
       // Implemente o código para enviar informações para o dispositivo externo aqui
     }
-
-    // Visualização de percurso em tempo real
-    function atualizarPercurso() {
-      // Implemente o código para atualizar o percurso em tempo real aqui
-    }
-
-    // Armazenamento de dados
-    function guardarDados() {
-      // Implemente o código para armazenar os dados aqui
-    }
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+
+  <div>
+    <input type="text" id="search-input" placeholder="Search">
+    <button onclick="search()">Search</button>
+  </div>
+
+  <div>
+    <button onclick="getLocation()">Get Location</button>
+    <button onclick="traceRoute()">Trace Route</button>
+    <button onclick="guardarDados()">Save Data</button>
+  </div>
 </body>
 </html>

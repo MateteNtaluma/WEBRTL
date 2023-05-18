@@ -1,106 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>REAl TIME LOCATION</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Site de Localização</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&libraries=places"></script>
+  <script>
+    function initMap() {
+      // Inicializar o mapa
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: {lat: -33.867, lng: 151.206}
+      });
+
+      // Adicionar um marcador no mapa
+      var marker = new google.maps.Marker({
+        position: {lat: -33.867, lng: 151.206},
+        map: map,
+        title: 'Meu Local'
+      });
+
+      // Adicionar um evento de clique no marcador
+      marker.addListener('click', function() {
+        alert('Clicou no marcador!');
+      });
+    }
+  </script>
   <style>
     #map {
       height: 400px;
+      width: 100%;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+  <input type="text" id="search-input" placeholder="Pesquisar destino">
+  <button onclick="search()">Pesquisar</button>
 
   <script>
-    var map = L.map('map').setView([0, 0], 13);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Obter localização do usuário
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
-    }
-
-    function showPosition(position) {
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
-
-      // Atualizar a posição do mapa para a localização do usuário
-      map.setView([lat, lng], 13);
-
-      // Adicione um marcador para a localização do usuário
-      L.marker([lat, lng]).addTo(map).bindPopup('You are here!');
-    }
-
-    // Traçar um percurso em tempo real
-    function traceRoute() {
-      if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(updatePosition);
-      } else {
-        console.log('Geolocation is not supported by this browser.');
-      }
-    }
-
-    function updatePosition(position) {
-      var lat = position.coords.latitude;
-      var lng = position.coords.longitude;
-
-      // Atualizar a posição do mapa em tempo real
-      map.setView([lat, lng], 13);
-
-      // Atualizar ou adicionar marcador em tempo real
-      var marker = L.marker([lat, lng]).addTo(map);
-      marker.bindPopup('You are here!').openPopup();
-
-      // Implemente o código para enviar as informações de localização para um dispositivo externo aqui
-      enviarInformacoes(lat, lng);
-    }
-
-    // Barra de pesquisa
     function search() {
-      var input = document.getElementById('search-input').value;
+      var searchInput = document.getElementById('search-input');
+      var searchQuery = searchInput.value;
 
-      // Implemente o código para pesquisar o local desejado e exibir o resultado no mapa aqui
-      // Por exemplo, você pode usar uma API de geocodificação para converter o texto da pesquisa em coordenadas geográficas e exibir um marcador no mapa.
-    }
+      // Realizar uma pesquisa usando a API do Google Places
+      // e exibir os resultados no mapa
+      // ...
 
-    // Guardar dados localmente
-    function guardarDados() {
-      var data = {
-        location: map.getCenter(),
-        zoom: map.getZoom()
-      };
+      // Salvar o destino pesquisado no banco de dados
+      // ...
 
-      // Implemente o código para guardar os dados localmente aqui
-      // Você pode usar o LocalStorage ou IndexedDB para armazenar os dados.
-    }
-
-    // Enviar informações para dispositivo externo
-    function enviarInformacoes(lat, lng) {
-      // Implemente o código para enviar informações para o dispositivo externo aqui
+      // Enviar dados para um aparelho externo
+      // ...
     }
   </script>
-
-  <div>
-    <input type="text" id="search-input" placeholder="Search">
-    <button onclick="search()">Search</button>
-  </div>
-
-  <div>
-    <button onclick="getLocation()">Get Location</button>
-    <button onclick="traceRoute()">Trace Route</button>
-    <button onclick="guardarDados()">Save Data</button>
-  </div>
 </body>
 </html>

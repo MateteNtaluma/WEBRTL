@@ -2,9 +2,8 @@
 <html>
 <head>
   <title>Waze-like Website</title>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
   <style>
     #map {
       height: 400px;
@@ -14,31 +13,86 @@
 <body>
   <div id="map"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
   <script>
-    var map = L.map('map').setView([39.3999, -8.2245], 8);
+    var map;
+    var directionsService;
+    var directionsRenderer;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 39.3999, lng: -8.2245},
+        zoom: 8
+      });
 
-    // Adicione aqui a aparência e funcionalidades semelhantes ao Waze
-    // Isso incluiria elementos visuais como botões, barras de pesquisa, painéis laterais, etc.
+      directionsService = new google.maps.DirectionsService();
+      directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map
+      });
+
+      var input = document.getElementById('search-input');
+      var searchBox = new google.maps.places.SearchBox(input);
+
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length === 0) {
+          return;
+        }
+
+        var bounds = new google.maps.LatLngBounds();
+        places.forEach(function(place) {
+          if (!place.geometry || !place.geometry.location) {
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+
+        map.fitBounds(bounds);
+      });
+    }
+
+    function calculateRoute() {
+      var origin = document.getElementById('origin-input').value;
+      var destination = document.getElementById('destination-input').value;
+
+      var request = {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+
+      directionsService.route(request, function(result, status) {
+        if (status === google.maps.DirectionsStatus.OK) {
+          directionsRenderer.setDirections(result);
+        }
+      });
+    }
 
     // Enviar informações para dispositivo externo
     function enviarInformacoes(lat, lng) {
       // Implemente o código para enviar informações para o dispositivo externo aqui
     }
 
-    // Atualizar percurso em tempo real
+    // Visualização de percurso em tempo real
     function atualizarPercurso() {
       // Implemente o código para atualizar o percurso em tempo real aqui
     }
 
-    // Guardar os dados
+    // Armazenamento de dados
     function guardarDados() {
-      // Implemente o código para guardar os dados aqui
+      // Implemente o código para armazenar os dados aqui
     }
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
 </html>

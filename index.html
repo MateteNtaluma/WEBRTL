@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
 <html>
 <head>
-  <title>Meu Mapa</title>
+  <title>Google Maps API</title>
   <style>
     #map {
       height: 400px;
@@ -10,25 +10,82 @@
   </style>
 </head>
 <body>
+  <h1>Google Maps API Example</h1>
+  
   <div id="map"></div>
-
+  
   <script>
+    // Inicializa o mapa
     function initMap() {
-      // Inicializar o mapa
+      // Define as coordenadas do centro do mapa
+      var center = { lat: -23.5505, lng: -46.6333 };
+      
+      // Cria o mapa
       var map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -33.867, lng: 151.206},
-        zoom: 13
+        zoom: 12,
+        center: center
       });
-
-      // Adicionar um marcador no mapa
+      
+      // Adicione marcador no mapa
       var marker = new google.maps.Marker({
-        position: {lat: -33.867, lng: 151.206},
+        position: center,
         map: map,
-        title: 'Meu Local'
+        title: 'Localização atual'
       });
+      
+      // Enviar informações para um aparelho externo (exemplo)
+      function sendToExternalDevice(location) {
+        // Lógica para enviar informações para o aparelho externo
+        console.log('Enviando informações para o aparelho externo:', location);
+      }
+      
+      // Obter localização em tempo real
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            
+            // Atualiza a posição do marcador no mapa
+            marker.setPosition(location);
+            
+            // Envie as informações para o aparelho externo
+            sendToExternalDevice(location);
+          });
+        } else {
+          alert('Seu navegador não suporta geolocalização.');
+        }
+      }
+      
+      // Atualizar a localização em intervalos de tempo
+      setInterval(getCurrentLocation, 5000); // Atualiza a cada 5 segundos
+      
+      // Mostrar notificação (exemplo)
+      function showNotification() {
+        // Lógica para mostrar notificação
+        console.log('Exibindo notificação.');
+      }
+      
+      // Mostrar notificação quando o usuário permanecer em um local por um tempo específico
+      function checkTimeAtLocation() {
+        // Lógica para verificar o tempo gasto em um local e mostrar notificação se necessário
+        console.log('Verificando tempo gasto no local.');
+      }
+      
+      // Verificar tempo gasto em intervalos de tempo
+      setInterval(checkTimeAtLocation, 60000); // Verifica a cada 1 minuto
+    }
+  </script>
+  
+  <!-- Inclui a biblioteca do Google Maps API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=initMap">
+  </script>
+</body>
+</html>
 
-      // Adicionar um evento de clique no marcador
-      marker.addListener('click', function() {
         alert('Clicou no marcador!');
       });
 

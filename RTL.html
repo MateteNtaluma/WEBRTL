@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GPS e Percursos em Tempo Real</title>
+  <title>RTL</title>
   <style>
     body {
       margin: 0;
@@ -31,6 +31,7 @@
 
     #sidebar li {
       margin-bottom: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -41,11 +42,8 @@
 
   <div id="sidebar">
     <h2>Informações</h2>
-    <ul>
-      <li>Recentes</li>
-      <li>Guardados</li>
-      <li>Partilha de Localização</li>
-      <li>Os Meus Dados no RTL</li>
+    <ul id="info-list">
+      <!-- Os itens serão adicionados dinamicamente via JavaScript -->
     </ul>
   </div>
 
@@ -62,6 +60,15 @@
       // Implemente a funcionalidade de registro de usuário
 
       // Outras lógicas e funções necessárias
+
+      // Adicione eventos de clique nos itens da lista de informações
+      var infoList = document.getElementById('info-list');
+      var items = infoList.getElementsByTagName('li');
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function() {
+          // Implemente a lógica para cada item da lista ser clicável
+        });
+      }
     }
   </script>
 

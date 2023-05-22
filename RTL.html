@@ -1,78 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RTL</title>
+  <title>GPS em Tempo Real</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-
-    #map-container {
-      flex: 1;
-    }
-
     #map {
-      height: 100vh;
+      height: 400px;
       width: 100%;
-    }
-
-    #sidebar {
-      flex: 0 0 300px;
-      background-color: #f0f0f0;
-      padding: 20px;
-    }
-
-    #sidebar ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    #sidebar li {
-      margin-bottom: 10px;
-      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div id="map-container">
-    <div id="map"></div>
-  </div>
+  <h1>GPS em Tempo Real</h1>
 
-  <div id="sidebar">
-    <h2>Informações</h2>
-    <ul id="info-list">
-      <!-- Os itens serão adicionados dinamicamente via JavaScript -->
-    </ul>
-  </div>
+  <div id="map"></div>
 
   <script>
-    function initMap() {
-      // Inicialize o mapa e configure as opções de exibição
+    // Carregar a API Maps JavaScript
+    function loadMap() {
+      // Configurar o mapa centralizado em Portugal
+      var center = { lat: 39.3999, lng: -8.2245 };
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center
+      });
 
-      // Crie o mapa e atribua-o ao elemento com ID 'map'
+      // Exibir marcadores personalizados para as atrações mais procuradas em Portugal
+      var attractions = [
+        { name: 'Atração 1', lat: 38.7223, lng: -9.1393 },
+        { name: 'Atração 2', lat: 41.1496, lng: -8.6110 },
+        { name: 'Atração 3', lat: 37.0194, lng: -7.9305 },
+      ];
 
-      // Adicione marcadores, polylines, etc. conforme necessário
-
-      // Atualize a localização em tempo real e mostre o percurso para o outro usuário
-
-      // Implemente a funcionalidade de registro de usuário
-
-      // Outras lógicas e funções necessárias
-
-      // Adicione eventos de clique nos itens da lista de informações
-      var infoList = document.getElementById('info-list');
-      var items = infoList.getElementsByTagName('li');
-      for (var i = 0; i < items.length; i++) {
-        items[i].addEventListener('click', function() {
-          // Implemente a lógica para cada item da lista ser clicável
+      attractions.forEach(function(attraction) {
+        var marker = new google.maps.Marker({
+          position: { lat: attraction.lat, lng: attraction.lng },
+          map: map,
+          title: attraction.name
         });
-      }
-    }
-  </script>
 
-  <!-- Inclua a biblioteca do Google Maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=initMap" async defer></script>
+        // Permitir interação com o usuário
+        marker.addListener('click', function() {
+          // Atualizar e criar um círculo no mapa
+          var circle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: marker.getPosition(),
+            radius: 10000
+          });
+        });
+      });
+
+      // Implementar GPS em tempo real
+      // Conectar ao Arduino e enviar dados para dispositivo externo (telefones ou computadores)
+
+    }
+
+    // Carregar a API Maps JavaScript
+    function loadMapsAPI() {
+      var script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=loadMap';
+      script.defer = true;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+
+    // Iniciar o carregamento da API Maps JavaScript
+    loadMapsAPI();
+  </script>
 </body>
 </html>

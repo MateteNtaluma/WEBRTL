@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Divisão de Página com Mapa e Tabela</title>
+  <title>GPS e Percurso em Tempo Real</title>
   <style>
     body {
       margin: 0;
@@ -20,9 +20,9 @@
       height: 100%;
     }
 
-    #table-container {
+    #sidebar {
       flex: 1;
-      background-color: blue;
+      background-color: green;
       color: white;
       padding: 20px;
       box-sizing: border-box;
@@ -33,14 +33,14 @@
       padding: 5px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
     }
 
-    th, td {
-      padding: 10px;
-      border: 1px solid white;
+    li {
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -49,34 +49,20 @@
     <div id="map"></div>
   </div>
 
-  <div id="table-container">
+  <div id="sidebar">
     <h2>Funções e Informações</h2>
 
-    <input type="text" id="search-input" placeholder="Pesquisar destino">
-    <button id="search-button">Pesquisar</button>
+    <input type="text" id="search-input" placeholder="Pesquisar">
 
-    <table>
-      <tr>
-        <th>Função</th>
-        <th>Descrição</th>
-      </tr>
-      <tr>
-        <td>GPS</td>
-        <td>Obter a localização atual</td>
-      </tr>
-      <tr>
-        <td>Percurso em Tempo Real</td>
-        <td>Visualizar o percurso em tempo real no mapa</td>
-      </tr>
-      <tr>
-        <td>Guardar Dados</td>
-        <td>Armazenar dados para referência futura</td>
-      </tr>
-      <tr>
-        <td>Enviar para Dispositivo Externo</td>
-        <td>Enviar informações para um dispositivo externo</td>
-      </tr>
-    </table>
+    <ul>
+      <li><a href="#">Mostrar barra lateral</a></li>
+      <li><a href="#">Guardados</a></li>
+      <li><a href="#">Recentes</a></li>
+      <li><a href="#">Partilha de localização</a></li>
+      <li><a href="#">Localização em tempo real</a></li>
+      <li><a href="#">Enviar informação para aparelho externo</a></li>
+      <li><a href="#">Os seus dados no Maps</a></li>
+    </ul>
   </div>
 
   <script>
@@ -93,36 +79,35 @@
 
       // Adicione marcadores, polylines, etc. ao mapa conforme necessário
 
-      // Barra de Pesquisa
-      var searchInput = document.getElementById('search-input');
-      var searchButton = document.getElementById('search-button');
+      // Atualizar a localização em tempo real
+      function updateCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
 
-      searchButton.addEventListener('click', function() {
-        var address = searchInput.value;
+            // Centralize o mapa na localização atual
+            map.setCenter(location);
 
-        // Use a API de Geocodificação do Google para obter as coordenadas do endereço pesquisado
-        var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ address: address }, function(results, status) {
-          if (status === 'OK') {
-            if (results[0]) {
-              var location = results[0].geometry.location;
+            // Adicione um marcador para a localização atual
+            new google.maps.Marker({
+              position: location,
+              map: map,
+              title: 'Localização atual'
+            });
 
-              // Centralize o mapa nas coordenadas do endereço pesquisado
-              map.setCenter(location);
+            // Atualize a posição em intervalos de tempo
+            setTimeout(updateCurrentLocation, 5000); // Atualiza a cada 5 segundos
+          });
+        } else {
+          alert('Seu navegador não suporta geolocalização.');
+        }
+      }
 
-              // Adicione um marcador no mapa para o endereço pesquisado
-              new google.maps.Marker({
-                position: location,
-                map: map,
-              });
-            } else {
-              alert('Endereço não encontrado.');
-            }
-          } else {
-            alert('Ocorreu um erro na pesquisa. Tente novamente mais tarde.');
-          }
-        });
-      });
+      // Chame a função para atualizar a localização
+      updateCurrentLocation();
     }
   </script>
 

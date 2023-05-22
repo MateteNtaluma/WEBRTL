@@ -1,68 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GPS em Tempo Real</title>
+  <title>Site com Maps e Barra Dinâmica</title>
   <style>
     #map {
       height: 400px;
       width: 100%;
     }
+    
+    .sidebar {
+      width: 200px;
+      height: 100%;
+      background-color: #f2f2f2;
+      float: left;
+      padding: 10px;
+    }
+    
+    .function-button {
+      display: block;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>GPS em Tempo Real</h1>
+  <h1>Site com Maps e Barra Dinâmica</h1>
 
   <div id="map"></div>
 
+  <div class="sidebar">
+    <h2>Funções</h2>
+    <button class="function-button" onclick="showMarkers()">Mostrar Marcadores</button>
+    <button class="function-button" onclick="hideMarkers()">Esconder Marcadores</button>
+    <button class="function-button" onclick="zoomIn()">Zoom In</button>
+    <button class="function-button" onclick="zoomOut()">Zoom Out</button>
+  </div>
+
   <script>
-    // Carregar a API Maps JavaScript
-    function loadMap() {
-      // Configurar o mapa centralizado em Portugal
-      var center = { lat: 39.3999, lng: -8.2245 };
+    // Inicializar o mapa
+    function initMap() {
+      // Configurar as coordenadas do centro do mapa
+      var center = { lat: -23.5505, lng: -46.6333 };
+
+      // Criar o mapa
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
+        zoom: 12,
         center: center
       });
 
-      // Exibir marcadores personalizados para as atrações mais procuradas em Portugal
-      var attractions = [
-        { name: 'Atração 1', lat: 38.7223, lng: -9.1393 },
-        { name: 'Atração 2', lat: 41.1496, lng: -8.6110 },
-        { name: 'Atração 3', lat: 37.0194, lng: -7.9305 },
+      // Adicionar marcadores no mapa
+      var markers = [
+        { lat: -23.5505, lng: -46.6333, title: 'São Paulo' },
+        { lat: -22.9068, lng: -43.1729, title: 'Rio de Janeiro' },
+        { lat: -30.0346, lng: -51.2177, title: 'Porto Alegre' }
       ];
 
-      attractions.forEach(function(attraction) {
+      markers.forEach(function(markerInfo) {
         var marker = new google.maps.Marker({
-          position: { lat: attraction.lat, lng: attraction.lng },
+          position: { lat: markerInfo.lat, lng: markerInfo.lng },
           map: map,
-          title: attraction.name
-        });
-
-        // Permitir interação com o usuário
-        marker.addListener('click', function() {
-          // Atualizar e criar um círculo no mapa
-          var circle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: marker.getPosition(),
-            radius: 10000
-          });
+          title: markerInfo.title
         });
       });
+    }
 
-      // Implementar GPS em tempo real
-      // Conectar ao Arduino e enviar dados para dispositivo externo (telefones ou computadores)
+    // Função para mostrar os marcadores
+    function showMarkers() {
+      // Código para mostrar os marcadores no mapa
+      console.log('Mostrar marcadores');
+    }
 
+    // Função para esconder os marcadores
+    function hideMarkers() {
+      // Código para esconder os marcadores no mapa
+      console.log('Esconder marcadores');
+    }
+
+    // Função para dar zoom in no mapa
+    function zoomIn() {
+      // Código para dar zoom in no mapa
+      console.log('Zoom In');
+    }
+
+    // Função para dar zoom out no mapa
+    function zoomOut() {
+      // Código para dar zoom out no mapa
+      console.log('Zoom Out');
     }
 
     // Carregar a API Maps JavaScript
     function loadMapsAPI() {
       var script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=loadMap';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_API&callback=initMap';
       script.defer = true;
       script.async = true;
       document.head.appendChild(script);

@@ -1,68 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Exemplo de Mapa com Divisão em Tabela</title>
+  <title>Exemplo de Mapa com Google Maps API</title>
   <style>
-    #map-container {
-      display: flex;
-      height: 100vh;
-    }
-    
     #map {
-      flex: 1;
-      height: 100%;
-    }
-    
-    #table-container {
-      flex: 1;
-      padding: 20px;
-    }
-    
-    table {
+      height: 400px;
       width: 100%;
-      border-collapse: collapse;
-    }
-    
-    th, td {
-      padding: 10px;
-      border: 1px solid black;
     }
   </style>
 </head>
 <body>
-  <div id="map-container">
-    <div id="map"></div>
-  </div>
+  <h1>Exemplo de Mapa com Google Maps API</h1>
   
-  <div id="table-container">
-    <h2>Funções e Informações</h2>
-    
-    <table>
-      <tr>
-        <th>Função</th>
-        <th>Descrição</th>
-      </tr>
-      <tr>
-        <td>Barra de Pesquisa</td>
-        <td>Permite pesquisar por locais no mapa</td>
-      </tr>
-      <tr>
-        <td>Envio de Dados</td>
-        <td>Envia informações para um dispositivo externo</td>
-      </tr>
-      <tr>
-        <td>Percuso em Tempo Real</td>
-        <td>Mostra o percurso em tempo real no mapa</td>
-      </tr>
-      <tr>
-        <td>Armazenamento de Dados</td>
-        <td>Guarda os dados em um banco de dados</td>
-      </tr>
-    </table>
-  </div>
+  <input type="text" id="search-input" placeholder="Pesquisar local">
+  <button onclick="searchLocation()">Pesquisar</button>
+  
+  <div id="map"></div>
   
   <script>
-    // Código do Google Maps API e funcionalidades do mapa aqui
-  </script>
-</body>
-</html>
+    var map;
+    var markers = [];
+    
+    function initMap() {
+      // Inicializa o mapa
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -23.5505, lng: -46.6333},
+        zoom: 12
+      });
+      
+      // Obtém a localização atual do usuário
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var userLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          
+          // Adiciona um marcador para a localização atual do usuário
+          addMarker(userLocation, 'Localização atual');
+          
+          // Centraliza o mapa na localização atual
+          map.setCenter(userLocation);
+        });
+      } else {
+        alert('Seu navegador não suporta geolocalização.');
+      }
+    }
+    
+    // Adiciona um marcador ao mapa
+    function addMarker(location, title) {
+      var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: title
+      });
+      
+      // Adiciona o marcador ao array de marcadores
+      markers.push(marker);
+    }
+    
+    // Remove todos os marcadores do mapa
+    function clearMarkers() {
+      for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+      }
+      
+      markers = [];
+    }
+    
+    // Pesquisa uma localização e exibe um marcador no mapa
+    function searchLocation() {
+      var searchQuery = document.getElementById('search-input').value;
+      
+      // Realiza a pesquisa usando a API do Google Places
+      var service = new google.maps.places.PlacesService(map);
+      
+      service.textSearch({query: searchQuery}, function(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          // Limpa os marcadores existentes
+          clearMarkers();
+          
+          // Exibe um marcador para cada resultado da pesquisa
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            var location = place.geometry.location;
+            var title = place.name;
+            
+            addMarker(location, title);
+          }
+          
+          // Centraliza o mapa no primeiro resultado da pesquisa
+          if (

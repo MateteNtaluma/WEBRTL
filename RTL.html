@@ -1,132 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Site com Maps e Barra de Pesquisa</title>
+  <title>Meu Site Waze</title>
   <style>
-    #map {
-      height: 400px;
-      width: 100%;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    
-    .sidebar {
-      width: 200px;
-      height: 100%;
-      background-color: #f2f2f2;
-      float: left;
+
+    header {
+      background-color: #2c3e50;
       padding: 10px;
+      color: #fff;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 10px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      padding: 10px;
+      color: #fff;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>Site com Maps e Barra de Pesquisa</h1>
-
-  <div id="map"></div>
-
-  <div class="sidebar">
-    <h2>Pesquisar Local</h2>
-    <input type="text" id="search-input" placeholder="Digite o local">
-    <button onclick="searchLocation()">Pesquisar</button>
-    <h2>Dados do Local</h2>
-    <p id="location-data"></p>
-    <button onclick="saveData()">Salvar Dados</button>
-    <button onclick="sendData()">Enviar Dados</button>
-  </div>
-
-  <script>
-    // Variável global para referenciar o mapa
-    var map;
-
-    // Variável global para referenciar o marcador
-    var marker;
-
-    // Inicializar o mapa
-    function initMap() {
-      // Configurar as coordenadas do centro do mapa
-      var center = { lat: -23.5505, lng: -46.6333 };
-
-      // Criar o mapa
-      map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: center
-      });
-
-      // Inicializar o marcador vazio
-      marker = new google.maps.Marker({
-        map: map,
-        draggable: true
-      });
-
-      // Adicionar um listener para atualizar a posição do marcador ao arrastá-lo
-      marker.addListener('dragend', function() {
-        updateMarkerPosition(marker.getPosition());
-      });
-    }
-
-    // Função para pesquisar um local
-    function searchLocation() {
-      var searchInput = document.getElementById('search-input').value;
-
-      // Criar um objeto de geocodificação
-      var geocoder = new google.maps.Geocoder();
-
-      // Realizar a geocodificação do local
-      geocoder.geocode({ address: searchInput }, function(results, status) {
-        if (status === 'OK') {
-          if (results[0]) {
-            var location = results[0].geometry.location;
-
-            // Atualizar a posição do marcador e do mapa com o local pesquisado
-            marker.setPosition(location);
-            map.setCenter(location);
-
-            // Atualizar os dados do local no elemento de parágrafo
-            var locationData = 'Latitude: ' + location.lat() + ', Longitude: ' + location.lng();
-            document.getElementById('location-data').textContent = locationData;
-          } else {
-            alert('Local não encontrado.');
-          }
-        } else {
-          alert('Erro na pesquisa: ' + status);
-        }
-      });
-    }
-
-    // Função para atualizar a posição do marcador
-    function updateMarkerPosition(position) {
-      var locationData = 'Latitude: ' + position.lat() + ', Longitude: ' + position.lng();
-      document.getElementById('location-data').textContent = locationData;
-    }
-
-    // Função para salvar os dados do local
-    function saveData() {
-      var locationData = document.getElementById('location-data').textContent;
-
-      // Simular o salvamento dos dados em um dispositivo externo
-      console.log('Dados salvos: ' + locationData);
-      alert('Dados salvos com sucesso!');
-    }
-
-    // Função para enviar os dados do local para um dispositivo externo
-    function sendData() {
-      var locationData = document.getElementById('location-data').textContent;
-
-      // Simular o envio dos dados para um dispositivo externo
-      console.log('Dados enviados: ' + locationData);
-      alert('Dados enviados com sucesso!');
-    }
-
-    // Carregar a API Maps JavaScript
-    function loadMapsAPI() {
-      var script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY';
-      script.defer = true;
-      script.async = true;
-      script.onload = initMap; // Chamar initMap() quando a API for carregada
-      document.head.appendChild(script);
-    }
-
-    // Iniciar o carregamento da API Maps JavaScript
-    loadMapsAPI();
-  </script>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Mapa</a></li>
+        <li><a href="#">Rotas</a></li>
+        <li><a href="#">Trânsito</a></li>
+        <li><a href="#">Configurações</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <!-- Conteúdo principal aqui -->
+  </main>
+  
+  <footer>
+    <p>Todos os direitos reservados &copy; 2023</p>
+  </footer>
 </body>
 </html>
+

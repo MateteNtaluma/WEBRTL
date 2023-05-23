@@ -36,13 +36,16 @@
   </div>
 
   <script>
+    // Variável global para referenciar o mapa
+    var map;
+
     // Inicializar o mapa
     function initMap() {
       // Configurar as coordenadas do centro do mapa
       var center = { lat: -23.5505, lng: -46.6333 };
 
       // Criar o mapa
-      var map = new google.maps.Map(document.getElementById('map'), {
+      map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
         center: center
       });
@@ -65,34 +68,41 @@
 
     // Função para mostrar os marcadores
     function showMarkers() {
-      // Código para mostrar os marcadores no mapa
-      console.log('Mostrar marcadores');
+      // Mostrar todos os marcadores no mapa
+      map.markers.forEach(function(marker) {
+        marker.setMap(map);
+      });
     }
 
     // Função para esconder os marcadores
     function hideMarkers() {
-      // Código para esconder os marcadores no mapa
-      console.log('Esconder marcadores');
+      // Esconder todos os marcadores no mapa
+      map.markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
     }
 
     // Função para dar zoom in no mapa
     function zoomIn() {
-      // Código para dar zoom in no mapa
-      console.log('Zoom In');
+      // Aumentar o nível de zoom do mapa
+      var zoom = map.getZoom();
+      map.setZoom(zoom + 1);
     }
 
     // Função para dar zoom out no mapa
     function zoomOut() {
-      // Código para dar zoom out no mapa
-      console.log('Zoom Out');
+      // Diminuir o nível de zoom do mapa
+      var zoom = map.getZoom();
+      map.setZoom(zoom - 1);
     }
 
     // Carregar a API Maps JavaScript
     function loadMapsAPI() {
       var script = document.createElement('script');
-      script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc';
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY';
       script.defer = true;
       script.async = true;
+      script.onload = initMap; // Chamar initMap() quando a API for carregada
       document.head.appendChild(script);
     }
 

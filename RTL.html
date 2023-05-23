@@ -45,9 +45,30 @@
       color: #fff;
       text-align: center;
     }
+
+    #map {
+      height: 400px;
+      margin-top: 20px;
+    }
   </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_DA_API"></script>
+  <script>
+    function initMap() {
+      // Coordenadas do mapa
+      var myLatLng = {lat: -23.550520, lng: -46.633308};
+
+      // Opções do mapa
+      var mapOptions = {
+        center: myLatLng,
+        zoom: 12
+      };
+
+      // Criação do mapa
+      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+  </script>
 </head>
-<body>
+<body onload="initMap()">
   <header>
     <nav>
       <ul>
@@ -61,7 +82,7 @@
   </header>
   
   <main>
-    <!-- Conteúdo principal aqui -->
+    <div id="map"></div>
   </main>
   
   <footer>

@@ -53,14 +53,16 @@
         }
 
         .search-bar {
-            position: absolute;
-            top: 15px;
-            right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px;
         }
 
         .search-bar input[type="text"] {
             padding: 5px;
-            width: 200px;
+            width: 100%;
+            max-width: 200px;
             border-radius: 3px;
         }
 
@@ -70,25 +72,55 @@
             color: #fff;
             border: none;
             cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Estilos para telas maiores, como desktops */
+        @media (min-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .search-bar {
+                position: absolute;
+                top: 15px;
+                right: 10px;
+            }
+
+            /* Outras regras de estilo para telas maiores */
+        }
+
+        /* Estilos para telas menores, como smartphones */
+        @media (max-width: 767px) {
+            body {
+                font-size: 14px;
+            }
+
+            header {
+                padding: 10px;
+            }
+
+            /* Outras regras de estilo para telas menores */
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"
-        defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
     <script>
         function initMap() {
-            // Coordenadas do mapa
             var myLatLng = { lat: 38.71, lng: -9.133 };
 
-            // Opções do mapa
             var mapOptions = {
                 center: myLatLng,
                 zoom: 12
             };
 
-            // Criação do mapa
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
         }
     </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body onload="initMap()">
@@ -115,7 +147,7 @@
     </main>
 
     <footer>
-        <p>Todos os direitos reservados a RTL &copy; 2023</p>
+        <p>Todos os direitos reservados &copy; 2023</p>
     </footer>
 </body>
 

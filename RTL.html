@@ -48,7 +48,8 @@
         }
 
         #map {
-            height: calc(100vh - 80px); /* 80px é a altura do cabeçalho (ajuste conforme necessário) */
+            width: 100%;
+            height: calc(100vh - 90px); /* 80px é a altura do cabeçalho (ajuste conforme necessário) */
             margin-top: 20px;
         }
 
@@ -57,6 +58,7 @@
             align-items: center;
             justify-content: flex-end;
             padding: 10px;
+            width: 100%;
         }
 
         .search-bar input[type="text"] {
@@ -78,7 +80,7 @@
 
             .search-bar {
                 position: absolute;
-                top: 15px;
+                top: 10px;
                 right: 10px;
             }
 
@@ -93,6 +95,16 @@
 
             header {
                 padding: 10px;
+            }
+
+            .search-bar {
+                justify-content: center;
+                padding: 10px 0;
+            }
+
+            .search-bar input[type="text"] {
+                max-width: none;
+                width: 80%;
             }
 
             /* Outras regras de estilo para telas menores */
@@ -162,5 +174,3 @@
 </body>
 
 </html>
-
-

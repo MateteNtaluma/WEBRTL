@@ -49,7 +49,7 @@
 
         #map {
             width: 100%;
-            height: calc(100vh - 90px); /* 80px é a altura do cabeçalho (ajuste conforme necessário) */
+            height: calc(100vh - 90px);
             margin-top: 20px;
         }
 
@@ -83,8 +83,6 @@
                 top: 10px;
                 right: 10px;
             }
-
-            /* Outras regras de estilo para telas maiores */
         }
 
         /* Estilos para telas menores, como smartphones */
@@ -106,12 +104,13 @@
                 max-width: none;
                 width: 80%;
             }
-
-            /* Outras regras de estilo para telas menores */
         }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
     <script>
+        var map;
+        var markers = [];
+
         function initMap() {
             var myLatLng = { lat: 38.71, lng: -9.133 };
 
@@ -120,27 +119,98 @@
                 zoom: 12
             };
 
-            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            var searchQuery = getSearchQueryFromURL();
+            if (searchQuery) {
+                document.getElementById('search-input').value = searchQuery;
+                search();
+            }
         }
 
         function search(event) {
-            event.preventDefault(); // Impede o envio do formulário
+            if (event) {
+                event.preventDefault();
+            }
 
             var query = document.getElementById('search-input').value;
-            // Faça algo com a consulta (por exemplo, executar uma pesquisa AJAX)
-            console.log('Consulta:', query);
+
+            var request = {
+                query: query,
+                fields: ['name', 'geometry'],
+            };
+
+            var service = new google.maps.places.PlacesService(map);
+
+            service.textSearch(request, function(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    clearMarkers();
+                    var resultsElement = document.getElementById('search-results');
+                    resultsElement.innerHTML = '';
+
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        createResultElement(place);
+                        createMarker(place);
+                    }
+                } else {
+                    var resultsElement = document.getElementById('search-results');
+                    resultsElement.innerHTML = 'Nenhum resultado encontrado para: ' + query;
+                }
+            });
+        }
+
+        function createResultElement(place) {
+            var resultElement = document.createElement('div');
+            resultElement.innerHTML = '<strong>' + place.name + '</strong><br>' + place.geometry.location.toUrlValue();
+            resultElement.addEventListener('click', function() {
+                map.setCenter(place.geometry.location);
+            });
+
+            var resultsElement = document.getElementById('search-results');
+            resultsElement.appendChild(resultElement);
+        }
+
+        function createMarker(place) {
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            markers.push(marker);
+        }
+
+        function clearMarkers() {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+
+        function getSearchQueryFromURL() {
+            var urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('q');
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             var searchForm = document.getElementById('search-form');
             var searchInput = document.getElementById('search-input');
 
-            searchForm.addEventListener('submit', search);
+            searchForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                search();
+            });
+
             searchInput.addEventListener('keydown', function (event) {
                 if (event.key === 'Enter') {
                     search(event);
                 }
             });
+
+            var searchQuery = getSearchQueryFromURL();
+            if (searchQuery) {
+                searchInput.value = searchQuery;
+            }
         });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -166,6 +236,8 @@
 
     <main>
         <div id="map"></div>
+
+        <div id="search-results"></div>
     </main>
 
     <footer>
@@ -174,3 +246,8 @@
 </body>
 
 </html>
+
+
+
+
+

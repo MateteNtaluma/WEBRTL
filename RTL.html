@@ -1,95 +1,119 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>RTL</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    <title>RTL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    header {
-      background-color: #2c3e50;
-      padding: 10px;
-      color: #fff;
-    }
+        header {
+            background-color: #2c3e50;
+            padding: 10px;
+            color: #fff;
+        }
 
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    nav ul li {
-      display: inline;
-      margin-right: 10px;
-    }
+            nav ul li {
+                display: inline;
+                margin-right: 10px;
+            }
 
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-    }
+                nav ul li a {
+                    color: #fff;
+                    text-decoration: none;
+                }
 
-    nav ul li a:hover {
-      text-decoration: underline;
-    }
+                    nav ul li a:hover {
+                        text-decoration: underline;
+                    }
 
-    main {
-      padding: 20px;
-    }
+        main {
+            padding: 20px;
+        }
 
-    footer {
-      background-color: #2c3e50;
-      padding: 10px;
-      color: #fff;
-      text-align: center;
-    }
+        footer {
+            background-color: #2c3e50;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+        }
 
-    #map {
-      height: 400px;
-      margin-top: 20px;
-    }
-  </style>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"
-  defer></script>
-  <script>
-    function initMap() {
-      // Coordenadas do mapa
-      var myLatLng = {lat: 38.71, lng: -9.133};
+        #map {
+            height: 400px;
+            margin-top: 20px;
+        }
 
-      // Opções do mapa
-      var mapOptions = {
-        center: myLatLng,
-        zoom: 12
-      };
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
 
-      // Criação do mapa
-      var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    }
-  </script>
+            .search-bar input[type="text"] {
+                padding: 5px;
+                width: 200px;
+                border-radius: 3px;
+            }
+
+            .search-bar input[type="submit"] {
+                padding: 5px 10px;
+                background-color: #2c3e50;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+            }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
+    <script>
+        function initMap() {
+            // Coordenadas do mapa
+            var myLatLng = { lat: 38.71, lng: -9.133 };
+
+            // Opções do mapa
+            var mapOptions = {
+                center: myLatLng,
+                zoom: 12
+            };
+
+            // Criação do mapa
+            var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        }
+    </script>
 </head>
 <body onload="initMap()">
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#">Registro</a></li>
-        <li><a href="#">Recentes</a></li>
-        <li><a href="#">Dados</a></li>
-        <li><a href="#">Percurso</a></li>
-        <li><a href="#">Configurações</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <main>
-    <div id="map"></div>
-  </main>
-  
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Registro</a></li>
+                <li><a href="#">Recentes</a></li>
+                <li><a href="#">Dados</a></li>
+                <li><a href="#">Percurso</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar">
+            <form>
+                <input type="text" placeholder="Pesquisar...">
+                <input type="submit" value="Buscar">
+            </form>
+        </div>
+    </header>
 
-  <footer>
-    <p>Todos os direitos reservados &copy; 2023</p>
-  </footer>
+    <main>
+        <div id="map"></div>
+    </main>
+
+    <footer>
+        <p>Todos os direitos reservados &copy; 2023</p>
+    </footer>
 </body>
 
 </html>

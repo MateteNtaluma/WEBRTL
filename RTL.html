@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>RTL</title>
     <style>
@@ -11,7 +12,7 @@
 
         header {
             background-color: #2c3e50;
-            padding: 10px;
+            padding: 20px;
             color: #fff;
         }
 
@@ -21,19 +22,19 @@
             padding: 0;
         }
 
-            nav ul li {
-                display: inline;
-                margin-right: 10px;
-            }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
 
-                nav ul li a {
-                    color: #fff;
-                    text-decoration: none;
-                }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
 
-                    nav ul li a:hover {
-                        text-decoration: underline;
-                    }
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
 
         main {
             padding: 20px;
@@ -53,25 +54,26 @@
 
         .search-bar {
             position: absolute;
-            top: 10px;
+            top: 15px;
             right: 10px;
         }
 
-            .search-bar input[type="text"] {
-                padding: 5px;
-                width: 200px;
-                border-radius: 3px;
-            }
+        .search-bar input[type="text"] {
+            padding: 5px;
+            width: 200px;
+            border-radius: 3px;
+        }
 
-            .search-bar input[type="submit"] {
-                padding: 5px 10px;
-                background-color: #2c3e50;
-                color: #fff;
-                border: none;
-                cursor: pointer;
-            }
+        .search-bar input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"
+        defer></script>
     <script>
         function initMap() {
             // Coordenadas do mapa
@@ -88,6 +90,7 @@
         }
     </script>
 </head>
+
 <body onload="initMap()">
     <header>
         <nav>

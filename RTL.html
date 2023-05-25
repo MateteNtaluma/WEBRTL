@@ -67,6 +67,9 @@
                 event.preventDefault();
                 calculateDirections();
             });
+
+            // Chama a função para usar a localização atual automaticamente
+            useCurrentLocation();
         }
 
         function calculateDirections() {
@@ -84,6 +87,23 @@
                     directionsRenderer.setDirections(result);
                 }
             });
+        }
+
+        function useCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    // Define o valor do campo de origem como a localização atual
+                    document.getElementById('origin-input').value = 'Localização Atual';
+                    
+                    // Chama a função para calcular a rota automaticamente
+                    calculateDirections();
+                });
+            }
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,12 +124,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-

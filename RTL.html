@@ -2,7 +2,7 @@
 <html lang="pt">
 
 <head>
-    <title>RTL</title>
+    <title>Meu Site - Estilo Waze</title>
     <style>
         body {
             margin: 0;
@@ -21,11 +21,12 @@
             z-index: 1;
             background-color: #fff;
             padding: 10px;
+            width: 300px;
         }
 
         #search-bar input[type="text"] {
-            width: 300px;
-            padding: 5px;
+            width: 80%;
+            padding: 3px;
             font-size: 14px;
         }
 
@@ -42,6 +43,13 @@
             background-color: #fff;
             padding: 10px;
             max-width: 300px;
+        }
+
+        @media only screen and (max-width: 768px) {
+            #search-bar {
+                width: 90%;
+                max-width: none;
+            }
         }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
@@ -68,7 +76,6 @@
                 calculateDirections();
             });
 
-            // Chama a função para usar a localização atual automaticamente
             useCurrentLocation();
         }
 
@@ -97,13 +104,23 @@
                         lng: position.coords.longitude
                     };
 
-                    // Define o valor do campo de origem como a localização atual
                     document.getElementById('origin-input').value = 'Localização Atual';
-                    
-                    // Chama a função para calcular a rota automaticamente
                     calculateDirections();
                 });
             }
+        }
+
+        function planRoute() {
+            var originInput = document.getElementById('origin-input').value;
+            var destinationInput = document.getElementById('destination-input').value;
+
+            if (originInput === '' || destinationInput === '') {
+                alert('Por favor, preencha a origem e o destino.');
+                return;
+            }
+
+            // Chamada da função para calcular a rota
+            calculateDirections();
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

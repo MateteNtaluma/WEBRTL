@@ -1,249 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 
 <head>
-    <title>RTL</title>
+    <title>Meu Site - Estilo Waze</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #2c3e50;
-            padding: 20px;
-            color: #fff;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin-right: 10px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        nav ul li a:hover {
-            text-decoration: underline;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        footer {
-            background-color: #2c3e50;
-            padding: 10px;
-            color: #fff;
-            text-align: center;
         }
 
         #map {
-            width: 100%;
-            height: calc(100vh - 90px);
-            margin-top: 20px;
+            height: 100vh;
         }
 
-        .search-bar {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+        #search-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1;
+            background-color: #fff;
             padding: 10px;
-            width: 100%;
         }
 
-        .search-bar input[type="text"] {
+        #search-bar input[type="text"] {
+            width: 300px;
             padding: 5px;
-            width: 100%;
-            max-width: 200px;
-            border-radius: 3px;
+            font-size: 14px;
         }
 
-        /* Estilos para telas maiores, como desktops */
-        @media (min-width: 768px) {
-            body {
-                font-size: 16px;
-            }
-
-            header {
-                padding: 20px;
-            }
-
-            .search-bar {
-                position: absolute;
-                top: 10px;
-                right: 10px;
-            }
+        #search-bar button {
+            padding: 5px 10px;
+            font-size: 14px;
         }
 
-        /* Estilos para telas menores, como smartphones */
-        @media (max-width: 767px) {
-            body {
-                font-size: 14px;
-            }
-
-            header {
-                padding: 10px;
-            }
-
-            .search-bar {
-                justify-content: center;
-                padding: 10px 0;
-            }
-
-            .search-bar input[type="text"] {
-                max-width: none;
-                width: 80%;
-            }
+        #directions-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            background-color: #fff;
+            padding: 10px;
+            max-width: 300px;
         }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
     <script>
         var map;
-        var markers = [];
+        var directionsService;
+        var directionsRenderer;
 
         function initMap() {
-            var myLatLng = { lat: 38.71, lng: -9.133 };
-
-            var mapOptions = {
-                center: myLatLng,
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 38.71, lng: -9.133 },
                 zoom: 12
-            };
-
-            map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-            var searchQuery = getSearchQueryFromURL();
-            if (searchQuery) {
-                document.getElementById('search-input').value = searchQuery;
-                search();
-            }
-        }
-
-        function search(event) {
-            if (event) {
-                event.preventDefault();
-            }
-
-            var query = document.getElementById('search-input').value;
-
-            var request = {
-                query: query,
-                fields: ['name', 'geometry'],
-            };
-
-            var service = new google.maps.places.PlacesService(map);
-
-            service.textSearch(request, function(results, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    clearMarkers();
-                    var resultsElement = document.getElementById('search-results');
-                    resultsElement.innerHTML = '';
-
-                    for (var i = 0; i < results.length; i++) {
-                        var place = results[i];
-                        createResultElement(place);
-                        createMarker(place);
-                    }
-                } else {
-                    var resultsElement = document.getElementById('search-results');
-                    resultsElement.innerHTML = 'Nenhum resultado encontrado para: ' + query;
-                }
-            });
-        }
-
-        function createResultElement(place) {
-            var resultElement = document.createElement('div');
-            resultElement.innerHTML = '<strong>' + place.name + '</strong><br>' + place.geometry.location.toUrlValue();
-            resultElement.addEventListener('click', function() {
-                map.setCenter(place.geometry.location);
             });
 
-            var resultsElement = document.getElementById('search-results');
-            resultsElement.appendChild(resultElement);
-        }
-
-        function createMarker(place) {
-            var marker = new google.maps.Marker({
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
                 map: map,
-                position: place.geometry.location
+                panel: document.getElementById('directions-panel')
             });
 
-            markers.push(marker);
-        }
-
-        function clearMarkers() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
-            markers = [];
-        }
-
-        function getSearchQueryFromURL() {
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('q');
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
             var searchForm = document.getElementById('search-form');
-            var searchInput = document.getElementById('search-input');
-
             searchForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                search();
+                calculateDirections();
             });
+        }
 
-            searchInput.addEventListener('keydown', function (event) {
-                if (event.key === 'Enter') {
-                    search(event);
+        function calculateDirections() {
+            var originInput = document.getElementById('origin-input').value;
+            var destinationInput = document.getElementById('destination-input').value;
+
+            var request = {
+                origin: originInput,
+                destination: destinationInput,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(result);
                 }
             });
-
-            var searchQuery = getSearchQueryFromURL();
-            if (searchQuery) {
-                searchInput.value = searchQuery;
-            }
-        });
+        }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body onload="initMap()">
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#">Registro</a></li>
-                <li><a href="#">Recentes</a></li>
-                <li><a href="#">Dados</a></li>
-                <li><a href="#">Percurso</a></li>
-                <li><a href="#">Definição</a></li>
-            </ul>
-        </nav>
-        <div class="search-bar">
-            <form id="search-form">
-                <input type="text" id="search-input" placeholder="Pesquisar...">
-            </form>
-        </div>
-    </header>
+    <div id="search-bar">
+        <form id="search-form">
+            <input type="text" id="origin-input" placeholder="Origem">
+            <input type="text" id="destination-input" placeholder="Destino">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
 
-    <main>
-        <div id="map"></div>
+    <div id="map"></div>
 
-        <div id="search-results"></div>
-    </main>
-
-    <footer>
-        <p>Todos os direitos reservados &copy; 2023</p>
-    </footer>
+    <div id="directions-panel"></div>
 </body>
 
 </html>
+
+
+
+
+
+
+
+
 

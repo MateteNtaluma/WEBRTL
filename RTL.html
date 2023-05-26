@@ -124,8 +124,49 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+        /* Estilos para o formulário de login */
+        #login-form {
+            display: none;
+            background-color: #f5f5f5;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        #login-form h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        #login-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        #login-form input[type="text"],
+        #login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        #login-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #fc0;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
     <script>
         var map;
         var markers = [];
@@ -177,6 +218,25 @@
             var registrationForm = document.getElementById('registration-form');
             registrationForm.style.display = 'block';
         }
+        
+        function showLoginForm() {
+            var loginForm = document.getElementById('login-form');
+            loginForm.style.display = 'block';
+        }
+        
+        function sendConfirmationEmail() {
+            var email = document.getElementById('email').value;
+            // Use a biblioteca ou serviço de envio de e-mails para enviar a mensagem de confirmação para o e-mail do usuário.
+            // Substitua 'YOUR_EMAIL_API_KEY' pelo seu próprio chave da API de envio de e-mails.
+            // Exemplo: sendEmailConfirmation(email, 'YOUR_EMAIL_API_KEY');
+            sendEmailConfirmation(email, 'YOUR_EMAIL_API_KEY');
+        }
+        
+        function sendEmailConfirmation(email, apiKey) {
+            // Código para enviar a mensagem de confirmação para o e-mail do usuário usando uma API de envio de e-mails.
+            // Aqui está apenas um exemplo simplificado.
+            console.log('Enviando e-mail de confirmação para: ' + email);
+        }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -193,13 +253,14 @@
     
     <div id="navigation-bar">
         <a href="#" class="menu" onclick="showRegistrationForm()">Registo</a>
+        <a href="#" class="menu" onclick="showLoginForm()">Entra</a>
         <a href="#" class="menu">Percurso</a>
         <a href="#" class="menu">Dados</a>
         <a href="#" class="menu">Definição</a>
     </div>
     
     <div id="registration-form">
-        <h2>Formulário de Registo</h2>
+        <h2>Formulário de Registro</h2>
         <label for="name">Nome:</label>
         <input type="text" id="name" name="name" placeholder="Digite nome">
         
@@ -209,11 +270,22 @@
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" placeholder="Digite senha">
         
-        <button>Registar</button>
+        <button onclick="sendConfirmationEmail()">Registar</button>
+    </div>
+    
+    <div id="login-form">
+        <h2>Formulário de Login</h2>
+        <label for="login-email">E-mail:</label>
+        <input type="text" id="login-email" name="login-email" placeholder="Digite e-mail">
+        
+        <label for="login-password">Senha:</label>
+        <input type="password" id="login-password" name="login-password" placeholder="Digite senha">
+        
+        <button>Entra</button>
     </div>
     
     <footer>
-        <p>&copy; 2023 RLT. Todos os direitos reservados.</p>
+        <p>&copy; 2023 RTL. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>

@@ -177,9 +177,20 @@
             markers = [];
         }
 
-        function showForm(formId) {
-            var form = document.getElementById(formId);
-            form.style.display = 'block';
+        function showRegistrationForm() {
+            var registrationForm = document.getElementById('registration-form');
+            var loginForm = document.getElementById('login-form');
+
+            registrationForm.style.display = 'block';
+            loginForm.style.display = 'none';
+        }
+
+        function showLoginForm() {
+            var registrationForm = document.getElementById('registration-form');
+            var loginForm = document.getElementById('login-form');
+
+            registrationForm.style.display = 'none';
+            loginForm.style.display = 'block';
         }
 
         function sendConfirmationEmail() {
@@ -210,8 +221,8 @@
     <div id="map"></div>
     
     <div id="navigation-bar">
-        <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
-        <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
+        <a href="#" class="menu" onclick="showRegistrationForm()">Registo</a>
+        <a href="#" class="menu" onclick="showLoginForm()">Entrar</a>
         <a href="#" class="menu">Percurso</a>
         <a href="#" class="menu">Dados</a>
         <a href="#" class="menu">Definição</a>
@@ -247,9 +258,4 @@
     </footer>
 </body>
 </html>
-
-
-
-
-
 

@@ -85,6 +85,45 @@
             text-align: center;
             color: #fff;
         }
+        
+        /* Estilos para o formulário de registro */
+        #registration-form {
+            display: none;
+            background-color: #f5f5f5;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        #registration-form h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        #registration-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        #registration-form input[type="text"],
+        #registration-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        
+        #registration-form button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #fc0;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
     <script>
@@ -127,11 +166,16 @@
         }
 
         function clearMarkers() {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
-            }
+            markers.forEach(function(marker) {
+                marker.setMap(null);
+            });
 
             markers = [];
+        }
+        
+        function showRegistrationForm() {
+            var registrationForm = document.getElementById('registration-form');
+            registrationForm.style.display = 'block';
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,10 +192,24 @@
     <div id="map"></div>
     
     <div id="navigation-bar">
-        <a href="registro.html" class="menu">Registro</a>
-        <a href="percurso.html" class="menu">Percurso</a>
-        <a href="dados.html" class="menu">Dados</a>
-        <a href="definicao.html" class="menu">Definição</a>
+        <a href="#" class="menu" onclick="showRegistrationForm()">Registro</a>
+        <a href="#" class="menu">Percurso</a>
+        <a href="#" class="menu">Dados</a>
+        <a href="#" class="menu">Definição</a>
+    </div>
+    
+    <div id="registration-form">
+        <h2>Formulário de Registro</h2>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" placeholder="Digite seu nome">
+        
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" name="email" placeholder="Digite seu e-mail">
+        
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" placeholder="Digite sua senha">
+        
+        <button>Registrar</button>
     </div>
     
     <footer>

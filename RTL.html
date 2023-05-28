@@ -93,7 +93,8 @@
         }
 
         .form-container input[type="text"],
-        .form-container input[type="password"] {
+        .form-container input[type="password"],
+        .form-container input[type="date"] {
             width: 100%;
             padding: 10px;
             font-size: 16px;
@@ -188,16 +189,12 @@
 
         function sendConfirmationEmail() {
             var email = document.getElementById('email').value;
-            // Use a biblioteca ou serviço de envio de e-mails para enviar a mensagem de confirmação para o e-mail do usuário.
-            // Substitua 'YOUR_EMAIL_API_KEY' pela sua própria chave da API de envio de e-mails.
-            // Exemplo: sendEmailConfirmation(email, 'YOUR_EMAIL_API_KEY');
-            sendEmailConfirmation(email, 'YOUR_EMAIL_API_KEY');
-        }
+            var fullName = document.getElementById('full-name').value;
+            var phoneNumber = document.getElementById('phone-number').value;
+            var dateOfBirth = document.getElementById('date-of-birth').value;
 
-        function sendEmailConfirmation(email, apiKey) {
-            // Código para enviar a mensagem de confirmação para o e-mail do usuário usando uma API de envio de e-mails.
-            // Aqui está apenas um exemplo simplificado.
-            console.log('Enviando e-mail de confirmação para: ' + email);
+            // Resto do código para enviar o e-mail de confirmação e processar os dados do formulário
+            // ...
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -207,7 +204,7 @@
         <h1>Bem-vindo ao RTL</h1>
     </div>
     <div id="search-bar">
-        <input type="text" id="address-input" placeholder="Pesquisa">
+        <input type="text" id="address-input" placeholder="Digite um endereço">
         <button onclick="searchAddress()">Pesquisar</button>
     </div>
     
@@ -224,7 +221,17 @@
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registo</h2>
         <label for="email">E-mail:</label>
-        <input type="text" id="email" placeholder="Digite seu e-mail">
+        <input type="text" id="email" placeholder="Digite o e-mail">
+
+        <label for="full-name">Nome Completo:</label>
+        <input type="text" id="full-name" placeholder="Digite o nome completo">
+
+        <label for="phone-number">Número de Telefone:</label>
+        <input type="text" id="phone-number" placeholder="Digite o número de telefone">
+
+        <label for="date-of-birth">Data de Nascimento:</label>
+        <input type="text" id="date-of-birth" placeholder="Digite a data de nascimento">
+
         <button onclick="sendConfirmationEmail()">Confime no seu e-mail</button>
     </div>
     

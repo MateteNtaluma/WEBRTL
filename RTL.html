@@ -218,36 +218,27 @@
         <a href="#" class="menu" onclick="showLoginForm()">Entrar</a>
         <a href="#" class="menu">Percurso</a>
         <a href="#" class="menu">Dados</a>
-        <a href="#" class="menu">Definição</a>
+        <a href="#" class="menu">Sair</a>
     </div>
     
-    <div id="registration-form" class="form-container" style="display:none">
-        <h2>Formulário de Registro</h2>
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" placeholder="Digite o nome">
-        
+    <div class="form-container" id="registration-form" style="display:none">
+        <h2>Registo</h2>
         <label for="email">E-mail:</label>
-        <input type="text" id="email" name="email" placeholder="Digite o e-mail">
-        
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" placeholder="Digite a senha">
-        
-        <button onclick="sendConfirmationEmail()">Registar</button>
+        <input type="text" id="email" placeholder="Digite seu e-mail">
+        <button onclick="sendConfirmationEmail()">Enviar E-mail de Confirmação</button>
     </div>
     
-    <div id="login-form" class="form-container" style="display:none">
-        <h2>Formulário de Login</h2>
-        <label for="login-email">E-mail:</label>
-        <input type="text" id="login-email" name="login-email" placeholder="Digite o e-mail">
-        
-        <label for="login-password">Senha:</label>
-        <input type="password" id="login-password" name="login-password" placeholder="Digite a senha">
-        
+    <div class="form-container" id="login-form" style="display:none">
+        <h2>Entrar</h2>
+        <label for="email">E-mail:</label>
+        <input type="text" id="email" placeholder="Digite o e-mail">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" placeholder="Digite a senha">
         <button>Entrar</button>
     </div>
     
     <footer>
-        <p>&copy; 2023 RTL. Todos os direitos reservados.</p>
+        &copy; 2023 RTL - Real Time Location
     </footer>
 </body>
 </html>

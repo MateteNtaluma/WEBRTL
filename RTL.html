@@ -69,8 +69,20 @@
             var phoneNumber = document.getElementById('phone-number').value;
             var dateOfBirth = document.getElementById('date-of-birth').value;
 
-            // Resto do código para enviar o e-mail de confirmação e processar os dados do formulário
+            // TODO: Implementar lógica de envio de e-mail de confirmação
             // ...
+
+            // TODO: Processar os dados do formulário, por exemplo, enviar para um servidor
+            // ...
+
+            // Exemplo de alerta de sucesso (substitua pela lógica real)
+            alert('Dados enviados com sucesso!');
+
+            // Limpar os campos do formulário
+            document.getElementById('email').value = '';
+            document.getElementById('full-name').value = '';
+            document.getElementById('phone-number').value = '';
+            document.getElementById('date-of-birth').value = '';
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,7 +118,7 @@
         <input type="text" id="phone-number" placeholder="Digite o número de telefone">
 
         <label for="date-of-birth">Data de Nascimento:</label>
-        <input type="text" id="date-of-birth" placeholder="Digite a data de nascimento">
+        <input type="date" id="date-of-birth" placeholder="Digite a data de nascimento">
 
         <button onclick="sendConfirmationEmail()">Confime no seu e-mail</button>
     </div>

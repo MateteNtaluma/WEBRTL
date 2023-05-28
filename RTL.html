@@ -5,123 +5,9 @@
     <style>
         /* Estilos gerais */
         /* Estilos para o cabeçalho */
-        #header {
-            background-color: #1c1c1c;
-            padding: 20px;
-            text-align: center;
-        }
-
-        #header h1 {
-            font-size: 24px;
-            margin: 0;
-            color: #fff;
-        }
-
-        /* Estilos para a barra de pesquisa */
-        #search-bar {
-            background-color: #f5f5f5;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #search-bar input[type="text"] {
-            width: 70%;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        #search-bar button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #fc0;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Estilos para o mapa */
-        #map {
-            height: calc(100vh - 150px);
-            width: 100%;
-        }
-
-        /* Estilos para a barra de navegação */
-        #navigation-bar {
-            background-color: #fc0;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .menu {
-            margin: 5px;
-            padding: 5px 10px;
-            font-size: 16px;
-            background-color: #fc0;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Estilos para o formulário */
-        .form-container {
-            background-color: #f5f5f5;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .form-container h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
-
-        .form-container input[type="text"],
-        .form-container input[type="password"],
-        .form-container input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-        .form-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #fc0;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Estilos para o rodapé */
-        footer {
-            background-color: #1c1c1c;
-            padding: 10px;
-            text-align: center;
-            color: #fff;
-        }
+        #header{background-color:#1c1c1c;padding:20px;text-align:center}#header h1{font-size:24px;margin:0;color:#fff}/* Estilos para a barra de pesquisa */#search-bar{background-color:#f5f5f5;padding:10px;display:flex;justify-content:space-between;align-items:center}#search-bar input[type="text"]{width:70%;padding:10px;font-size:16px;border:none;border-radius:5px;box-shadow:0 2px 6px rgba(0,0,0,.3)}#search-bar button{padding:10px 20px;font-size:16px;background-color:#fc0;color:#fff;border:none;border-radius:5px;cursor:pointer}/* Estilos para o mapa */#map{height:calc(100vh - 150px);width:100%}/* Estilos para a barra de navegação */#navigation-bar{background-color:#fc0;padding:10px;display:flex;justify-content:center;align-items:center;flex-wrap:wrap}.menu{margin:5px;padding:5px 10px;font-size:16px;background-color:#fc0;color:#fff;border:none;border-radius:5px;cursor:pointer}/* Estilos para o formulário */.form-container{background-color:#f5f5f5;padding:20px;max-width:400px;margin:0 auto}.form-container h2{font-size:20px;margin-bottom:10px;color:#333}.form-container label{display:block;margin-bottom:5px;color:#555}.form-container input[type="text"],.form-container input[type="password"],.form-container input[type="date"]{width:100%;padding:10px;font-size:16px;border:1px solid #ccc;border-radius:5px;margin-bottom:10px}.form-container button{padding:10px 20px;font-size:16px;background-color:#fc0;color:#fff;border:none;border-radius:5px;cursor:pointer}/* Estilos para o rodapé */footer{background-color:#1c1c1c;padding:10px;text-align:center;color:#fff}
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" defer></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
     <script>
@@ -137,25 +23,18 @@
 
         function searchAddress() {
             var address = document.getElementById('address-input').value;
-
             var geocoder = new google.maps.Geocoder();
 
             geocoder.geocode({ address: address }, function(results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                     var location = results[0].geometry.location;
                     map.setCenter(location);
-
-                    // Limpar marcadores anteriores
                     clearMarkers();
-
-                    // Adicionar marcador para o endereço pesquisado
                     var marker = new google.maps.Marker({
                         map: map,
                         position: location,
                         title: address
                     });
-
-                    // Adicionar o marcador à lista de marcadores
                     markers.push(marker);
                 } else {
                     alert('Não foi possível encontrar o endereço.');
@@ -167,14 +46,12 @@
             markers.forEach(function(marker) {
                 marker.setMap(null);
             });
-
             markers = [];
         }
 
         function showRegistrationForm() {
             var registrationForm = document.getElementById('registration-form');
             var loginForm = document.getElementById('login-form');
-
             registrationForm.style.display = 'block';
             loginForm.style.display = 'none';
         }
@@ -182,7 +59,6 @@
         function showLoginForm() {
             var registrationForm = document.getElementById('registration-form');
             var loginForm = document.getElementById('login-form');
-
             registrationForm.style.display = 'none';
             loginForm.style.display = 'block';
         }

@@ -58,7 +58,7 @@
         
         /* Estilos para o mapa */
         #map {
-            height: calc(100vh - 150px);
+            height: calc(100vh - 200px);
             width: 100%;
         }
         
@@ -133,7 +133,7 @@
             color: #fff;
         }
     </style>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap""></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
     <script>
@@ -204,6 +204,14 @@
             document.getElementById('full-name').value = '';
             document.getElementById('phone-number').value = '';
             document.getElementById('date-of-birth').value = '';
+        }
+
+        function zoomIn() {
+            map.setZoom(map.getZoom() + 1);
+        }
+
+        function zoomOut() {
+            map.setZoom(map.getZoom() - 1);
         }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

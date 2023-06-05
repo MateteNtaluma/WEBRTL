@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html lang="pt">
 <head>
+    <meta charset="UTF-8">
     <title>RTL - Real Time Location</title>
     <style>
         /* Estilos gerais */
@@ -19,6 +21,7 @@
             padding: 20px;
             text-align: center;
         }
+        
         #header h1 {
             font-size: 24px;
             margin: 0;
@@ -33,6 +36,7 @@
             justify-content: space-between;
             align-items: center;
         }
+        
         #search-bar input[type="text"] {
             width: 70%;
             padding: 10px;
@@ -41,6 +45,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
         }
+        
         #search-bar button {
             padding: 10px 20px;
             font-size: 16px;
@@ -66,6 +71,7 @@
             align-items: center;
             flex-wrap: wrap;
         }
+        
         .menu {
             margin: 5px;
             padding: 5px 10px;
@@ -85,16 +91,19 @@
             max-width: 400px;
             margin: 0 auto;
         }
+        
         .form-container h2 {
             font-size: 20px;
             margin-bottom: 10px;
             color: #333;
         }
+        
         .form-container label {
             display: block;
             margin-bottom: 5px;
             color: #555;
         }
+        
         .form-container input[type="text"],
         .form-container input[type="password"],
         .form-container input[type="date"] {
@@ -105,6 +114,7 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
+        
         .form-container button {
             padding: 10px 20px;
             font-size: 16px;
@@ -165,22 +175,17 @@
             markers = [];
         }
 
-        function showRegistrationForm() {
-            var registrationForm = document.getElementById('registration-form');
-            var loginForm = document.getElementById('login-form');
-            registrationForm.style.display = 'block';
-            loginForm.style.display = 'none';
-        }
-
-        function showLoginForm() {
-            var registrationForm = document.getElementById('registration-form');
-            var loginForm = document.getElementById('login-form');
-            registrationForm.style.display = 'none';
-            loginForm.style.display = 'block';
+        function showForm(formId) {
+            var forms = document.getElementsByClassName('form-container');
+            for (var i = 0; i < forms.length; i++) {
+                forms[i].style.display = 'none';
+            }
+            var form = document.getElementById(formId);
+            form.style.display = 'block';
         }
 
         function sendConfirmationEmail() {
-            var email = document.getElementById('email').value;
+            var email = document.getElementById('registration-email').value;
             var fullName = document.getElementById('full-name').value;
             var phoneNumber = document.getElementById('phone-number').value;
             var dateOfBirth = document.getElementById('date-of-birth').value;
@@ -195,7 +200,7 @@
             alert('Dados enviados com sucesso!');
 
             // Limpar os campos do formulário
-            document.getElementById('email').value = '';
+            document.getElementById('registration-email').value = '';
             document.getElementById('full-name').value = '';
             document.getElementById('phone-number').value = '';
             document.getElementById('date-of-birth').value = '';
@@ -215,8 +220,8 @@
     <div id="map"></div>
     
     <div id="navigation-bar">
-        <a href="#" class="menu" onclick="showRegistrationForm()">Registo</a>
-        <a href="#" class="menu" onclick="showLoginForm()">Entrar</a>
+        <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
+        <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
         <a href="#" class="menu">Menu</a>
         <a href="outra_pagina.html" class="menu">Perfil</a>
         <a href="#" class="menu">Sair</a>
@@ -224,8 +229,8 @@
     
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registo</h2>
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" placeholder="Digite o e-mail">
+        <label for="registration-email">E-mail:</label>
+        <input type="text" id="registration-email" placeholder="Digite o e-mail">
 
         <label for="full-name">Nome Completo:</label>
         <input type="text" id="full-name" placeholder="Digite o nome completo">
@@ -241,8 +246,8 @@
     
     <div class="form-container" id="login-form" style="display:none">
         <h2>Entrar</h2>
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" placeholder="Digite o e-mail">
+        <label for="login-email">E-mail:</label>
+        <input type="text" id="login-email" placeholder="Digite o e-mail">
         <label for="password">Senha:</label>
         <input type="password" id="password" placeholder="Digite a senha">
         <button>Entrar</button>
@@ -253,5 +258,3 @@
     </footer>
 </body>
 </html>
-
-

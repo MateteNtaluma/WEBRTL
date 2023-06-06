@@ -134,16 +134,18 @@
         }
     </style>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
+
     <script>
         var map;
         var markers = [];
+        var activeFormId = '';
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: 38.71, lng: -9.133 },
-                zoom: 12
+                zoom: 12,
+                maxZoom: 21,
+                minZoom: 6
             });
         }
 
@@ -176,12 +178,27 @@
         }
 
         function showForm(formId) {
+            if (activeFormId === formId) {
+                hideForm(formId);
+                activeFormId = '';
+            } else {
+                hideAllForms();
+                var form = document.getElementById(formId);
+                form.style.display = 'block';
+                activeFormId = formId;
+            }
+        }
+
+        function hideForm(formId) {
+            var form = document.getElementById(formId);
+            form.style.display = 'none';
+        }
+
+        function hideAllForms() {
             var forms = document.getElementsByClassName('form-container');
             for (var i = 0; i < forms.length; i++) {
                 forms[i].style.display = 'none';
             }
-            var form = document.getElementById(formId);
-            form.style.display = 'block';
         }
 
         function sendConfirmationEmail() {
@@ -262,3 +279,4 @@
     </footer>
 </body>
 </html>
+

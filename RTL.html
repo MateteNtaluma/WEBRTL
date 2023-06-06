@@ -84,6 +84,20 @@
             text-decoration: none;
         }
         
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #fc0;
+            z-index: 1;
+        }
+        
+        .submenu a {
+            display: block;
+            padding: 5px 10px;
+            color: #fff;
+            text-decoration: none;
+        }
+        
         /* Estilos para o formulário */
         .form-container {
             background-color: #f5f5f5;
@@ -132,6 +146,22 @@
             text-align: center;
             color: #fff;
         }
+        .dropdown {
+    position: relative;
+}
+
+.submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+}
+
+.dropdown:hover .submenu {
+    display: block;
+}
+
+
     </style>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
 
@@ -222,6 +252,11 @@
             document.getElementById('phone-number').value = '';
             document.getElementById('date-of-birth').value = '';
         }
+
+        function toggleSubmenu() {
+            var submenu = document.getElementById('submenu');
+            submenu.classList.toggle('show');
+        }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -237,12 +272,21 @@
     <div id="map"></div>
     
     <div id="navigation-bar">
+        <div class="dropdown">
+            <button class="menu" onclick="toggleSubmenu()">Menu</button>
+            <div class="submenu" id="submenu">
+                <a href="#">Dados</a>
+                <a href="#">Historico</a>
+                <a href="#">Perfil</a>
+            </div>
+        </div>
         <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
         <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
-        <a href="#" class="menu">Menu</a>
-        <a href="outra_pagina.html" class="menu">Perfil</a>
+        <a href="outra_pagina.html" class="menu">Recente</a>
         <a href="#" class="menu">Sair</a>
     </div>
+    
+    
     
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registo</h2>
@@ -279,4 +323,3 @@
     </footer>
 </body>
 </html>
-

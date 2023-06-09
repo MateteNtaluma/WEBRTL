@@ -62,7 +62,7 @@
         }
 
         .logo {
-            width: 150px;
+            width: 50px;
             height: 50px;
             margin-right: 10px;
         }
@@ -174,7 +174,7 @@
             display: block;
         }
     </style>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
     <script>
         var map;
         var markers = [];
@@ -272,12 +272,12 @@
 </head>
 
 <body>
-    <div id="header">
-        <div style="display: flex; align-items: center;">
-            <img src="caminho/para/sua/imagem.png" alt="Logo da RTL" class="logo" style="margin-right: 10px;">
+    <header id="header">
+        <div class="logo-container">
+            <img src="./img/RTL.png" alt="Logo da RTL" class="logo">
             <h1>Bem-vindo ao RTL</h1>
         </div>
-    </div>
+    </header>
 
     <div id="search-bar">
         <input type="text" id="address-input" placeholder="Pesquisar">
@@ -286,7 +286,7 @@
 
     <div id="map"></div>
 
-    <div id="navigation-bar">
+    <nav id="navigation-bar">
         <div class="dropdown">
             <button class="menu" onclick="toggleSubmenu()">Menu</button>
             <div class="submenu" id="submenu">
@@ -299,7 +299,7 @@
         <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
         <a href="outra_pagina.html" class="menu">Recente</a>
         <a href="#" class="menu">Sair</a>
-    </div>
+    </nav>
 
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registro</h2>

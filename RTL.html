@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <title>RTL - Real Time Location</title>
@@ -8,35 +9,39 @@
         * {
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #1c1c1c;
+            color: #fff;
         }
-        
+
         /* Estilos para o cabeçalho */
         #header {
-            background-color: #1c1c1c;
+            background-color: #000;
             padding: 20px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
         #header h1 {
             font-size: 24px;
             margin: 0;
             color: #fff;
         }
-        
+
         /* Estilos para a barra de pesquisa */
         #search-bar {
-            background-color: #f5f5f5;
+            background-color: #333;
             padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         #search-bar input[type="text"] {
             width: 70%;
             padding: 10px;
@@ -45,7 +50,7 @@
             border-radius: 5px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
         }
-        
+
         #search-bar button {
             padding: 10px 20px;
             font-size: 16px;
@@ -55,69 +60,76 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        
+
+        .logo {
+            width: 150px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
         /* Estilos para o mapa */
         #map {
             height: calc(100vh - 150px);
             width: 100%;
         }
-        
+
         /* Estilos para a barra de navegação */
         #navigation-bar {
-            background-color: #fc0;
+            background-color: #333;
             padding: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
         }
-        
+
         .menu {
             margin: 5px;
             padding: 5px 10px;
             font-size: 16px;
-            background-color: #fc0;
+            background-color: #333;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
         }
-        
+
         .submenu {
             display: none;
             position: absolute;
-            background-color: #fc0;
+            background-color: #333;
             z-index: 1;
         }
-        
+
         .submenu a {
             display: block;
             padding: 5px 10px;
             color: #fff;
             text-decoration: none;
         }
-        
+
         /* Estilos para o formulário */
         .form-container {
-            background-color: #f5f5f5;
+            background-color: #333;
             padding: 20px;
             max-width: 400px;
             margin: 0 auto;
+            border-radius: 5px;
         }
-        
+
         .form-container h2 {
             font-size: 20px;
             margin-bottom: 10px;
-            color: #333;
+            color: #fff;
         }
-        
+
         .form-container label {
             display: block;
             margin-bottom: 5px;
-            color: #555;
+            color: #fff;
         }
-        
+
         .form-container input[type="text"],
         .form-container input[type="password"],
         .form-container input[type="date"] {
@@ -128,7 +140,7 @@
             border-radius: 5px;
             margin-bottom: 10px;
         }
-        
+
         .form-container button {
             padding: 10px 20px;
             font-size: 16px;
@@ -138,33 +150,31 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        
+
         /* Estilos para o rodapé */
         footer {
-            background-color: #1c1c1c;
+            background-color: #000;
             padding: 10px;
             text-align: center;
             color: #fff;
         }
+
         .dropdown {
-    position: relative;
-}
+            position: relative;
+        }
 
-.submenu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    display: none;
-}
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+        }
 
-.dropdown:hover .submenu {
-    display: block;
-}
-
-
+        .dropdown:hover .submenu {
+            display: block;
+        }
     </style>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
-
     <script>
         var map;
         var markers = [];
@@ -183,7 +193,7 @@
             var address = document.getElementById('address-input').value;
             var geocoder = new google.maps.Geocoder();
 
-            geocoder.geocode({ address: address }, function(results, status) {
+            geocoder.geocode({ address: address }, function (results, status) {
                 if (status === google.maps.GeocoderStatus.OK) {
                     var location = results[0].geometry.location;
                     map.setCenter(location);
@@ -201,7 +211,7 @@
         }
 
         function clearMarkers() {
-            markers.forEach(function(marker) {
+            markers.forEach(function (marker) {
                 marker.setMap(null);
             });
             markers = [];
@@ -260,55 +270,57 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
     <div id="header">
-        <h1>Bem-vindo ao RTL</h1>
+        <div style="display: flex; align-items: center;">
+            <img src="caminho/para/sua/imagem.png" alt="Logo da RTL" class="logo" style="margin-right: 10px;">
+            <h1>Bem-vindo ao RTL</h1>
+        </div>
     </div>
+
     <div id="search-bar">
-        <input type="text" id="address-input" placeholder="Pesquisa">
+        <input type="text" id="address-input" placeholder="Pesquisar">
         <button onclick="searchAddress()">Pesquisar</button>
     </div>
-    
+
     <div id="map"></div>
-    
+
     <div id="navigation-bar">
         <div class="dropdown">
             <button class="menu" onclick="toggleSubmenu()">Menu</button>
             <div class="submenu" id="submenu">
                 <a href="outra_Dados.html">Dados</a>
-                <a href="outra_Historico.html">Historico</a>
+                <a href="outra_Historico.html">Histórico</a>
                 <a href="outra_Perfil.html">Perfil</a>
             </div>
         </div>
-        <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
+        <a href="#" class="menu" onclick="showForm('registration-form')">Registro</a>
         <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
         <a href="outra_pagina.html" class="menu">Recente</a>
         <a href="#" class="menu">Sair</a>
     </div>
-    
-    
-    
+
     <div class="form-container" id="registration-form" style="display:none">
-        <h2>Registo</h2>
+        <h2>Registro</h2>
         <label for="registration-email">E-mail:</label>
         <input type="text" id="registration-email" placeholder="Digite o e-mail">
-    
+
         <label for="password">Senha:</label>
         <input type="password" id="password" placeholder="Digite a senha">
-    
+
         <label for="full-name">Nome Completo:</label>
         <input type="text" id="full-name" placeholder="Digite o nome completo">
-    
+
         <label for="phone-number">Número de Telefone:</label>
         <input type="text" id="phone-number" placeholder="Digite o número de telefone">
-    
+
         <label for="date-of-birth">Data de Nascimento:</label>
         <input type="date" id="date-of-birth" placeholder="Digite a data de nascimento">
-    
-        <button onclick="sendConfirmationEmail()">Confime no seu e-mail</button>
+
+        <button onclick="sendConfirmationEmail()">Confirmar no seu e-mail</button>
     </div>
-    
-    
+
     <div class="form-container" id="login-form" style="display:none">
         <h2>Entrar</h2>
         <label for="login-email">E-mail:</label>
@@ -317,9 +329,10 @@
         <input type="password" id="password" placeholder="Digite a senha">
         <button>Entrar</button>
     </div>
-    
+
     <footer>
-        &copy; 2023 RTL - Real Time Location
+        Todos os direitos reservados. &copy; 2023 RTL
     </footer>
 </body>
+
 </html>

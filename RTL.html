@@ -174,7 +174,7 @@
             display: block;
         }
     </style>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
     <script>
         var map;
         var markers = [];
@@ -280,8 +280,8 @@
     </header>
 
     <div id="search-bar">
-        <input type="text" id="address-input" placeholder="Pesquisar">
-        <button onclick="searchAddress()">Pesquisar</button>
+        <input type="text" id="address-input" placeholder="Pesquisar" style="width: 70%; padding: 10px; font-size: 16px; border: none; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, .3);">
+        <button onclick="searchAddress()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Pesquisar</button>
     </div>
 
     <div id="map"></div>
@@ -304,34 +304,36 @@
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registro</h2>
         <label for="registration-email">E-mail:</label>
-        <input type="text" id="registration-email" placeholder="Digite o e-mail">
+        <input type="text" id="registration-email" placeholder="Digite o e-mail" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
 
         <label for="password">Senha:</label>
-        <input type="password" id="password" placeholder="Digite a senha">
+        <input type="password" id="password" placeholder="Digite a senha" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
 
         <label for="full-name">Nome Completo:</label>
-        <input type="text" id="full-name" placeholder="Digite o nome completo">
+        <input type="text" id="full-name" placeholder="Digite o nome completo" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
 
         <label for="phone-number">Número de Telefone:</label>
-        <input type="text" id="phone-number" placeholder="Digite o número de telefone">
+        <input type="text" id="phone-number" placeholder="Digite o número de telefone" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
 
         <label for="date-of-birth">Data de Nascimento:</label>
-        <input type="date" id="date-of-birth" placeholder="Digite a data de nascimento">
+        <input type="date" id="date-of-birth" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
 
-        <button onclick="sendConfirmationEmail()">Confirmar no seu e-mail</button>
+        <button onclick="sendConfirmationEmail()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Registrar</button>
     </div>
 
     <div class="form-container" id="login-form" style="display:none">
         <h2>Entrar</h2>
         <label for="login-email">E-mail:</label>
-        <input type="text" id="login-email" placeholder="Digite o e-mail">
-        <label for="password">Senha:</label>
-        <input type="password" id="password" placeholder="Digite a senha">
-        <button>Entrar</button>
+        <input type="text" id="login-email" placeholder="Digite o e-mail" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+
+        <label for="login-password">Senha:</label>
+        <input type="password" id="login-password" placeholder="Digite a senha" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
+
+        <button onclick="login()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Entrar</button>
     </div>
 
     <footer>
-        Todos os direitos reservados. &copy; 2023 RTL
+        &copy; 2023 RTL - Real Time Location
     </footer>
 </body>
 

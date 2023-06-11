@@ -18,20 +18,25 @@
             color: #fff;
         }
 
-        /* Estilos para o cabeçalho */
-     #header {
+     /* Estilos para o cabeçalho */
+        #header {
     background-color: #000;
-    padding: 20px;
+    padding: 10px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
+#header h1 {
+    flex-shrink: 1;
+    font-size: 24px;
+    margin: 0;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-        #header h1 {
-            font-size: 24px;
-            margin: 0;
-            color: #fff;
-        }
 
         /* Estilos para a barra de pesquisa */
         #search-bar {
@@ -61,9 +66,10 @@
             cursor: pointer;
         }
 
-       .logo-container 
-    margin-left: auto;
-
+        .logo {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
         }
 
         /* Estilos para o mapa */
@@ -272,11 +278,10 @@
 
 <body>
     <header id="header">
-<div class="logo-container">
-    <img src="./img/RTL.png" alt="Logo da RTL" class="logo">
-    <h1>Bem-vindo ao RTL</h1>
-</div>
-
+        <div class="logo-container">
+            <img src="./img/RTL.png" alt="Logo da RTL" class="logo">
+            <h1>Bem-vindo ao RTL</h1>
+        </div>
     </header>
 
     <div id="search-bar">

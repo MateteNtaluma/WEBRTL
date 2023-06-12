@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Registo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom right, #ffffff, #ffffffc0);
+            background-repeat: no-repeat;
+            background-size: cover;
+            text-align: center;
+            color: #fff;
+        }
+
+        .container {
+            width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 4px;
+            resize: vertical;
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        button {
+            background-color: #1595df;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="RTL.png" alt="Logo da Empresa">
+        </div>
+        <h2 style="color: #000000">Registo</h2>
+        <form action="processar_registo.php" method="POST" onsubmit="return validateAge()">
+            <label for="nome_completo" style="color: #000000">Nome Completo:</label>
+            <input type="text" id="nome_completo" name="nome_completo" placeholder="Digite o nome completo" required>
+
+            <label for="telefone" style="color: #000000">Número de Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="Digite o número de telefone" required>
+
+            <label for="data_nascimento" style="color: #000000">Data de Nascimento:</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" required>
+
+            <label for="email_registo" style="color: #000000">E-mail:</label>
+            <input type="email" id="email_registo" name="email_registo" placeholder="Digite o e-mail" required>
+
+            <label for="senha_registo" style="color: #000000">Senha:</label>
+            <input type="password" id="senha_registo" name="senha_registo" placeholder="Digite a senha" required>
+
+            <button type="submit">Registar</button>
+        </form>
+        <p id="age-error" class="error-message" style="display: none;">Você deve ter pelo menos 18 anos para se registar.</p>
+    </div>
+
+    <script>
+        function validateAge() {
+            var dobInput = document.getElementById("data_nascimento");
+            var dob = new Date(dobInput.value);
+            var currentDate = new Date();
+            var age = currentDate.getFullYear() - dob.getFullYear();
+
+            if (currentDate.getMonth() < dob.getMonth() ||
+                (currentDate.getMonth() === dob.getMonth() && currentDate.getDate() < dob.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                document.getElementById("age-error").style.display = "block";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

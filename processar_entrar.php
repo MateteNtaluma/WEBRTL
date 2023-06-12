@@ -2,6 +2,8 @@
 $email=$_POST['email'];
 $senha=$_POST['senha'];
 
-echo $email . ' - ' . $senha;
+if (isset($email) && isset($senha)){ 
+  $liga=
+}
 
 ?>

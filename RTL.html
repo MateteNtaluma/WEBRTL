@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8">
     <title>RTL - Real Time Location</title>
@@ -8,175 +7,164 @@
         /* Estilos gerais */
         * {
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1c1c1c;
-            color: #fff;
         }
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #1c1c1c;
+        color: #fff;
+    }
 
-     /* Estilos para o cabeçalho */
-        #header {
-    background-color: #000;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    /* Estilos para o cabeçalho */
+    #header {
+        background-color: #000;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-#header h1 {
-    flex-shrink: 1;
-    font-size: 24px;
-    margin: 0;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+    #header h1 {
+        flex-shrink: 1;
+        font-size: 24px;
+        margin: 0;
+        color: #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
+    /* Estilos para a barra de pesquisa */
+    #search-bar {
+        background-color: #333;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        /* Estilos para a barra de pesquisa */
-        #search-bar {
-            background-color: #333;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    #search-bar input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+    }
 
-        #search-bar input[type="text"] {
-            width: 70%;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
-        }
+    #search-bar button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #fc0;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        #search-bar button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #fc0;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .logo {
+        width: 50px;
+        height: 50px;
+        margin-left: 1000px;
+    }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            margin-left: 1000px;
-        }
+    /* Estilos para o mapa */
+    #map {
+        height: calc(100vh - 150px);
+        width: 100%;
+    }
 
-        /* Estilos para o mapa */
-        #map {
-            height: calc(100vh - 150px);
-            width: 100%;
-        }
+    /* Estilos para a barra de navegação */
+    #navigation-bar {
+        background-color: #333;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-        /* Estilos para a barra de navegação */
-        #navigation-bar {
-            background-color: #333;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+    .menu {
+        margin: 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
 
-        .menu {
-            margin: 5px;
-            padding: 5px 10px;
-            font-size: 16px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
+    .submenu {
+        display: none;
+        position: absolute;
+        background-color: #333;
+        z-index: 1;
+    }
 
-        .submenu {
-            display: none;
-            position: absolute;
-            background-color: #333;
-            z-index: 1;
-        }
+    .submenu a {
+        display: block;
+        padding: 5px 10px;
+        color: #fff;
+        text-decoration: none;
+    }
 
-        .submenu a {
-            display: block;
-            padding: 5px 10px;
-            color: #fff;
-            text-decoration: none;
-        }
+    /* Estilos para o formulário */
+    .form-container {
+        background-color: #333;
+        padding: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+        border-radius: 5px;
+    }
 
-        /* Estilos para o formulário */
-        .form-container {
-            background-color: #333;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            border-radius: 5px;
-        }
+    .form-container h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #fff;
+    }
 
-        .form-container h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #fff;
-        }
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+    }
 
-        .form-container label {
-            display: block;
-            margin-bottom: 5px;
-            color: #fff;
-        }
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+    }
 
-        .form-container input[type="text"],
-        .form-container input[type="password"],
-        .form-container input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
+    .form-container button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #fc0;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        .form-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #fc0;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    /* Estilos para o rodapé */
+    footer {
+        background-color: #000;
+        padding: 10px;
+        text-align: center;
+    }
 
-        /* Estilos para o rodapé */
-        footer {
-            background-color: #000;
-            padding: 10px;
-            text-align: center;
-            color: #fff;
-        }
-
-        .dropdown {
-            position: relative;
-        }
-
-        .submenu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            display: none;
-        }
-
-        .dropdown:hover .submenu {
-            display: block;
+    footer a {
+        color: #fff;
+        text-decoration: none;
+    }
         }
     </style>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>

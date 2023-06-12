@@ -284,6 +284,10 @@
                 }
             });
         }
+        function toggleSubmenu() {
+        const submenu = document.getElementById("submenu");
+        submenu.style.display = submenu.style.display === "none" ? "block" : "none";
+    }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -302,7 +306,7 @@
     </div>
 
     <div id="map"></div>
-
+    
     <nav id="navigation-bar">
         <div class="dropdown">
             <button class="menu" onclick="toggleSubmenu()">Menu</button>
@@ -315,6 +319,7 @@
         <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
         <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
     </nav>
+    
 
     <div class="form-container" id="registration-form" style="display:none">
         <h2>Registro</h2>

@@ -66,7 +66,7 @@
     .logo {
         width: 50px;
         height: 50px;
-        margin-left: 100px;
+        margin-left: 1000px;
     }
 
     /* Estilos para o mapa */
@@ -284,10 +284,6 @@
                 }
             });
         }
-        function toggleSubmenu() {
-        const submenu = document.getElementById("submenu");
-        submenu.style.display = submenu.style.display === "none" ? "block" : "none";
-    }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -295,7 +291,7 @@
 <body>
     <header id="header">
         <div class="logo-container">
-            <img src="./img/RTL.png" alt="Logo da RTL" class="logo">
+            <img src=".RTL.png" alt="Logo da RTL" class="logo">
             <h1>Bem-vindo ao RTL</h1>
         </div>
     </header>
@@ -306,7 +302,7 @@
     </div>
 
     <div id="map"></div>
-    
+
     <nav id="navigation-bar">
         <div class="dropdown">
             <button class="menu" onclick="toggleSubmenu()">Menu</button>
@@ -316,40 +312,9 @@
                 <a href="outra_Perfil.html">Perfil</a>
             </div>
         </div>
-        <a href="#" class="menu" onclick="showForm('registration-form')">Registo</a>
-        <a href="#" class="menu" onclick="showForm('login-form')">Entrar</a>
-    </nav>
-    
-
-    <div class="form-container" id="registration-form" style="display:none">
-        <h2>Registro</h2>
-        <label for="registration-email">E-mail:</label>
-        <input type="text" id="registration-email" placeholder="Digite o e-mail" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <label for="password">Senha:</label>
-        <input type="password" id="password" placeholder="Digite a senha" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <label for="full-name">Nome Completo:</label>
-        <input type="text" id="full-name" placeholder="Digite o nome completo" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <label for="phone-number">Número de Telefone:</label>
-        <input type="text" id="phone-number" placeholder="Digite o número de telefone" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <label for="date-of-birth">Data de Nascimento:</label>
-        <input type="date" id="date-of-birth" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <button onclick="sendConfirmationEmail()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Registrar</button>
-    </div>
-
-    <div class="form-container" id="login-form" style="display:none">
-        <h2>Entrar</h2>
-        <label for="login-email">E-mail:</label>
-        <input type="text" id="login-email" placeholder="Digite o e-mail" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <label for="login-password">Senha:</label>
-        <input type="password" id="login-password" placeholder="Digite a senha" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px;">
-
-        <button onclick="login()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Entrar</button>
+        <a href="RTL.HTML.Registo.html" class="menu" onclick="redirecionarParaPagina()">Registo</a>
+        <a href="HTML.RTL.Entrar.html" class="menu" onclick="redirecionarParaPagina()">Entrar</a>
+      </nav>
     </div>
    
         <h2>Calcular Rota</h2>

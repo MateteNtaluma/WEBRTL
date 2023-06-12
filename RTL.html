@@ -164,13 +164,14 @@
     footer a {
         color: #fff;
         text-decoration: none;
-    }
-        }
+    }    
     </style>
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
     <script>
         var map;
         var markers = [];
+        var directionsService;
+        var directionsDisplay;
         var activeFormId = '';
 
         function initMap() {
@@ -180,6 +181,10 @@
                 maxZoom: 21,
                 minZoom: 6
             });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
         }
 
         function searchAddress() {
@@ -260,6 +265,25 @@
             var submenu = document.getElementById('submenu');
             submenu.classList.toggle('show');
         }
+
+        function calculateRoute() {
+            var start = document.getElementById('start-input').value;
+            var end = document.getElementById('end-input').value;
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (result, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                } else {
+                    alert('Não foi possível calcular a rota.');
+                }
+            });
+        }
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -322,6 +346,12 @@
 
         <button onclick="login()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Entrar</button>
     </div>
+   
+        <h2>Calcular Rota</h2>
+        <input id="start-input" type="text" placeholder="Origem">
+        <input id="end-input" type="text" placeholder="Destino">
+        <button onclick="calculateRoute()">Calcular</button>
+    
 
     <footer>
         &copy; 2023 RTL - Real Time Location

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <title>RTL - Real Time Location</title>
@@ -10,165 +11,134 @@
             margin: 0;
             padding: 0;
         }
+
         body {
-        font-family: Arial, sans-serif;
-        background-color: #1c1c1c;
-        color: #fff;
-    }
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
 
-    /* Estilos para o cabeçalho */
-    #header {
-        background-color: #000;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        /* Estilos para o cabeçalho */
+        #header {
+            background-color: #0099cc;
+            padding: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    #header h1 {
-        flex-shrink: 1;
-        font-size: 24px;
-        margin: 0;
-        color: #fff;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        #header .logo-container {
+            display: flex;
+            align-items: center;
+        }
 
-    /* Estilos para a barra de pesquisa */
-    #search-bar {
-        background-color: #333;
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+        #header .logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
 
-    #search-bar input[type="text"] {
-        width: 70%;
-        padding: 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
-    }
+        #header h1 {
+            font-size: 10px;
+            margin: 0;
+            color: #fff;
+        }
 
-    #search-bar button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #fc0;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+        /* Estilos para a barra de pesquisa e rota */
+        #search-route-bar {
+            background-color: #fff;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
 
-   .logo {
-    width: 50px;
-    height: 50px;
-    margin-left: auto;
-    margin-right: 100px;
+        #search-route-bar input[type="text"] {
+            width: 48%;
+            padding: 15px;
+            font-size: 15px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
+        }
 
-    }
+        #search-route-bar button {
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #0099cc;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+        }
 
-    /* Estilos para o mapa */
-    #map {
-        height: calc(100vh - 150px);
-        width: 100%;
-    }
+        /* Estilos para o mapa */
+        #map {
+            height: 95vh;
+            width: 100%;
+        }
 
-    /* Estilos para a barra de navegação */
-    #navigation-bar {
-        background-color: #333;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-    }
+        /* Estilos para a barra de navegação */
+        #navigation-bar {
+            background-color: #0099cc;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-    .menu {
-        margin: 5px;
-        padding: 5px 10px;
-        font-size: 16px;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-    }
+        .dropdown {
+            position: relative;
+        }
 
-    .submenu {
-        display: none;
-        position: absolute;
-        background-color: #333;
-        z-index: 1;
-    }
+        .menu {
+            margin: 5px;
+            padding: 5px 10px;
+            font-size: 16px;
+            background-color: #0099cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
 
-    .submenu a {
-        display: block;
-        padding: 5px 10px;
-        color: #fff;
-        text-decoration: none;
-    }
+        .submenu {
+            display: none;
+            position: absolute;
+            background-color: #0099cc;
+            z-index: 1;
+            min-width: 120px;
+        }
 
-    /* Estilos para o formulário */
-    .form-container {
-        background-color: #333;
-        padding: 20px;
-        max-width: 400px;
-        margin: 0 auto;
-        border-radius: 5px;
-    }
+        .submenu a {
+            display: block;
+            padding: 5px 10px;
+            color: #fff;
+            text-decoration: none;
+        }
 
-    .form-container h2 {
-        font-size: 20px;
-        margin-bottom: 10px;
-        color: #fff;
-    }
+        .submenu.show {
+            display: block;
+        }
 
-    .form-container label {
-        display: block;
-        margin-bottom: 5px;
-        color: #fff;
-    }
+        /* Estilos para o rodapé */
+        footer {
+            background-color: #0099cc;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
 
-    .form-container input[type="text"],
-    .form-container input[type="password"],
-    .form-container input[type="email"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        font-size: 16px;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
-    }
-
-    .form-container button {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #fc0;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    /* Estilos para o rodapé */
-    footer {
-        background-color: #000;
-        padding: 10px;
-        text-align: center;
-    }
-
-    footer a {
-        color: #fff;
-        text-decoration: none;
-    }    
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" async defer></script>
     <script>
         var map;
         var markers = [];
@@ -190,7 +160,7 @@
         }
 
         function searchAddress() {
-            var address = document.getElementById('address-input').value;
+            var address = document.getElementById('search-input').value;
             var geocoder = new google.maps.Geocoder();
 
             geocoder.geocode({ address: address }, function (results, status) {
@@ -217,60 +187,15 @@
             markers = [];
         }
 
-        function showForm(formId) {
-            if (activeFormId === formId) {
-                hideForm(formId);
-                activeFormId = '';
-            } else {
-                hideAllForms();
-                var form = document.getElementById(formId);
-                form.style.display = 'block';
-                activeFormId = formId;
-            }
-        }
-
-        function hideForm(formId) {
-            var form = document.getElementById(formId);
-            form.style.display = 'none';
-        }
-
-        function hideAllForms() {
-            var forms = document.getElementsByClassName('form-container');
-            for (var i = 0; i < forms.length; i++) {
-                forms[i].style.display = 'none';
-            }
-        }
-
-        function sendConfirmationEmail() {
-            var email = document.getElementById('registration-email').value;
-            var fullName = document.getElementById('full-name').value;
-            var phoneNumber = document.getElementById('phone-number').value;
-            var dateOfBirth = document.getElementById('date-of-birth').value;
-
-            // TODO: Implementar lógica de envio de e-mail de confirmação
-            // ...
-
-            // TODO: Processar os dados do formulário, por exemplo, enviar para um servidor
-            // ...
-
-            // Exemplo de alerta de sucesso (substitua pela lógica real)
-            alert('Dados enviados com sucesso!');
-
-            // Limpar os campos do formulário
-            document.getElementById('registration-email').value = '';
-            document.getElementById('full-name').value = '';
-            document.getElementById('phone-number').value = '';
-            document.getElementById('date-of-birth').value = '';
-        }
-
         function toggleSubmenu() {
             var submenu = document.getElementById('submenu');
             submenu.classList.toggle('show');
         }
 
-        function calculateRoute() {
-            var start = document.getElementById('start-input').value;
-            var end = document.getElementById('end-input').value;
+        function calculateRoute(event) {
+            event.preventDefault();
+            var start = document.getElementById('origin-input').value;
+            var end = document.getElementById('destination-input').value;
 
             var request = {
                 origin: start,
@@ -293,14 +218,21 @@
 <body>
     <header id="header">
         <div class="logo-container">
-            <img src=".RTL.png" alt="Logo da RTL" class="logo">
-            <h1>Bem-vindo ao RTL</h1>
+            <img src="RTL.png" alt="Logo da RTL" class="logo">
+            <h1>RTL</h1>
         </div>
     </header>
 
-    <div id="search-bar">
-        <input type="text" id="address-input" placeholder="Pesquisar" style="width: 70%; padding: 10px; font-size: 16px; border: none; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, .3);">
-        <button onclick="searchAddress()" style="padding: 10px 20px; font-size: 16px; background-color: #fc0; color: #fff; border: none; border-radius: 5px; cursor: pointer;">Pesquisar</button>
+    <div id="search-route-bar">
+        <form id="route-form" onsubmit="calculateRoute(event)">
+            <input type="text" id="origin-input" placeholder="Origem">
+            <input type="text" id="destination-input" placeholder="Destino">
+            <button type="submit">Calcular Rota</button>
+        </form>
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="Pesquisar" style="width: 30%;">
+            <button onclick="searchAddress()">Pesquisar</button>
+        </div>
     </div>
 
     <div id="map"></div>
@@ -309,24 +241,17 @@
         <div class="dropdown">
             <button class="menu" onclick="toggleSubmenu()">Menu</button>
             <div class="submenu" id="submenu">
-                <a href="outra_Dados.html"></a>
+                <a href="outra_Dados.html">Dados</a>
                 <a href="outra_Historico.html">Histórico</a>
                 <a href="outra_Perfil.html">Perfil</a>
             </div>
         </div>
-        <a href="RTL.HTML.Registo.html" class="menu" onclick="redirecionarParaPagina()">Registo</a>
-        <a href="HTML.RTL.Entrar.html" class="menu" onclick="redirecionarParaPagina()">Entrar</a>
-      </nav>
-    </div>
-   
-        <h2>Calcular Rota</h2>
-        <input id="start-input" type="text" placeholder="Origem">
-        <input id="end-input" type="text" placeholder="Destino">
-        <button onclick="calculateRoute()">Calcular</button>
-    
+        <a href="RTL_Registo.html" class="menu">Registo</a>
+        <a href="RTL_Entrar.html" class="menu">Entrar</a>
+    </nav>
 
     <footer>
-        &copy; 2023 RTL - Real Time Location
+        <p>RTL - Real Time Location &copy; 2023. Todos os direitos reservados.</p>
     </footer>
 </body>
 

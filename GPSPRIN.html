@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt">
 
-<!-- Início do cabeçalho -->
 <head>
-    <!-- Especificação do conjunto de caracteres -->
     <meta charset="UTF-8">
-    <!-- Título da página -->
     <title>RTL - Real Time Location</title>
-    <!-- Início do estilo -->
     <style>
         /* Estilos gerais */
         * {
@@ -15,12 +11,13 @@
             margin: 0;
             padding: 0;
         }
-        /* Estilos para o corpo da página */
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             color: #333;
         }
+
         /* Estilos para o cabeçalho */
         #header {
             background-color: #0099cc;
@@ -29,24 +26,25 @@
             justify-content: center;
             align-items: center;
         }
-        /* Estilos para o container do logotipo no cabeçalho */
+
         #header .logo-container {
             display: flex;
             align-items: center;
         }
-        /* Estilos para o logotipo no cabeçalho */
+
         #header .logo {
             width: 30px;
             height: 30px;
             margin-right: 5px;
             border-radius: 50%;
         }
-        /* Estilos para o título no cabeçalho */
+
         #header h1 {
             font-size: 10px;
             margin: 0;
             color: #fff;
         }
+
         /* Estilos para a barra de pesquisa e rota */
         #search-route-bar {
             background-color: #fff;
@@ -57,7 +55,7 @@
             flex-wrap: wrap;
             margin-bottom: 10px;
         }
-        /* Estilos para o campo de texto na barra de pesquisa e rota */
+
         #search-route-bar input[type="text"] {
             width: 48%;
             padding: 15px;
@@ -66,7 +64,7 @@
             border-radius: 15px;
             box-shadow: 0 3px 6px rgba(0, 0, 0, .3);
         }
-        /* Estilos para o botão na barra de pesquisa e rota */
+
         #search-route-bar button {
             padding: 10px 15px;
             font-size: 14px;
@@ -76,11 +74,13 @@
             border-radius: 15px;
             cursor: pointer;
         }
+
         /* Estilos para o mapa */
         #map {
             height: 95vh;
             width: 100%;
         }
+
         /* Estilos para a barra de navegação */
         #navigation-bar {
             background-color: #0099cc;
@@ -90,11 +90,11 @@
             align-items: center;
             flex-wrap: wrap;
         }
-        /* Estilos para o menu suspenso */
+
         .dropdown {
             position: relative;
         }
-        /* Estilos para o botão do menu */
+
         .menu {
             margin: 5px;
             padding: 5px 10px;
@@ -106,7 +106,7 @@
             cursor: pointer;
             text-decoration: none;
         }
-        /* Estilos para o submenu do menu suspenso */
+
         .submenu {
             display: none;
             position: absolute;
@@ -114,193 +114,168 @@
             z-index: 1;
             min-width: 120px;
         }
-        /* Estilos para os links do submenu */
+
         .submenu a {
             display: block;
             padding: 5px 10px;
             color: #fff;
             text-decoration: none;
         }
-/* Estilos para o submenu */
-.submenu {
-    display: none; /* Oculta o submenu inicialmente */
-    position: absolute;
-    background-color: #0099cc; /* Cor de fundo do submenu */
-    z-index: 1; 
-    min-width: 120px; /* Largura mínima do submenu */
-}
-.submenu a {
-    display: block;
-    padding: 5px 10px; /* Preenchimento interno dos links do submenu */
-    color: #fff; /* Cor do texto dos links do submenu */
-    text-decoration: none; /* Remove a decoração de texto nos links */
-}
-.submenu.show {
-    display: block; /* Exibe o submenu quando a classe .show é aplicada */
-}
-/* Estilos para o rodapé */
-footer {
-    background-color: #0099cc; /* Cor de fundo do rodapé */
-    padding: 10px; /* Preenchimento interno do rodapé */
-    text-align: center; /* Alinhamento central do texto no rodapé */
-    color: #fff; /* Cor do texto no rodapé */
-}
-footer a {
-    color: #fff; /* Cor dos links no rodapé */
-    text-decoration: none; /* Remove a decoração de texto nos links do rodapé */
-}
+
+        .submenu.show {
+            display: block;
+        }
+
+        /* Estilos para o rodapé */
+        footer {
+            background-color: #0099cc;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
     </style>
-   <!-- Importação da biblioteca do Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap" async defer></script>
-<script>
-    // Declaração das variáveis
-    var map; // Objeto do mapa do Google
-    var markers = []; // Array para armazenar marcadores
-    var directionsService; // Serviço de direções do Google Maps
-    var directionsDisplay; // Objeto para exibir as direções no mapa
-    var activeFormId = ''; // ID do formulário ativo
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc&callback=initMap"  async defer></script>
+    <script>
+        var map;
+        var markers = [];
+        var directionsService;
+        var directionsDisplay;
+        var activeFormId = '';
 
-    // Função de inicialização do mapa
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: 38.71, lng: -9.133 }, // Coordenadas do centro do mapa
-            zoom: 2, // Nível de zoom inicial
-            maxZoom: 21, // Nível máximo de zoom permitido
-            minZoom: 3, // Nível mínimo de zoom permitido
-        });
-        directionsService = new google.maps.DirectionsService(); // Inicializa o serviço de direções
-        directionsDisplay = new google.maps.DirectionsRenderer(); // Inicializa o objeto para exibir direções
-        directionsDisplay.setMap(map); // Associa o objeto de exibição de direções ao mapa
-    }
-    // Função para pesquisar um endereço e exibir no mapa
-function searchAddress() {
-    var address = document.getElementById('search-input').value; // Obtém o valor do campo de pesquisa de endereço
-    var geocoder = new google.maps.Geocoder(); // Inicializa o geocodificador do Google Maps
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 38.71, lng: -9.133 },
+                zoom: 12,
+                maxZoom: 21,
+                minZoom: 6
+            });
 
-    // Faz a geocodificação do endereço
-    geocoder.geocode({ address: address }, function (results, status) {
-          // Código a ser executado se a geocodificação for bem-sucedida
-        if (status === google.maps.GeocoderStatus.OK) {
-            var location = results[0].geometry.location; // Obtém a localização do endereço
-            map.setCenter(location); // Centraliza o mapa na localização do endereço
-            clearMarkers(); // Remove todos os marcadores do mapa
-
-            // Adiciona um novo marcador no mapa com as informações do endereço pesquisado
-            var marker = new google.maps.Marker({
-    map: map, // Mapa em que o marcador será exibido
-    position: location, // Posição geográfica do marcador
-    title: address // Título do marcador, que neste caso é o endereço
-});
-            markers.push(marker); // Adiciona o marcador ao array de marcadores
-        } else {
-            alert('Não foi possível encontrar o endereço.');
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
         }
-    });
-}
-// Função para remover todos os marcadores do mapa
-function clearMarkers() {
-    markers.forEach(function (marker) {
-        marker.setMap(null); // Remove o marcador do mapa
-    });
-    markers = []; // Limpa o array de marcadores
-}
-// Função para exibir ou ocultar o submenu
-function toggleSubmenu() {
-    var submenu = document.getElementById('submenu');
-    submenu.classList.toggle('show'); // Alterna a classe 'show' para exibir ou ocultar o submenu
-}
-// Função para calcular uma rota entre dois pontos
-function calculateRoute(event) {
-    event.preventDefault();
-    var start = document.getElementById('origin-input').value; // Obtém o valor do campo de origem
-    var end = document.getElementById('destination-input').value; // Obtém o valor do campo de destino
-    var request = { //solicitar uma rota ao serviço de direções do Google 
-    origin: start, // Origem da rota
-    destination: end, // Destino da rota
-    travelMode: google.maps.TravelMode.DRIVING // Modo de viagem, neste caso, é de carro
-};
-    // Solicita a rota ao serviço de direções do Google Maps
-    directionsService.route(request, function (result, status) {
-        // Código a ser executado se a geocodificação for bem-sucedida
-        if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(result); // Exibe a rota no mapa
-        } else {
-            alert('Não foi possível calcular a rota.');
+
+        function searchAddress() {
+            var address = document.getElementById('search-input').value;
+            var geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ address: address }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    var location = results[0].geometry.location;
+                    map.setCenter(location);
+                    clearMarkers();
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: location,
+                        title: address
+                    });
+                    markers.push(marker);
+                } else {
+                    alert('Não foi possível encontrar o endereço.');
+                }
+            });
         }
-    });
-}
-</script> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Meta tag para a viewport -->
-</head> <!-- Fim do cabeçalho -->
-<body> <!-- Corpo da página -->
-<header id="header"> <!-- Cabeçalho da página -->
-    <div class="logo-container"> <!-- Container do logo -->
-        <img src="RTL.png" alt="Logo da RTL" class="logo"> <!-- Imagem do logo -->
-        <h1>RTL</h1> <!-- Título da página -->
-    </header> <!-- Fechamento da tag header -->
-<div id="search-route-bar"> <!-- Barra de pesquisa e rota -->
-<form id="route-form" onsubmit="calculateRoute(event)"> <!-- Formulário para calcular a rota -->
-<input type="text" id="origin-input" placeholder="Origem"> <!-- Campo de entrada para a origem da rota -->
-<input type="text" id="destination-input" placeholder="Destino"> <!-- Campo de entrada para o destino da rota -->
-<button type="submit">Calcular Rota</button> <!-- Botão para submeter o formulário e calcular a rota -->
-</form>
-<div id="search-bar"> <!-- Barra de pesquisa -->
-<input type="text" id="search-input" placeholder="Pesquisar" style="width: 30%;"> <!-- Campo de entrada para pesquisa -->
-<button onclick="searchAddress()">Pesquisar</button> <!-- Botão para iniciar a pesquisa -->
+
+        function clearMarkers() {
+            markers.forEach(function (marker) {
+                marker.setMap(null);
+            });
+            markers = [];
+        }
+
+        function toggleSubmenu() {
+            var submenu = document.getElementById('submenu');
+            submenu.classList.toggle('show');
+        }
+
+        function calculateRoute(event) {
+            event.preventDefault();
+            var start = document.getElementById('origin-input').value;
+            var end = document.getElementById('destination-input').value;
+
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+
+            directionsService.route(request, function (result, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(result);
+                } else {
+                    alert('Não foi possível calcular a rota.');
+                }
+            });
+        }
+
+        function redirectToRegister() {
+            window.location.href = 'RTL.HTML.Registo.html';
+        }
+
+        function redirectToLogin() {
+            window.location.href = 'HTML.RTL.Entrar.html';
+        }
+
+        function checkAuthentication(event, target) {
+            event.preventDefault();
+            // Aqui você deve adicionar sua lógica de verificação de autenticação.
+            // Vou adicionar um exemplo simples que redireciona para a página de registro caso o usuário não esteja autenticado.
+            var isAuthenticated = false; // Altere para sua lógica de autenticação real
+
+            if (isAuthenticated) {
+                window.location.href = target;
+            } else {
+                redirectToRegister();
+            }
+        }
+    
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <header id="header">
+        <div class="logo-container">
+            <img src="RTL.png" alt="Logo da RTL" class="logo">
+            <h1>RTL</h1>
+        </div>
+    </header>
+
+    <div id="search-route-bar">
+        <form id="route-form" onsubmit="calculateRoute(event)">
+            <input type="text" id="origin-input" placeholder="Origem">
+            <input type="text" id="destination-input" placeholder="Destino">
+            <button type="submit">Calcular Rota</button>
+        </form>
+        <div id="search-bar">
+            <input type="text" id="search-input" placeholder="Pesquisar" style="width: 30%;">
+            <button onclick="searchAddress()">Pesquisar</button>
         </div>
     </div>
-    <div id="map"></div> <!-- Div para exibir o mapa -->
 
-    <nav id="navigation-bar"> <!-- Barra de navegação -->
-        <div class="dropdown"> <!-- Dropdown do menu -->
-<button class="menu" onclick="toggleSubmenu()">Menu</button> <!-- Botão para abrir/fechar o submenu -->
- <div class="submenu hide" id="submenu"> <!-- Submenu oculto por padrão -->
-<a href="HTML.RTL.Historico de localização.html">Histórico</a> <!-- Link para o histórico -->
-<a href="HTML.RTL.Perfil.html">Perfil</a> <!-- Link para o perfil -->
+    <div id="map"></div>
+
+    <nav id="navigation-bar">
+        <div class="dropdown">
+            <button class="menu" onclick="toggleSubmenu()">Menu</button>
+            <div class="submenu" id="submenu">
+                <a href="#" onclick="checkAuthentication(event, 'HTML.RTL.Historico de localização.html')">Histórico</a>
+                <a href="#" onclick="checkAuthentication(event, 'HTML.RTL.Perfil.html')">Perfil</a>
             </div>
         </div>
-<a href="RTL.HTML.Registo.html" class="menu" id="registo-link">Registo</a> <!-- Link para a página de registo -->
-<a href="HTML.RTL.Entrar.html" class="menu" id="entrar-link">Entrar</a> <!-- Link para a página de entrada -->
+        <a href="#" onclick="redirectToRegister()" class="menu">Registo</a>
+        <a href="#" onclick="redirectToLogin()" class="menu">Entrar</a>
     </nav>
-    <!-- ... -->
-    <script>
- function toggleSubmenu() { // Função para alternar a visibilidade do submenu
-            var submenu = document.getElementById('submenu');
- submenu.classList.toggle('hide'); // Adiciona ou remove a classe 'hide' para exibir ou ocultar o submenu
-}
-// Verifica se o usuário está autenticado
-function verificarAutenticacao() {
-    var usuarioAutenticado = getCookie('autenticado'); // Obtém o valor do cookie 'autenticado'
- if (usuarioAutenticado) {
- // Exibe os links do submenu
-document.getElementById('submenu').classList.remove('hide'); // Remove a classe 'hide' do submenu
-// Oculta os links de registo e entrar
-document.getElementById('registo-link').style.display = 'none'; // Oculta o link de registo
-document.getElementById('entrar-link').style.display = 'none'; // Oculta o link de entrar
-} else {
-// Oculta os links do submenu
-document.getElementById('submenu').classList.add('hide'); // Adiciona a classe 'hide' ao submenu
-// Exibe os links de registo e entrar
-document.getElementById('registo-link').style.display = 'block'; // Exibe o link de registo
-document.getElementById('entrar-link').style.display = 'block'; // Exibe o link de entrar
- }
-}
-  // Obtém o valor de um cookie pelo nome
-function getCookie(name) {
-    var cookies = document.cookie.split(';'); // Divide a string de cookies em um array
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim(); // Remove os espaços em branco do cookie
-        if (cookie.indexOf(name + '=') === 0) {
-            return cookie.substring(name.length + 1); // Retorna o valor do cookie
-        }
-    }
-    return ''; // Retorna uma string vazia caso o cookie não seja encontrado
-}
-// Chama a função de verificação de autenticação ao carregar a página
-window.onload = function () {
-    verificarAutenticacao(); // Chama a função verificarAutenticacao()
-};
-</script>
+
+    <footer>
+        <p>RTL - Real Time Location &copy; 2023. Todos os direitos reservados.</p>
+    </footer>
 </body>
 
 </html>
+

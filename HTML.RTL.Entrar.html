@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Página de Entrar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,12 +15,13 @@
 
         .container {
             width: 90%;
-            max-width: 600px;
-            margin: 10% auto;
-            background-color: rgba(255, 255, 255, 0.8);
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: rgba(255, 255, 255, 0.5);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
 
         .logo {
@@ -27,38 +29,26 @@
         }
 
         .logo img {
-            width: 200px;
-            height: 200px;
+            width: 250px;
+            height: 250px;
             border-radius: 50%;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            padding: 0 10px; /* Adicionado espaçamento interno */
-        }
-
-        .form-group label {
-            display: block;
-            text-align: left;
-            color: #000000;
-            margin-bottom: 5px;
-            font-size: 16px; /* Aumentado tamanho da fonte */
-        }
-
-        .form-group input {
+        input[type="email"],
+        input[type="password"] {
             width: 100%;
             padding: 12px 20px;
+            margin: 8px 0;
             box-sizing: border-box;
             border: none;
             border-radius: 4px;
             resize: vertical;
-            background-color: #f2f2f2;
-            color: #000000;
-            font-size: 16px; /* Aumentado tamanho da fonte */
+            background-color: #fdf4f4;
+            color: #ffffff;
         }
 
         button {
-            background-color: #0099cc;
+            background-color:#0099cc;
             color: white;
             padding: 14px 20px;
             margin: 8px 0;
@@ -69,25 +59,12 @@
         }
 
         button:hover {
-            background-color: #0085b3;
+            background-color: #45a049;
         }
 
         .error-message {
             color: red;
             margin-top: 10px;
-        }
-
-        @media only screen and (max-width: 600px) {
-            .container {
-                width: 100%;
-                margin-top: 20%;
-                border-radius: 0;
-            }
-
-            .form-group input,
-            button {
-                width: 100%;
-            }
         }
     </style>
 </head>
@@ -96,17 +73,13 @@
         <div class="logo">
             <img src="RTL.png" alt="Logo da Empresa">
         </div>
-        <h2>Entrar</h2>
+        <h2 style="color: #000000">Entrar</h2>
         <form action="processar_entrar.php" method="POST">
-            <div class="form-group">
-                <label for="email">E-mail:</label>
-                <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
-            </div>
+            <label for="email" style="color: #000000">E-mail:</label>
+            <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
 
-            <div class="form-group">
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
-            </div>
+            <label for="senha" style="color: #000000">Senha:</label>
+            <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
 
             <button type="submit">Entrar</button>
         </form>

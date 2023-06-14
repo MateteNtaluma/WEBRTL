@@ -4,84 +4,94 @@
     <title>Página de Entrar</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-image: linear-gradient(to bottom right, #ffffff, #ffffffc0);
-            background-repeat: no-repeat;
-            background-size: cover;
-            text-align: center;
-            color: #fff;
+            font-family: Arial, sans-serif;/* Define a família de fontes e o estilo do corpo do texto */
+            background-image: linear-gradient(to bottom right, #ffffff, #ffffffc0);    /* Define o plano de fundo como um gradiente linear */
+            background-repeat: no-repeat;/* Impede a repetição do plano de fundo */
+            background-size: cover; /* Redimensiona o plano de fundo para cobrir todo o elemento */
+            text-align: center;/* Centraliza o texto */
+            color: #fff;/* Define a cor do texto */
         }
 
         .container {
-            width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            background-color: rgba(255, 255, 255, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            width: 400px;/* Define a largura do contêiner */
+            margin: 0 auto;/* Centraliza o contêiner horizontalmente na página */
+            margin-top: 100px;/* Define a margem superior do contêiner */
+            background-color: rgba(255, 255, 255, 0.5);/* Define a cor de fundo do contêiner com transparência */
+            padding: 20px;/* Define o preenchimento interno do contêiner */
+            border-radius: 10px;/* Define o raio dos cantos do contêiner */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);/* Adiciona uma sombra ao contêiner */
         }
 
         .logo {
-            margin-bottom: 20px;
+            margin-bottom: 20px;/* Define a margem inferior do logotipo */
         }
 
         .logo img {
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
+            width: 250px;/* Define a largura da imagem do logotipo */
+            height: 250px;/* Define a altura da imagem do logotipo */
+            border-radius: 50%;/* Define o raio dos cantos da imagem do logotipo */
         }
 
         input[type="email"],
         input[type="password"] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: none;
-            border-radius: 4px;
-            resize: vertical;
-            background-color: #000000;
-            color: #ffffff;
+            width: 100%;/* Define a largura dos campos de entrada de e-mail e senha */
+            padding: 12px 20px;/* Define o preenchimento interno dos campos de entrada */
+            margin: 8px 0; /* Define as margens dos campos de entrada */
+            box-sizing: border-box;/* Inclui a largura da borda e do preenchimento na largura total */
+            border: none;/* Remove a borda dos campos de entrada */
+            border-radius: 4px;/* Define o raio dos cantos dos campos de entrada */
+            resize: vertical;/* Permite a redimensionamento vertical dos campos de entrada */
+            background-color: #000000;/* Define a cor de fundo dos campos de entrada */
+            color: #ffffff;/* Define a cor do texto nos campos de entrada */
         }
 
         button {
-            background-color: #040844;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
+            background-color: #0099cc;/* Define a cor de fundo do botão */
+            color: white; /* Define a cor do texto do botão */
+            padding: 14px 20px;/* Define o preenchimento interno do botão */
+            margin: 8px 0;/* Define as margens do botão */
+            border: none;/* Remove a borda do botão */
+            border-radius: 4px;/* Define o raio dos cantos do botão */
+            cursor: pointer;/* Mostra o cursor como um ponteiro ao passar o mouse sobre o botão */
+            width: 100%;/* Define a largura do botão */
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #45a049;/* Define a cor de fundo do botão ao passar o mouse sobre ele */
         }
 
         .error-message {
-            color: red;
-            margin-top: 10px;
+            color: red;/* Define a cor do texto da mensagem de erro */
+            margin-top: 10px;/* Define a margem superior da mensagem de erro */
+        }
+
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 90%;/* Define a largura do contêiner para telas menores */
+            }
+
+            .logo img {
+                width: 150px;/* Define a largura da imagem do logotipo para telas menores */
+                height: 150px;/* Define a altura da imagem do logotipo para telas menores */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo">
-            <img src="RTL.png" alt="Logo da Empresa">
+            <img src="RTL.png" alt="Logo da Empresa"><!-- Exibe a imagem do logotipo -->
         </div>
-        <h2 style="color: #000000">Entrar</h2>
-        <form action="processar_entrar.php" method="POST">
-            <label for="email" style="color: #000000">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
+        <h2 style="color: #000000">Entrar</h2><!-- Exibe o título "Entrar" -->
+        <form action="processar_entrar.php" method="POST"><!-- Formulário de login com método POST e ação "processar_entrar.php" -->
+            <label for="email" style="color: #000000">E-mail:</label>  <!-- Rótulo do campo de entrada de e-mail -->
+            <input type="email" id="email" name="email" placeholder="Digite o e-mail" required><!-- Campo de entrada de e-mail -->
 
-            <label for="senha" style="color: #000000">Senha:</label>
-            <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>
+            <label for="senha" style="color: #000000">Senha:</label><!-- Rótulo do campo de entrada de senha -->
+            <input type="password" id="senha" name="senha" placeholder="Digite a senha" required>  <!-- Campo de entrada de senha -->
 
-            <button type="submit">Entrar</button>
+            <button type="submit">Entrar</button><!-- Botão de envio do formulário -->
         </form>
     </div>
 </body>
 </html>
-

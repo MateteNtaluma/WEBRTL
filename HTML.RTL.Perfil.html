@@ -4,253 +4,232 @@
   <title>Perfil do Usuário</title>
   <style>
     /* Estilos gerais do corpo da página */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #000000; /* Cor de fundo preta */
-  color: #ffffff; /* Cor do texto branca */
-  margin: 0; /* Remove as margens */
-  padding: 0; /* Remove o preenchimento */
-}
-/* Estilos do cabeçalho do perfil */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #686767;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+    }
+    /* Estilos do cabeçalho do perfil */
 .profile-header {
-  background-color: #000000; /* Cor de fundo preta */
-  padding: 20px; /* Preenchimento de 20 pixels */
-  text-align: center; /* Centraliza o conteúdo */
-  color: #fff; /* Cor do texto branca */
+  background-color: #686767;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
 }
+
 .profile-header h1 {
-  font-size: 36px; /* Tamanho da fonte 36 pixels */
-  margin-bottom: 10px; /* Margem inferior de 10 pixels */
+  font-size: 36px;
+  margin-bottom: 10px;
 }
+
 .profile-header p {
-  font-size: 18px; /* Tamanho da fonte 18 pixels */
-  color: #fff; /* Cor do texto branca */
-  margin-top: -10px; /* Reduz o espaçamento superior em 10 pixels */
+  font-size: 18px;
+  color: #fff;
+  margin-top: -10px;
 }
+
 /* Estilos do conteúdo do perfil */
 .profile-content {
-  margin: 20px; /* Margem de 20 pixels em todas as direções */
+  margin: 20px;
 }
+
 .profile-content p {
-  font-size: 16px; /* Tamanho da fonte 16 pixels */
-  margin-bottom: 10px; /* Margem inferior de 10 pixels */
+  font-size: 16px;
+  margin-bottom: 10px;
 }
+
 .profile-content .label {
-  font-weight: bold; /* Texto em negrito */
+  font-weight: bold;
 }
+
 .profile-content .data {
-  background-color: transparent; /* Fundo transparente */
-  color: #fff; /* Cor do texto branca */
+  background-color: transparent;
+  color: #fff;
 }
+
 /* Estilos do rodapé do perfil */
 .profile-footer {
-  text-align: center; /* Centraliza o conteúdo */
-  margin-top: 30px; /* Margem superior de 30 pixels */
+  text-align: center;
+  margin-top: 30px;
 }
+
 .profile-footer a {
-  display: inline-block; /* Exibe como bloco com inline */
-  background-color: #0099cc; /* Cor de fundo azul */
-  color: rgb(255, 255, 255); /* Cor do texto branca */
-  padding: 10px 20px; /* Preenchimento de 10 pixels superior/inferior e 20 pixels esquerda/direita */
-  text-decoration: none; /* Remove a decoração de texto */
-  border-radius: 5px; /* Borda arredondada de 5 pixels */
+  display: inline-block;
+  background-color: #0099cc;
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
 }
+
 /* Estilos do logotipo do perfil */
 .profile-logo {
-  text-align: center; /* Centraliza o conteúdo */
-  padding: 10px; /* Preenchimento de 10 pixels */
+  text-align: center;
+  padding: 10px;
 }
+
 .profile-logo img {
-  max-width: 150px; /* Largura máxima de 150 pixels */
-  height: auto; /* Altura automática */
-  border-radius: 50%; /* Borda arredondada de 50% (formato de círculo) */
-  border: none; /* Remove a borda */
+  max-width: 150px;
+  height: auto;
+  border-radius: 50%;
+  border: none;
 }
+
 /* Estilos do avatar do perfil */
 .profile-avatar {
-  position: absolute; /* Posicionamento absoluto */
-  top: 20px; /* Posiciona a 20 pixels do topo */
-  left: 20px; /* Posiciona a 20 pixels da esquerda */
-  width: 80px; /* Largura de 80 pixels */
-  height: 80px; /* Altura de 80 pixels */
-  border-radius: 50%; /* Borda arredondada de 50% (formato de círculo) */
-  overflow: hidden; /* Oculta conteúdo que exceder os limites */
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
 }
+
 .profile-avatar img {
-  width: 100%; /* Largura de 100% */
-  height: 100%; /* Altura de 100% */
-  object-fit: cover; /* Redimensiona a imagem para preencher o espaço */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
 /* Estilos do campo de senha */
 .password-field {
-  position: relative; /* Posicionamento relativo */
+  position: relative;
 }
+
 .password-field input[type="password"] {
-  padding-right: 30px; /* Preenchimento à direita de 30 pixels */
-  border-radius: 0; /* Borda sem arredondamento */
+  padding-right: 30px;
+  border-radius: 0;
 }
+
 .password-field .toggle-password {
-  position: absolute; /* Posicionamento absoluto */
-  top: 50%; /* Posiciona a 50% do topo */
-  right: 10px; /* Posiciona a 10 pixels da direita */
-  transform: translateY(-50%); /* Centraliza verticalmente */
-  cursor: pointer; /* Altera o cursor para um ponteiro */
-  color: #888; /* Cor do ícone do cursor */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
 }
+
 .password-field .toggle-password:hover {
-  color: #333; /* Cor do ícone do cursor ao passar o mouse */
+  color: #333;
 }
+
 /* Estilos do campo de upload de avatar */
 .profile-avatar input[type="file"] {
-  display: none; /* Não exibe o elemento */
+  display: none;
 }
+
 .profile-avatar label {
-  position: relative; /* Posicionamento relativo */
-  display: inline-block; /* Exibe como bloco com inline */
-  width: 80px; /* Largura de 80 pixels */
-  height: 80px; /* Altura de 80 pixels */
-  border-radius: 50%; /* Borda arredondada de 50% (formato de círculo) */
-  overflow: hidden; /* Oculta conteúdo que exceder os limites */
-  cursor: pointer; /* Altera o cursor para um ponteiro */
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
 }
+
 .profile-avatar label::before {
-  content: ""; /* Conteúdo vazio */
-  position: absolute; /* Posicionamento absoluto */
-  top: 0; /* Posiciona no topo */
-  left: 0; /* Posiciona na esquerda */
-  width: 100%; /* Largura de 100% */
-  height: 100%; /* Altura de 100% */
-  background-color: rgba(0, 0, 0, 0.7); /* Cor de fundo preta com opacidade 0.7 */
-  opacity: 0; /* Opacidade inicial de 0 */
-  transition: opacity 0.3s; /* Transição suave da opacidade em 0.3 segundos */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
+
 .profile-avatar label:hover::before {
-  opacity: 1; /* Opacidade de 1 ao passar o mouse */
+  opacity: 1;
 }
+
 .profile-avatar label img {
-  width: 100%; /* Largura de 100% */
-  height: 100%; /* Altura de 100% */
-  object-fit: cover; /* Redimensiona a imagem para preencher o espaço */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-/* Estilos para dispositivos móveis com largura máxima de 480 pixels */
-@media (max-width: 480px) {
-  .profile-header h1 {
-    font-size: 24px; /* Tamanho da fonte 24 pixels */
-  }
-  .profile-header p {
-    font-size: 14px; /*Tamanho da fonte 14 pixels */
-  }
-  .profile-content p {
-    font-size: 14px; /*Tamanho da fonte 14 pixels */
-  }
-  .profile-logo img {
-    max-width: 100px; /*Largura máxima de 100 pixels */
-  }
-  .profile-avatar {
-    width: 60px; /* Largura de 60 pixels */
-    height: 60px; /* Altura de 60 pixels */
-  }
-assword-field input[type="password"] {
-    padding-right: 20px;/* Preenchimento à direita de 20 pixels */
-  }
-  .password-field .toggle-password {
-    right: 5px;/* Posiciona a 5 pixels da direita */
-  }
-}
-</style><!-- Fim das regras de estilo CSS -->
-</head><!-- Fim da seção do cabeçalho -->
-<body><!-- Início do corpo do documento -->
-  <div class="profile-header"><!-- Início da seção do cabeçalho do perfil -->
-    <div class="profile-avatar"><!-- Div para o avatar do perfil -->
-      <input type="file" id="upload-avatar" accept="image/*" onchange="previewAvatar(event)">
-      <!-- Campo de upload de arquivo para selecionar o avatar -->
-      <label for="upload-avatar"><!-- Rótulo para o campo de upload de avatar -->
-        <img id="avatar-preview" src="avatar.jpg" alt="Foto de Perfil"><!-- Imagem do avatar do perfil -->
+</style>
+</head>
+<body>
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <label for="avatar-upload">
+        <img src="placeholder.png" alt="Avatar">
       </label>
+      <input type="file" id="avatar-upload">
     </div>
-    <div class="profile-logo"><!-- Div para o logotipo do perfil -->
-      <img src="RTL.png" alt="Logo"><!-- Imagem do logotipo -->
+    <div class="profile-logo">
+      <img src="RTL.png" alt="Logo">
     </div>
-    <h1>Perfil do Usuário</h1><!-- Título do perfil do usuário -->
-    <p style="text-shadow: none; font-size: 24px;">Bem-vindo(a) de volta, <span class="initial" id="nome"></span>!</p>
-    <!-- Parágrafo de boas-vindas com o nome do usuário -->
+    <h1>Perfil do Usuário</h1>
+    <p>Bem-vindo(a) de volta!</p>
   </div>
-  <div class="profile-content">           <!-- Início da seção de conteúdo do perfil -->
-    <p><span class="label">Email:</span> <span class="data" id="email"></span></p>
-    <!-- Parágrafo para exibir o email do usuário -->
-    <div class="password-field"><!-- Div para o campo de senha -->
-      <p><span class="label">Senha:</span> <input type="password" id="password" readonly></p>
-      <!-- Campo de senha -->
-      <span class="toggle-password" onclick="togglePasswordVisibility()"><i class="show-password"></i></span>
-      <!-- Ícone para alternar a visibilidade da senha -->
+  <div class="profile-content">
+    <p><span class="label">Nome:</span> <span class="data" id="nome-usuario"></span></p>
+    <p><span class="label">Email:</span> <span class="data" id="email-usuario"></span></p>
+    <p><span class="label">Telefone:</span> <span class="data" id="telefone-usuario"></span></p>
+    <p><span class="label">Data de Nascimento:</span> <span class="data" id="data-nascimento-usuario"></span></p>
+    <p><span class="label">Último Login:</span> <span class="data" id="ultimo-login-usuario"></span></p>
+    <div class="password-field">
+      <label for="password">Senha:</label>
+      <input type="password" id="password">
+      <span class="toggle-password">Mostrar</span>
     </div>
-    <p><span class="label">Telefone:</span> <span class="data" id="telefone"></span></p>
-    <!-- Parágrafo para exibir o telefone do usuário -->
-    <p><span class="label">Data de Nascimento:</span> <span class="data" id="dataNascimento"></span></p>
-    <!-- Parágrafo para exibir a data de nascimento do usuário -->
-    <p><span class="label">Último Login:</span> <span class="data" id="ultimoLogin"></span></p>
-    <!-- Parágrafo para exibir o último login do usuário -->
   </div>
-  <div class="profile-footer"><!-- Início da seção do rodapé do perfil -->
-    <a href="GPS.html">Voltar para o Site</a><!-- Link para voltar ao site -->
+  <div class="profile-footer">
+    <a href="/">Voltar ao Site</a>
   </div>
   <script>
-    // Função para exibir/ocultar a senha
-    function togglePasswordVisibility() {// Função para exibir ou ocultar a senha
-      var passwordInput = document.getElementById("password");// Obtém o elemento do campo de senha
-      var togglePassword = document.querySelector(".toggle-password");// Obtém o elemento do botão de alternar senha
-      var showPasswordIcon = document.querySelector(".show-password");// Obtém o elemento do ícone de mostrar senha
-  
-      if (passwordInput.type === "password") {// Verifica se o tipo de entrada da senha é "password"
-        passwordInput.type = "text";// Altera o tipo de entrada da senha para "text" (exibindo a senha)
-        showPasswordIcon.className = "";// Remove as classes existentes do ícone
-        showPasswordIcon.classList.add("fa", "fa-eye-slash");// Adiciona as classes de ícone para mostrar a senha
+    // Função de exemplo para obter o nome do usuário
+    function getNomeUsuario() {
+      return "João Silva";
+    }
+    
+    // Função de exemplo para obter o email do usuário
+    function getEmailUsuario() {
+      return "joao.silva@example.com";
+    }
+    
+    // Função de exemplo para obter o telefone do usuário
+    function getTelefoneUsuario() {
+      return "+55 11 98765-4321";
+    }
+    
+    // Função de exemplo para obter a data de nascimento do usuário
+    function getDataNascimentoUsuario() {
+      return "01/01/1990";
+    }
+    
+    // Função de exemplo para obter o último login do usuário
+    function getUltimoLoginUsuario() {
+      return "14/06/2023 18:30";
+    }
+    
+    // Preencher os dados do usuário no perfil
+    document.getElementById("nome-usuario").textContent = getNomeUsuario();
+    document.getElementById("email-usuario").textContent = getEmailUsuario();
+    document.getElementById("telefone-usuario").textContent = getTelefoneUsuario();
+    document.getElementById("data-nascimento-usuario").textContent = getDataNascimentoUsuario();
+    document.getElementById("ultimo-login-usuario").textContent = getUltimoLoginUsuario();
+    
+    // Alternar visibilidade da senha
+    var passwordInput = document.getElementById("password");
+    var togglePassword = document.querySelector(".toggle-password");
+    
+    togglePassword.addEventListener("click", function () {
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        togglePassword.textContent = "Ocultar";
       } else {
-        passwordInput.type = "password";// Caso contrário, altera o tipo de entrada da senha para "password" (ocultando a senha)
-        showPasswordIcon.className = "";// Remove as classes existentes do ícone
-        showPasswordIcon.classList.add("fa", "fa-eye");// Adiciona as classes de ícone para ocultar a senha
+        passwordInput.type = "password";
+        togglePassword.textContent = "Mostrar";
       }
-    }
-    // Função para pré-visualizar a foto de perfil selecionada
-    function previewAvatar(event) {// Função para pré-visualizar a imagem de perfil selecionada
-      var input = event.target;// Obtém o elemento de entrada do arquivo
-      var preview = document.getElementById('avatar-preview');// Obtém o elemento de visualização da imagem
-  
-      if (input.files && input.files[0]) {// Verifica se há arquivos selecionados
-        var reader = new FileReader();// Cria um objeto FileReader
-        reader.onload = function(e) {// Define o evento de carregamento do FileReader
-          preview.src = e.target.result;// Define o atributo src do elemento de visualização com o resultado do carregamento
-        }
-        reader.readAsDataURL(input.files[0]);// Lê o arquivo como uma URL de dados
-      }
-    }
- // Script para obter os dados do usuário e preencher os campos
-// Substitua as chamadas das funções pelas suas próprias implementações
-function preencherDadosUsuario() {// Função para preencher os campos com os dados do usuário
-  document.getElementById("nome").textContent = getNomeUsuario();// Define o conteúdo do elemento com id "nome" como o nome do usuário obtido pela função getNomeUsuario()
-  document.getElementById("email").textContent = getEmailUsuario();// Define o conteúdo do elemento com id "email" como o email do usuário obtido pela função getEmailUsuario()
-  document.getElementById("telefone").textContent = getTelefoneUsuario();// Define o conteúdo do elemento com id "telefone" como o telefone do usuário obtido pela função getTelefoneUsuario()
-  document.getElementById("dataNascimento").textContent = getDataNascimentoUsuario();// Define o conteúdo do elemento com id "dataNascimento" como a data de nascimento do usuário obtida pela função getDataNascimentoUsuario()
-  document.getElementById("ultimoLogin").textContent = getUltimoLoginUsuario()// Define o conteúdo do elemento com id "ultimoLogin" como o último login do usuário obtido pela função getUltimoLoginUsuario()
-}
-// Funções de exemplo para obter os dados do usuário
-function getNomeUsuario() {// Função de exemplo para obter o nome do usuário
-  return "Nome";// Retorna o nome do usuário (exemplo)
-}
-function getEmailUsuario() {// Função de exemplo para obter o email do usuário
-  return "email@example.com";// Retorna o email do usuário (exemplo)
-}
-function getTelefoneUsuario() {// Função de exemplo para obter o telefone do usuário
-  return "(123) 456-7890";// Retorna o telefone do usuário (exemplo)
-}
-function getDataNascimentoUsuario() {// Função de exemplo para obter a data de nascimento do usuário
-  return "01/01/1990";// Retorna a data de nascimento do usuário (exemplo)
-}
-function getUltimoLoginUsuario() {// Função de exemplo para obter o último login do usuário
-  return "01/06/2023";// Retorna o último login do usuário (exemplo)
-}
-// Chamada da função para preencher os dados do usuário ao carregar a página
-preencherDadosUsuario();// Chamada da função preencherDadosUsuario() para preencher os campos do usuário ao carregar a página
+    });
   </script>
 </body>
-</html>
+</html>  

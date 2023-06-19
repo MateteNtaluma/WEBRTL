@@ -3,7 +3,7 @@ $email = $_POST['email'];
 $senha = $_POST['senha'];
 
 if (isset($email) && isset($senha)) {
-  $liga = mysqli_connect('localhost', 'root', '', 'RTL');
+  $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
   $verifica = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email'");
   if (mysqli_num_rows($verifica) > 0) {
     $verifica2 = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email' and pass='$senha'");

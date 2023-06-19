@@ -9,6 +9,7 @@ $pass = $_POST['senha_registo'];
 if (isset($nome) && isset($telefone) && isset($nascimento) && isset($email) && isset($pass)) {
   $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
   $sql = "INSERT INTO utilizadores (id, email, nome, telefone, data_nascimento, pass) VALUES (NULL, '$email','$nome','$telefone','$nascimento','$pass')";
+  echo $sql;
   if ($liga->query($sql) === TRUE) {
     // Mudar para a página que pretende ir
     // header("Location: ddd.html");
@@ -17,7 +18,7 @@ if (isset($nome) && isset($telefone) && isset($nascimento) && isset($email) && i
     echo "Erro: " . $sql . "<br>" . $conn->error;
   }
 }
-else {
-  header("Location: HTML.RTL.Entrar.html");
-}
+// else {
+//  header("Location: HTML.RTL.Entrar.html");
+//}
 ?>

@@ -163,7 +163,7 @@
   $email = $_COOKIE['RTL'];
 
   if (isset($email)) {
-    $liga = mysqli_connect('localhost', 'root', '', 'RTL');
+    $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
     $verifica = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email'");
     $linha = mysqli_fetch_array($verifica);
   } else {

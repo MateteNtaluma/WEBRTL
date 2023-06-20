@@ -19,6 +19,6 @@ if (isset($nome) && isset($telefone) && isset($nascimento) && isset($email) && i
   }
 }
 // else {
-//  header("Location: HTML.RTL.Entrar.html");
+//  header("Location: HTML.RTL.Registo.html");
 //}
 ?>

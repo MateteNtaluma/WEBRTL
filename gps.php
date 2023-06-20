@@ -1,16 +1,19 @@
 <?php
-$date=$_GET['date'];
+$data=$_GET['data'];
 $long=$_GET['longitude'];
 $lat=$_GET['latitude'];
 
-if (isset($date)){
+if (isset($data)){
   echo $sql;
+  echo "1";
     $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
-    $sql = mysqli_query($liga, "INSERT INTO gps (Data,Longitude,Latitude) values ('$date','$long','$lat')");
+  echo "2";
+    $sql = mysqli_query($liga, "INSERT INTO gps (Data,Longitude,Latitude) values ('$data','$long','$lat')");
+  echo "3";
     if ($liga->query($sql) === TRUE) {
     echo "Dados inseridos";
    } 
-    echo  "INSERT INTO gps (Data,Longitude,Latitude) values ('$date','$long','$lat')";
+    echo  "INSERT INTO gps (Data,Longitude,Latitude) values ('$data','$long','$lat')";
 }
-echo $date . $long . $lat;
+echo $data . $long . $lat;
 ?>

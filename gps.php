@@ -6,7 +6,7 @@ $lat=$_GET['latitude'];
 if (isset($date)){
   echo $sql;
     $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
-    $sql = mysqli_query($liga, "INSERT INTO gps (Data,Longitude,Latitude) values ('" . $date . "','" . $long ."','". $lat . "')");
+    $sql = mysqli_query($liga, "INSERT INTO gps (Data,Longitude,Latitude) values ('$date','$long','$lat')");
     if ($liga->query($sql) === TRUE) {
     echo "Dados inseridos";
    } 

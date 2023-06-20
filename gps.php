@@ -12,7 +12,6 @@ if (isset($data)){
     if ($liga->query($sql) === TRUE) {
     echo "Dados inseridos";
    } 
-    echo  "INSERT INTO gps (Data,Longitude,Latitude) values ('$data','$long','$lat')";
 }
 echo $data . $long . $lat;
 ?>

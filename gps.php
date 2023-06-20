@@ -4,7 +4,6 @@ $long=$_GET['longitude'];
 $lat=$_GET['latitude'];
 
 if (isset($data)){
-  echo $sql;
   echo "1";
     $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
   echo "2";

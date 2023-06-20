@@ -18,7 +18,7 @@ if (isset($nome) && isset($telefone) && isset($nascimento) && isset($email) && i
     echo "Erro: " . $sql . "<br>" . $conn->error;
   }
 }
-// else {
-//  header("Location: HTML.RTL.Registo.html");
-//}
+else {
+header("Location: HTML.RTL.Registo.html");
+}
 ?>

@@ -196,9 +196,11 @@
       <input type="password" id="password" value="<?php echo $linha['pass']; ?>">
       <span class="toggle-password">Mostrar</span>
     </div>
-  </div>
-  <div class="profile-footer">
+    <div class="profile-footer">
     <a href="GPSPRIN.html">Inicio</a>
+  </div>
+    <div class="profile-footer">
+    <a href="HTML.RTL.Historico de Localizacao.html">Histórico de Localização</a>
   </div>
   <script>
     // Alternar visibilidade da senha

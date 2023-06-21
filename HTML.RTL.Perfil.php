@@ -200,7 +200,7 @@
     <a href="GPSPRIN.html">Inicio</a>
   </div>
     <div class="profile-footer">
-    <a href="HTML.RTL.Historico de localização.html">Histórico de Localização</a>
+    <a href="HTML.RTL.Historico de localização.html">Histórico</a>
   </div>
   <script>
     // Alternar visibilidade da senha

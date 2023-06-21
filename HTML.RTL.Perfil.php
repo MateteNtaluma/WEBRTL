@@ -198,7 +198,7 @@
     </div>
   </div>
   <div class="profile-footer">
-    <a href="/">Inicio</a>
+    <a href="GPSPRIN.html">Inicio</a>
   </div>
   <script>
     // Alternar visibilidade da senha

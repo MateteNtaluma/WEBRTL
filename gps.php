@@ -1,5 +1,5 @@
 <?php
-$Nome=$_GET['nome'];
+$nome=$_GET['nome'];
 $data=$_GET['data'];
 $long=$_GET['longitude'];
 $lat=$_GET['latitude'];

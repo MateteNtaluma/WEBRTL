@@ -4,7 +4,7 @@
 <head>
   <title>Perfil do Usuário</title>
   <style>
-    /* Estilos gerais do corpo da página */
+    /* Estilos gerais do corpo da pagina */
     body {
       font-family: Arial, sans-serif;
       background-color: #686767;

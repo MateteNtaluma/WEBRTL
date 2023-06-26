@@ -168,6 +168,33 @@ if (isset($email)) {
       height: 100%;
       object-fit: cover;
     }
+    
+    /* Media queries para telas menores */
+    @media (max-width: 780px) {
+      .profile-avatar {
+        position: static;
+        margin-bottom: 20px;
+        width: 120px;
+        height: 120px;
+      }
+
+      .profile-avatar img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .profile-header h1 {
+        font-size: 48px;
+      }
+
+      .profile-header p {
+        font-size: 24px;
+      }
+
+      .profile-content p {
+        font-size: 20px;
+      }
+    }
   </style>
 </head>
 

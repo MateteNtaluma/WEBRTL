@@ -170,7 +170,7 @@ if (isset($email)) {
     }
     
     /* Media queries para telas menores */
-    @media (max-width: 780px) {
+    @media (max-width: 790px) {
       .profile-avatar {
         position: static;
         margin-bottom: 20px;

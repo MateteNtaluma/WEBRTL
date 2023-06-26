@@ -1,16 +1,3 @@
-<?php
-$email = $_COOKIE['RTL'];
-
-if (isset($email)) {
-  $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
-  $verifica = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email'");
-  $linha = mysqli_fetch_array($verifica);
-} else {
-  header("Location: HTML.RTL.Entrar.html");
-  exit(); // Adicionando um 'exit()' para garantir que o código seja interrompido após o redirecionamento.
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
@@ -167,6 +154,31 @@ if (isset($email)) {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    /* Media queries para telas menores */
+    @media (max-width: 768px) {
+      .profile-avatar {
+        position: static;
+        margin-bottom: 20px;
+      }
+
+      .profile-avatar img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .profile-header h1 {
+        font-size: 24px;
+      }
+
+      .profile-header p {
+        font-size: 16px;
+      }
+
+      .profile-content p {
+        font-size: 14px;
+      }
     }
   </style>
 </head>

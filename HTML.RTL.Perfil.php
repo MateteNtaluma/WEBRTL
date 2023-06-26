@@ -172,17 +172,17 @@ if (isset($email)) {
     /* Media queries para telas maiores */
     @media (min-width: 950px) {
       .profile-avatar {
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
       }
 
       .profile-avatar img {
-        width: 150px;
-        height: 150px;
+        width: 120px;
+        height: 120px;
       }
 
       .profile-header h1 {
-        font-size: 60px;
+        font-size: 50px;
       }
 
       .profile-header p {

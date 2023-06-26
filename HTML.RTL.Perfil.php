@@ -1,3 +1,16 @@
+<?php
+$email = $_COOKIE['RTL'];
+
+if (isset($email)) {
+  $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
+  $verifica = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email'");
+  $linha = mysqli_fetch_array($verifica);
+} else {
+  header("Location: HTML.RTL.Entrar.html");
+  exit(); // Adicionando um 'exit()' para garantir que o código seja interrompido após o redirecionamento.
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -159,17 +172,6 @@
 </head>
 
 <body>
-  <?php
-  $email = $_COOKIE['RTL'];
-
-  if (isset($email)) {
-    $liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
-    $verifica = mysqli_query($liga, "SELECT * FROM utilizadores WHERE email='$email'");
-    $linha = mysqli_fetch_array($verifica);
-  } else {
-    header("Location: HTML.RTL.Entrar.html");
-  }
-  ?>
   <div class="profile-header">
     <div class="profile-avatar">
       <label for="avatar-upload">
@@ -196,12 +198,12 @@
       <input type="password" id="password" value="<?php echo $linha['pass']; ?>">
       <span class="toggle-password">Mostrar</span>
     </div>
-    <div class="profile-footer">
-    <a href="GPSPRIN.html">Inicio</a>
   </div>
-    <div class="profile-footer">
+  <div class="profile-footer">
+    <a href="GPSPRIN.html">Início</a>
     <a href="HTML.RTL.Historico de localização.html">Histórico</a>
   </div>
+
   <script>
     // Alternar visibilidade da senha
     var passwordInput = document.getElementById("password");
@@ -220,4 +222,3 @@
 </body>
 
 </html>
-

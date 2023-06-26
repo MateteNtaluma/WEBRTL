@@ -36,7 +36,7 @@ if (isset($data)) {
 
  
 
-    $sql = "INSERT INTO gps2 (Data, Longitude, Latitude, Hour, Minute, Second) VALUES ('$data', '$long', '$lat', '$hour', '$minute', '$second')";
+    $sql = "INSERT INTO gps (Data, Longitude, Latitude, Hour, Minute, Second) VALUES ('$data', '$long', '$lat', '$hour', '$minute', '$second')";
 
  
 

@@ -17,21 +17,21 @@ if (isset($email)) {
 <head>
   <title>Perfil do Usuário</title>
   <style>
-    /* Estilos gerais do corpo da pagina */
+    /* Estilos gerais do corpo da página */
     body {
       font-family: Arial, sans-serif;
-      background-color: #686767;
-      color: #ffffff;
+      background-color: #f8f8f8;
+      color: #333333;
       margin: 0;
       padding: 0;
     }
 
     /* Estilos do cabeçalho do perfil */
     .profile-header {
-      background-color: #686767;
-      padding: 20px;
+      background-color: #0099cc;
+      padding: 40px;
       text-align: center;
-      color: #fff;
+      color: #ffffff;
     }
 
     .profile-header h1 {
@@ -41,13 +41,17 @@ if (isset($email)) {
 
     .profile-header p {
       font-size: 18px;
-      color: #fff;
+      color: #ffffff;
       margin-top: -10px;
     }
 
     /* Estilos do conteúdo do perfil */
     .profile-content {
-      margin: 20px;
+      margin: 40px;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     }
 
     .profile-content p {
@@ -60,8 +64,7 @@ if (isset($email)) {
     }
 
     .profile-content .data {
-      background-color: transparent;
-      color: #fff;
+      color: #333333;
     }
 
     /* Estilos do rodapé do perfil */
@@ -94,11 +97,10 @@ if (isset($email)) {
 
     /* Estilos do avatar do perfil */
     .profile-avatar {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      width: 80px;
-      height: 80px;
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto;
       border-radius: 50%;
       overflow: hidden;
     }
@@ -140,8 +142,8 @@ if (isset($email)) {
     .profile-avatar label {
       position: relative;
       display: inline-block;
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       overflow: hidden;
       cursor: pointer;
@@ -174,13 +176,13 @@ if (isset($email)) {
       .profile-avatar {
         position: static;
         margin-bottom: 20px;
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
       }
 
       .profile-avatar img {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
       }
 
       .profile-header h1 {
@@ -213,12 +215,10 @@ if (isset($email)) {
     <p>Bem-vindo(a) de volta!</p>
   </div>
   <div class="profile-content">
-    <p><span class="label">Nome:</span> <span class="data" id="nome-usuario">
-        <?php echo $linha['nome']; ?>
-      </span></p>
+    <p><span class="label">Nome:</span> <span class="data" id="nome-usuario"><?php echo $linha['nome']; ?></span></p>
     <p><span class="label">Email:</span> <span class="data" id="email-usuario"><?php echo $linha['email']; ?></span></p>
     <p><span class="label">Telefone:</span> <span class="data" id="telefone-usuario"><?php echo $linha['telefone']; ?></span></p>
-    <p><span class="label">Data de Nascimento:</span><?php echo $linha['data_nascimento']; ?><span class="data" id="data-nascimento-usuario"></span></p>
+    <p><span class="label">Data de Nascimento:</span> <span class="data" id="data-nascimento-usuario"><?php echo $linha['data_nascimento']; ?></span></p>
     <p><span class="label">Último Login:</span> <span class="data" id="ultimo-login-usuario"><?php echo $linha['ultimo']; ?></span></p>
     <div class="password-field">
       <label for="password">Senha:</label>
@@ -228,7 +228,7 @@ if (isset($email)) {
   </div>
   <div class="profile-footer">
     <a href="GPSPRIN.html">Início</a>
-    <a href="HTML.RTL.Historico de localização.html">Histórico</a>
+    <a href="HTML.RTL.Historico de localizacao.html">Histórico</a>
   </div>
 
   <script>
@@ -249,3 +249,7 @@ if (isset($email)) {
 </body>
 
 </html>
+
+
+
+

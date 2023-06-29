@@ -50,6 +50,7 @@
 <html>
 <head>
   <title>Histórico de Localização</title>
+    <style>
    /* Estilos CSS para tornar o histórico visualmente atraente */
 body {
 font-family: Arial, sans-serif; /* Estilo de fonte do corpo do documento */

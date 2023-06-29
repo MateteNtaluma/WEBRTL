@@ -180,22 +180,57 @@ function adicionarNovaLocalizacao() {
       // Substitua esta função com sua lógica para obter os dados de localização
       // Pode ser por meio de uma API, banco de dados, ou qualquer outra fonte de dados
 
-      // Exemplo de dados de localização
+        // Função para carregar o histórico de localizações
+    function carregarHistoricoLocalizacoes() {
+      var locationList = document.getElementById('locationList');
+
       var dadosLocalizacao = [
-        {
-          data: new Date("2023-06-01T10:00:00"),
-          localizacao: "Nome do Local 1",
-          latitude: "123.456",
-          longitude: "789.012"
-        },
-        {
-          data: new Date("2023-06-01T09:30:00"),
-          localizacao: "Nome do Local 2",
-          latitude: "456.789",
-          longitude: "012.345"
-        },
-        // Adicione mais dados de localização conforme necessário
+        // Dados de localização omitidos para brevidade
       ];
+
+      for (var i = 0; i < dadosLocalizacao.length; i++) {
+        var locationItem = document.createElement('div');
+        locationItem.className = 'location-item';
+
+        var dateElement = document.createElement('p');
+        dateElement.className = 'date';
+        dateElement.textContent = dadosLocalizacao[i].data.toLocaleString();
+        locationItem.appendChild(dateElement);
+
+        var coordinatesElement = document.createElement('p');
+        coordinatesElement.className = 'coordinates';
+        coordinatesElement.textContent = 'Latitude: ' + dadosLocalizacao[i].latitude + ', Longitude: ' + dadosLocalizacao[i].longitude;
+        locationItem.appendChild(coordinatesElement);
+
+        var locationNameElement = document.createElement('p');
+        locationNameElement.className = 'location-name';
+        locationNameElement.textContent = 'Carregando...';
+        locationItem.appendChild(locationNameElement);
+
+        locationList.appendChild(locationItem);
+
+        // Obter o nome do local usando a API do Google Maps Geocoding
+        obterNomeLocal(dadosLocalizacao[i].latitude, dadosLocalizacao[i].longitude, locationNameElement);
+      }
+    }
+
+    // Obter o nome do local usando a API do Google Maps Geocoding
+    function obterNomeLocal(latitude, longitude, element) {
+      var geocoder = new google.maps.Geocoder();
+      var latLng = new google.maps.LatLng(latitude, longitude);
+
+      geocoder.geocode({ 'latLng': latLng }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[0]) {
+            element.textContent = 'Localização: ' + results[0].formatted_address;
+          } else {
+            element.textContent = 'Nome do local não encontrado';
+          }
+        } else {
+          element.textContent = 'Erro na obtenção do nome do local';
+        }
+      });
+    }
 // Retorna os dados de localização
       return dadosLocalizacao;
     }

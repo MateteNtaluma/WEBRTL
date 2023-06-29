@@ -1,216 +1,143 @@
+<?php
+  $liga = mysqli_connect('20.71.94.247', 'root', 'root', 'RTL');
+
+  $sql = "SELECT * FROM gps";
+  $result = $liga->query($sql);
+
+  $dadosLocalizacao = array();
+
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+      $data = $row['Data'];
+      $longitude = $row['Longitude'];
+      $latitude = $row['Latitude'];
+
+      // Fazer a solicitação à API de geocodificação para obter o nome do local
+      // Substitua {API_KEY} pelo seu valor de chave de API válida
+      $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc";
+
+      // Fazer a solicitação à API de geocodificação
+      $geocodingResponse = file_get_contents($geocodingAPIURL);
+      $geocodingData = json_decode($geocodingResponse);
+
+      // Extrair o nome do local da resposta
+      $locationName = '';
+      if ($geocodingData && isset($geocodingData->results) && count($geocodingData->results) > 0) {
+        $locationName = $geocodingData->results[0]->formatted_address;
+      }
+
+      // Criar um array com os dados de localização
+      $dados = array(
+        'data' => $data,
+        'localizacao' => $locationName,
+        'latitude' => $latitude,
+        'longitude' => $longitude,
+      );
+
+      // Adicionar os dados ao array de localizações
+      $dadosLocalizacao[] = $dados;
+    }
+  }
+
+  $liga->close();
+
+  // Codificar o array de dados de localização como JSON e enviá-lo para o JavaScript
+  echo '<script>';
+  echo 'var dadosLocalizacao = ' . json_encode($dadosLocalizacao) . ';';
+  echo '</script>';
+?>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Historico de Local</title>
+  <title>Histórico de Localização</title>
   <style>
-     /* Estilos CSS para tornar o histórico visualmente atraente */
-body {
-font-family: Arial, sans-serif; /* Estilo de fonte do corpo do documento */
-background-color: #f2f2f2; /* Cor de fundo do corpo do documento */
-color: #333333; /* Cor do texto do corpo do documento */
-margin: 0; /* Margem do corpo do documento */
-padding: 0; /* Espaçamento interno do corpo do documento */
-}
-.page-title {
-background-color: #000000; /* Cor de fundo do título da página */
-padding: 10px; /* Espaçamento interno do título da página */
-text-align: center; /* Alinhamento do texto do título da página */
- color: #ffffff; /* Cor do texto do título da página */
-}
-.page-title h1 {
-font-size: 24px; /* Tamanho da fonte do título da página */
- margin: 0; /* Margem do título da página */
-}
-.logo {
-margin-top: 20px; /* Espaçamento superior do logotipo */
-text-align: center; /* Alinhamento do logotipo */
-}
-.location-list {
-margin: 20px; /* Margem da lista de localizações */
-}
-.location-item {
-padding: 10px; /* Espaçamento interno de cada item de localização */
-background-color: #ffffff; /* Cor de fundo de cada item de localização */
-border-radius: 5px; /* Raio do canto arredondado de cada item de localização */
-margin-bottom: 10px; /* Margem inferior de cada item de localização */
-  }
-.location-item .date {
-font-weight: bold; /* Peso da fonte da data do item de localização */
-margin-bottom: 5px; /* Margem inferior da data do item de localização */
-}
-.location-item .coordinates {
-color: #888888; /* Cor das coordenadas do item de localização */
-}
-.location-item .location-name {
-color: #333333; /* Cor do nome do local do item de localização */
-font-style: italic; /* Estilo da fonte do nome do local do item de localização */
-}
-.back-button {
-position: fixed; /* Posição fixa do botão de voltar */
-top: 0; /* Posição superior do botão de voltar */
-left: 0; /* Posição esquerda do botão de voltar */
-margin: 10px; /* Margem do botão de voltar */
-z-index: 9999; /* Índice z do botão de voltar */
-
-    }
-    .back-button a {
-  color: #ffffff; /* Cor do texto do link do botão de voltar */
-  text-decoration: none; /* Decoração do link do botão de voltar */
-  font-weight: bold; /* Peso da fonte do link do botão de voltar */
-  padding: 5px 8px; /* Espaçamento interno do link do botão de voltar */
-  background-color: #099bfc; /* Cor de fundo do link do botão de voltar */
-  border-radius: 16%; /* Torna o botão completamente redondo */
-
-    }
-    .site-properties {
-      position: fixed; /* Posição fixa das propriedades do site */
-      bottom: 10px; /* Posição inferior das propriedades do site */
-      left: 10px; /* Posição esquerda das propriedades do site */
-      font-size: 12px; /* Tamanho da fonte das propriedades do site */
-      color: rgba(0, 0, 0, 0.2); /* Cor das propriedades do site */
-      z-index: 9999; /* Índice z das propriedades do site */
-    }
-   
-    @media only screen and (max-width: 500px) {
-      /* Estilos de mídia para dispositivos com largura máxima de 500px */
-      .logo img {
-        width: 80px; /* Largura do logotipo para dispositivos de tela pequena */
-      }
-      .page-title h1 {
-        font-size: 20px; /* Tamanho da fonte do título da página para dispositivos de tela pequena */
-      }
-      .back-button {
-        top: 10px; /* Posição superior do botão de voltar para dispositivos de tela pequena */
-        left: 10px; /* Posição esquerda do botão de voltar para dispositivos de tela pequena */
-      }
-      .back-button a {
-        padding: 5px 10px; /* Espaçamento interno do link do botão de voltar para dispositivos de tela pequena */
-      }
-    }
-   
-</style>
+    /* Estilos CSS para tornar o histórico visualmente atraente */
+    /* ... (seu código CSS existente) ... */
+  </style>
 </head>
 <body>
   <div class="back-button">              
-    <a href="GPSPRIN.html">Inicio</a>  
+    <a href="GPSPRIN.html">Início</a>  
   </div>
 
   <div class="page-title">              
-    <h1>Historico de Localizacaos</h1>
+    <h1>Histórico de Localizações</h1>
   </div>
 
-  <div class="location-list" id="locationList">   <!-- Div com classe "location-list" e ID "locationList" -->
+  <div class="location-list" id="locationList">
     <!-- Locais de localização serão adicionados aqui automaticamente -->
   </div>
 
-  <div class="site-properties"> <!--Div com classe "site-properties" -->
-    Todos os direitos autorais reservados © RTL.   <!-- Texto de direitos autorais -->
+  <div class="site-properties">
+    Todos os direitos autorais reservados © RTL.
   </div>
 
-  <script> // Início do bloco de script JavaScript -->
+  <script>
     // Função para carregar o histórico de localizações
     function carregarHistoricoLocalizacoes() {
-      var locationList = document.getElementById('locationList');   //Obtém o elemento com o ID "locationList" -->
+      var locationList = document.getElementById('locationList');
 
-      var dadosLocalizacao = [ //Array de dados de localização -->
-     
-      //exemplo de dados de localização
-    {
-      data: new Date("2023-06-01T09:30:00"),
-      localizacao: "Nome do Local 2",
-      latitude: "456.789",
-      longitude: "012.345"
-    },
-    // Adicione mais dados de localização conforme necessário
-  ];
-
-  for (var i = 0; i < dadosLocalizacao.length; i++) {
-    var locationItem = document.createElement('div'); // Cria um elemento <div> para representar um item de localização
-    locationItem.className = 'location-item';   // Atribui a classe CSS "location-item" ao elemento
-
-    var dateElement = document.createElement('p');// Cria um elemento <p> para representar a data e hora da localização
-    dateElement.className = 'date';// Atribui a classe CSS "date" ao elemento
-    dateElement.textContent = dadosLocalizacao[i].data.toLocaleString();   // Define o conteúdo de texto do elemento como a data e hora da localização
-    locationItem.appendChild(dateElement);// Adiciona o elemento de data e hora ao item de localização
-
-    var coordinatesElement = document.createElement('p');// Cria um elemento <p> para representar as coordenadas da localização
-    coordinatesElement.className = 'coordinates';// Atribui a classe CSS "coordinates" ao elemento
-    coordinatesElement.textContent = 'Latitude: ' + dadosLocalizacao[i].latitude + ', Longitude: ' + dadosLocalizacao[i].longitude;   // Define o conteúdo de texto do elemento como as coordenadas da localização
-    locationItem.appendChild(coordinatesElement);// Adiciona o elemento de coordenadas ao item de localização
-
-    var locationNameElement = document.createElement('p');// Cria um elemento <p> para representar o nome da localização
-    locationNameElement.className = 'location-name';// Atribui a classe CSS "location-name" ao elemento
-    locationNameElement.textContent = 'Localização: ' + dadosLocalizacao[i].localizacao;   // Define o conteúdo de texto do elemento como o nome da localização
-    locationItem.appendChild(locationNameElement);// Adiciona o elemento de nome da localização ao item de localização
-
-    locationList.appendChild(locationItem);// Adiciona o item de localização à lista de localizações
-  }
-}
-   // Adicionar uma nova localização ao histórico
-function adicionarNovaLocalizacao() {
-  var locationList = document.getElementById('locationList');   // Obtém o elemento com o ID "locationList"
-
-  var novaData = new Date();// Obtém a data e hora atual
-  var novoLocal = "Nova Localização";// Define o nome da nova localização
-  var novaLatitude = "987.654";// Define a latitude da nova localização
-  var novaLongitude = "321.098";// Define a longitude da nova localização
-
-  var locationItem = document.createElement('div');// Cria um elemento <div> para representar um item de localização
-  locationItem.className = 'location-item';// Atribui a classe CSS "location-item" ao elemento
-
-  var dateElement = document.createElement('p');// Cria um elemento <p> para representar a data e hora da nova localização
-  dateElement.className = 'date';// Atribui a classe CSS "date" ao elemento
-  dateElement.textContent = novaData.toLocaleString();// Define o conteúdo de texto do elemento como a data e hora atual
-  locationItem.appendChild(dateElement);// Adiciona o elemento de data e hora ao item de localização
-
-  var coordinatesElement = document.createElement('p');// Cria um elemento <p> para representar as coordenadas da nova localização
-  coordinatesElement.className = 'coordinates';// Atribui a classe CSS "coordinates" ao elemento
-  coordinatesElement.textContent = 'Latitude: ' + novaLatitude + ', Longitude: ' + novaLongitude;   // Define o conteúdo de texto do elemento como as coordenadas da nova localização
-  locationItem.appendChild(coordinatesElement);// Adiciona o elemento de coordenadas ao item de localização
-
-  var locationNameElement = document.createElement('p');// Cria um elemento <p> para representar o nome da nova localização
-  locationNameElement.className = 'location-name';// Atribui a classe CSS "location-name" ao elemento
-  locationNameElement.textContent = 'Localização: ' + novoLocal;   // Define o conteúdo de texto do elemento como o nome da nova localização
-  locationItem.appendChild(locationNameElement);// Adiciona o elemento de nome da localização ao item de localização
-
-  locationList.appendChild(locationItem);// Adiciona o item de localização à lista de localizações
-}
-    // Obter os dados de localização automaticamente
-    function obterDadosLocalizacao() {
-      // Substitua esta função com sua lógica para obter os dados de localização
-      // Pode ser por meio de uma API, banco de dados, ou qualquer outra fonte de dados
-
-      // Exemplo de dados de localização
-      var dadosLocalizacao = [
-        {
-          data: new Date("2023-06-01T10:00:00"),
-          localizacao: "Nome do Local 1",
-          latitude: "123.456",
-          longitude: "789.012"
-        },
-        {
-          data: new Date("2023-06-01T09:30:00"),
-          localizacao: "Nome do Local 2",
-          latitude: "456.789",
-          longitude: "012.345"
-        },
-        // Adicione mais dados de localização conforme necessário
-      ];
-// Retorna os dados de localização
-      return dadosLocalizacao;
+      // Fazer a solicitação ao arquivo PHP para obter os dados de localização do banco de dados
+      fetch('obter_dados_localizacao.php')
+        .then(response => response.json())
+        .then(dadosLocalizacao => {
+          // Adicionar os dados de localização ao histórico
+          for (var i = 0; i < dadosLocalizacao.length; i++) {
+            var dados = dadosLocalizacao[i];
+            adicionarLocalizacao(dados.data, dados.localizacao, dados.latitude, dados.longitude);
+          }
+        })
+        .catch(error => {
+          console.error('Erro ao obter os dados de localização:', error);
+        });
     }
 
-    // Adicionar a nova localização ao histórico
-adicionarNovaLocalizacao();
+    // Função para adicionar uma nova localização ao histórico
+    function adicionarNovaLocalizacao() {
+      // Fazer a solicitação ao arquivo PHP para adicionar uma nova localização ao banco de dados
+      fetch('adicionar_localizacao.php')
+        .then(response => response.json())
+        .then(dadosLocalizacao => {
+          // Adicionar a nova localização ao histórico
+          var dados = dadosLocalizacao[0];
+          adicionarLocalizacao(dados.data, dados.localizacao, dados.latitude, dados.longitude);
+        })
+        .catch(error => {
+          console.error('Erro ao adicionar a nova localização:', error);
+        });
+    }
 
-// Obter os dados de localização automaticamente
-var dadosLocalizacao = obterDadosLocalizacao();
+    // Função para adicionar uma localização ao histórico
+    function adicionarLocalizacao(data, localizacao, latitude, longitude) {
+      var locationList = document.getElementById('locationList');
 
-// Adicionar os dados de localização ao histórico
-for (var i = 0; i < dadosLocalizacao.length; i++) {
-  var dados = dadosLocalizacao[i];
-  adicionarLocalizacao(dados.data, dados.localizacao, dados.latitude, dados.longitude);
-}
+      var locationItem = document.createElement('div');
+      locationItem.className = 'location-item';
+
+      var dateElement = document.createElement('p');
+      dateElement.className = 'date';
+      dateElement.textContent = new Date(data).toLocaleString();
+      locationItem.appendChild(dateElement);
+
+      var coordinatesElement = document.createElement('p');
+      coordinatesElement.className = 'coordinates';
+      coordinatesElement.textContent = 'Latitude: ' + latitude + ', Longitude: ' + longitude;
+      locationItem.appendChild(coordinatesElement);
+
+      var locationNameElement = document.createElement('p');
+      locationNameElement.className = 'location-name';
+      locationNameElement.textContent = 'Localização: ' + localizacao;
+      locationItem.appendChild(locationNameElement);
+
+      locationList.appendChild(locationItem);
+    }
+
+    // Carregar o histórico de localizações
+    carregarHistoricoLocalizacoes();
+  </script>
+</body>
+</html>
+
 
 // Carregar o histórico de localizações
 carregarHistoricoLocalizacoes();

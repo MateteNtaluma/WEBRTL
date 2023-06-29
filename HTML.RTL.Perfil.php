@@ -228,7 +228,7 @@ if (isset($email)) {
   </div>
   <div class="profile-footer">
     <a href="GPSPRIN.html">Início</a>
-    <a href="HTML.RTL.Historico de localização.html">Histórico</a>
+    <a href="HTML.RTL.Historico de localização.php">Histórico</a>
   </div>
 
   <script>

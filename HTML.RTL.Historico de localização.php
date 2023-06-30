@@ -8,9 +8,9 @@
 
   if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-      $data = $row['Data'];
-      $longitude = $row['Longitude'];
-      $latitude = $row['Latitude'];
+      $data = $row['data'];
+      $longitude = $row['longitude'];
+      $latitude = $row['latitude'];
 
       // Fazer a solicitação à API de geocodificação para obter o nome do local
       // Substitua {API_KEY} pelo seu valor de chave de API válida

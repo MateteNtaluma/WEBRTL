@@ -1,142 +1,70 @@
 <?php
-  $liga = mysqli_connect('20.71.94.247', 'root', 'root', 'RTL');
+$liga = mysqli_connect('20.71.94.247', 'root', 'root', 'RTL');
 
-  $sql = "SELECT * FROM gps";
-  $result = $liga->query($sql);
+if ($liga === false) {
+  die("Erro na conexão: " . mysqli_connect_error());
+}
 
-  $dadosLocalizacao = array();
+$sql = "SELECT * FROM gps";
+$result = $liga->query($sql);
 
-  if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $data = $row['data'];
-      $longitude = $row['longitude'];
-      $latitude = $row['latitude'];
+if ($result === false) {
+  die("Erro na consulta: " . $liga->error);
+}
 
-      // Fazer a solicitação à API de geocodificação para obter o nome do local
-      // Substitua {API_KEY} pelo seu valor de chave de API válida
-      $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc";
+$dadosLocalizacao = array();
 
-      // Fazer a solicitação à API de geocodificação
-      $geocodingResponse = file_get_contents($geocodingAPIURL);
-      $geocodingData = json_decode($geocodingResponse);
+if ($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+    $latitude = $row['latitude'];
+    $longitude = $row['longitude'];
+    $data = $row['data'];
 
-      // Extrair o nome do local da resposta
-      $locationName = '';
-      if ($geocodingData && isset($geocodingData->results) && count($geocodingData->results) > 0) {
-        $locationName = $geocodingData->results[0]->formatted_address;
-      }
+    // Fazer a solicitação à API de geocodificação para obter o nome do local
+    // Substitua {API_KEY} pelo seu valor de chave de API válida
+    $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc";
 
-      // Criar um array com os dados de localização
-      $dados = array(
-        'data' => $data,
-        'localizacao' => $locationName,
-        'latitude' => $latitude,
-        'longitude' => $longitude,
-      );
-
-      // Adicionar os dados ao array de localizações
-      $dadosLocalizacao[] = $dados;
+    // Fazer a solicitação à API de geocodificação
+    $geocodingResponse = file_get_contents($geocodingAPIURL);
+    if ($geocodingResponse === false) {
+      die("Erro ao obter a resposta da API de geocodificação");
     }
+
+    $geocodingData = json_decode($geocodingResponse);
+
+    // Extrair o nome do local da resposta
+    $locationName = '';
+    if ($geocodingData && isset($geocodingData->results) && count($geocodingData->results) > 0) {
+      $locationName = $geocodingData->results[0]->formatted_address;
+    }
+
+    // Imprimir os dados na página HTML
+    echo "Data: $data<br>";
+    echo "Latitude: $latitude<br>";
+    echo "Longitude: $longitude<br>";
+    echo "Localização: $locationName<br>";
+    echo "<br>";
+
+    // Adicionar os dados ao array de localizações
+    $dadosLocalizacao[] = array(
+      'data' => $data,
+      'localizacao' => $locationName,
+      'latitude' => $latitude,
+      'longitude' => $longitude,
+    );
   }
+}
 
-  $liga->close();
-
-  // Codificar o array de dados de localização como JSON e enviá-lo para o JavaScript
-  echo '<script>';
-  echo 'var dadosLocalizacao = ' . json_encode($dadosLocalizacao) . ';';
-  echo '</script>';
+$liga->close();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Histórico de Localização</title>
-    <style>
-   /* Estilos CSS para tornar o histórico visualmente atraente */
-body {
-font-family: Arial, sans-serif; /* Estilo de fonte do corpo do documento */
-background-color: #f2f2f2; /* Cor de fundo do corpo do documento */
-color: #333333; /* Cor do texto do corpo do documento */
-margin: 0; /* Margem do corpo do documento */
-padding: 0; /* Espaçamento interno do corpo do documento */
-}
-.page-title {
-background-color: #000000; /* Cor de fundo do título da página */
-padding: 10px; /* Espaçamento interno do título da página */
-text-align: center; /* Alinhamento do texto do título da página */
- color: #ffffff; /* Cor do texto do título da página */
-}
-.page-title h1 {
-font-size: 24px; /* Tamanho da fonte do título da página */
- margin: 0; /* Margem do título da página */
-}
-.logo {
-margin-top: 20px; /* Espaçamento superior do logotipo */
-text-align: center; /* Alinhamento do logotipo */
-}
-.location-list {
-margin: 20px; /* Margem da lista de localizações */
-}
-.location-item {
-padding: 10px; /* Espaçamento interno de cada item de localização */
-background-color: #ffffff; /* Cor de fundo de cada item de localização */
-border-radius: 5px; /* Raio do canto arredondado de cada item de localização */
-margin-bottom: 10px; /* Margem inferior de cada item de localização */
-  }
-.location-item .date {
-font-weight: bold; /* Peso da fonte da data do item de localização */
-margin-bottom: 5px; /* Margem inferior da data do item de localização */
-}
-.location-item .coordinates {
-color: #888888; /* Cor das coordenadas do item de localização */
-}
-.location-item .location-name {
-color: #333333; /* Cor do nome do local do item de localização */
-font-style: italic; /* Estilo da fonte do nome do local do item de localização */
-}
-.back-button {
-position: fixed; /* Posição fixa do botão de voltar */
-top: 0; /* Posição superior do botão de voltar */
-left: 0; /* Posição esquerda do botão de voltar */
-margin: 10px; /* Margem do botão de voltar */
-z-index: 9999; /* Índice z do botão de voltar */
-
-    }
-    .back-button a {
-  color: #ffffff; /* Cor do texto do link do botão de voltar */
-  text-decoration: none; /* Decoração do link do botão de voltar */
-  font-weight: bold; /* Peso da fonte do link do botão de voltar */
-  padding: 5px 8px; /* Espaçamento interno do link do botão de voltar */
-  background-color: #099bfc; /* Cor de fundo do link do botão de voltar */
-  border-radius: 16%; /* Torna o botão completamente redondo */
-
-    }
-    .site-properties {
-      position: fixed; /* Posição fixa das propriedades do site */
-      bottom: 10px; /* Posição inferior das propriedades do site */
-      left: 10px; /* Posição esquerda das propriedades do site */
-      font-size: 12px; /* Tamanho da fonte das propriedades do site */
-      color: rgba(0, 0, 0, 0.2); /* Cor das propriedades do site */
-      z-index: 9999; /* Índice z das propriedades do site */
-    }
-   
-    @media only screen and (max-width: 500px) {
-      /* Estilos de mídia para dispositivos com largura máxima de 500px */
-      .logo img {
-        width: 80px; /* Largura do logotipo para dispositivos de tela pequena */
-      }
-      .page-title h1 {
-        font-size: 20px; /* Tamanho da fonte do título da página para dispositivos de tela pequena */
-      }
-      .back-button {
-        top: 10px; /* Posição superior do botão de voltar para dispositivos de tela pequena */
-        left: 10px; /* Posição esquerda do botão de voltar para dispositivos de tela pequena */
-      }
-      .back-button a {
-        padding: 5px 10px; /* Espaçamento interno do link do botão de voltar para dispositivos de tela pequena */
-      }
-    }
-   
-</style>
+  <style>
+    /* Estilos CSS para tornar o histórico visualmente atraente */
+    /* ... (estilos CSS omitidos para brevidade) ... */
+  </style>
 </head>
 <body>
   <div class="back-button">              
@@ -160,8 +88,8 @@ z-index: 9999; /* Índice z do botão de voltar */
     function carregarHistoricoLocalizacoes() {
       var locationList = document.getElementById('locationList');
 
-      // Fazer a solicitação ao arquivo PHP para obter os dados de localização do banco de dados
-      fetch('obter_dados_localizacao.php')
+      // Fazer a solicitação ao arquivo PHP (gps.php) para obter os dados de localização
+      fetch('gps.php')
         .then(response => response.json())
         .then(dadosLocalizacao => {
           // Adicionar os dados de localização ao histórico
@@ -177,8 +105,8 @@ z-index: 9999; /* Índice z do botão de voltar */
 
     // Função para adicionar uma nova localização ao histórico
     function adicionarNovaLocalizacao() {
-      // Fazer a solicitação ao arquivo PHP para adicionar uma nova localização ao banco de dados
-      fetch('adicionar_localizacao.php')
+      // Fazer a solicitação ao arquivo PHP (gps.php) para adicionar uma nova localização
+      fetch('gps.php', { method: 'POST' })
         .then(response => response.json())
         .then(dadosLocalizacao => {
           // Adicionar a nova localização ao histórico
@@ -220,5 +148,3 @@ z-index: 9999; /* Índice z do botão de voltar */
   </script>
 </body>
 </html>
-
-

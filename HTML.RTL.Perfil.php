@@ -15,7 +15,7 @@ if (isset($email)) {
 <html>
 
 <head>
-  <title>Perfil do Usuário</title>
+  <title>Perfil</title>
   <style>
     /* Estilos gerais do corpo da página */
     body {

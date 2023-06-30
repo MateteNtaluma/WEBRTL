@@ -1,62 +1,3 @@
-<?php
-$liga = mysqli_connect('20.71.94.247', 'root', 'root', 'RTL');
-
-if ($liga === false) {
-  die("Erro na conexão: " . mysqli_connect_error());
-}
-
-$sql = "SELECT * FROM gps";
-$result = $liga->query($sql);
-
-if ($result === false) {
-  die("Erro na consulta: " . $liga->error);
-}
-
-$dadosLocalizacao = array();
-
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-    $latitude = $row['latitude'];
-    $longitude = $row['longitude'];
-    $data = $row['data'];
-
-    // Fazer a solicitação à API de geocodificação para obter o nome do local
-    // Substitua {API_KEY} pelo seu valor de chave de API válida
-    $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc";
-
-    // Fazer a solicitação à API de geocodificação
-    $geocodingResponse = file_get_contents($geocodingAPIURL);
-    if ($geocodingResponse === false) {
-      die("Erro ao obter a resposta da API de geocodificação");
-    }
-
-    $geocodingData = json_decode($geocodingResponse);
-
-    // Extrair o nome do local da resposta
-    $locationName = '';
-    if ($geocodingData && isset($geocodingData->results) && count($geocodingData->results) > 0) {
-      $locationName = $geocodingData->results[0]->formatted_address;
-    }
-
-    // Imprimir os dados na página HTML
-    echo "Data: $data<br>";
-    echo "Latitude: $latitude<br>";
-    echo "Longitude: $longitude<br>";
-    echo "Localização: $locationName<br>";
-    echo "<br>";
-
-    // Adicionar os dados ao array de localizações
-    $dadosLocalizacao[] = array(
-      'data' => $data,
-      'localizacao' => $locationName,
-      'latitude' => $latitude,
-      'longitude' => $longitude,
-    );
-  }
-}
-
-$liga->close();
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,3 +89,4 @@ $liga->close();
   </script>
 </body>
 </html>
+

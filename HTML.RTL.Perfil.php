@@ -211,7 +211,7 @@ if (isset($email)) {
     <div class="profile-logo">
       <img src="RTL.png" alt="Logo">
     </div>
-    <h1>Perfil do Usuário</h1>
+    <h1>Perfil</h1>
     <p>Bem-vindo(a) de volta!</p>
   </div>
   <div class="profile-content">

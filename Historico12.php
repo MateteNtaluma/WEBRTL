@@ -1,5 +1,5 @@
 <?php
-$liga = mysqli_connect('20.71.94.247', 'root', 'root', 'RTL');
+$liga = mysqli_connect('localhost', 'root', 'root', 'RTL');
 
 if ($liga === false) {
   die("Erro na conexão: " . mysqli_connect_error());

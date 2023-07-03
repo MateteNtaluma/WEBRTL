@@ -113,7 +113,7 @@ z-index: 9999; /* Índice z do botão de voltar */
     function carregarHistoricoLocalizacoes() {
       var locationList = document.getElementById('locationList');
 
-      // Fazer a solicitação ao arquivo PHP (gps.php) para obter os dados de localização
+      // Fazer a solicitação ao arquivo PHP (Historico12.php) para obter os dados de localização
       fetch('Historico12.php')
         .then(response => response.json())
         .then(dadosLocalizacao => {

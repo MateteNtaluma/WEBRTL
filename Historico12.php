@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       // Faz a solicitação à API de geocodificação para obter o nome do local
       // Substitua {API_KEY} pelo seu valor de chave de API válida
-      $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latitude . "," . $longitude . "&key={API_KEY}";
+      $geocodingAPIURL = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $latitude . "," . $longitude . "&key=AIzaSyBf2a8jJFDPp9gPOzdi9tirTZKomFjTmZc";
 
       // Faz a solicitação à API de geocodificação
       $geocodingResponse = file_get_contents($geocodingAPIURL);

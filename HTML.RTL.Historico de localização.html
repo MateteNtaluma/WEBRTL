@@ -114,7 +114,7 @@ z-index: 9999; /* Índice z do botão de voltar */
       var locationList = document.getElementById('locationList');
 
       // Fazer a solicitação ao arquivo PHP (gps.php) para obter os dados de localização
-      fetch('gps.php')
+      fetch('Historico12.php')
         .then(response => response.json())
         .then(dadosLocalizacao => {
           // Adicionar os dados de localização ao histórico
@@ -131,7 +131,7 @@ z-index: 9999; /* Índice z do botão de voltar */
     // Função para adicionar uma nova localização ao histórico
     function adicionarNovaLocalizacao() {
       // Fazer a solicitação ao arquivo PHP (gps.php) para adicionar uma nova localização
-      fetch('gps.php', { method: 'POST' })
+      fetch('Historico12.php', { method: 'POST' })
         .then(response => response.json())
         .then(dadosLocalizacao => {
           // Adicionar a nova localização ao histórico

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     while ($row = $result->fetch_assoc()) {
       $latitude = $row['latitude'];
       $longitude = $row['longitude'];
-      $data = $row['data'];
+      $data = $row['dt'];
 
       // Fazer a solicitação à API de geocodificação para obter o nome do local
       // Substitua {API_KEY} pelo seu valor de chave de API válida
